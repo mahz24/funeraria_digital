@@ -29,6 +29,7 @@ public class PermissionController {
     @Autowired
     private JSONResponsesService theJsonResponse;
 
+    @SuppressWarnings("unused")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         try{

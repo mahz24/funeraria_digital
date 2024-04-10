@@ -121,7 +121,7 @@ public class PermissionController {
         try{
             if(thePermission != null){
                 this.thePermissionRepository.delete(thePermission);
-                this.theJsonResponse.setMessage("El permiso ha eliminado.");
+                this.theJsonResponse.setMessage("El permiso se ha eliminado.");
                 return ResponseEntity.status(HttpStatus.OK).body(this.theJsonResponse.getFinalJSON());
             }else{
                 this.theJsonResponse.setMessage("No se encontró permiso.");

@@ -1,6 +1,11 @@
 package microservises.mssegurity.Services;
 
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import microservises.mssegurity.Models.User;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,10 +14,12 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 @Service
 public class JwtService {
     @Value("${jwt.secret}")
-    private String secret; // Esta es la clave secreta que se utiliza para firmar el token. Debe mantenerse segura.
+    private String secret; // Esta es la clave secreta que se utiliza para firmar el token. Debe mantenerse
+                           // segura.
 
     @Value("${jwt.expiration}")
     private Long expiration; // Tiempo de expiración del token en milisegundos.
@@ -35,6 +42,7 @@ public class JwtService {
                 .signWith(secretKey)
                 .compact();
     }
+
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
@@ -57,7 +65,6 @@ public class JwtService {
             return false;
         }
     }
-
 
     public User getUserFromToken(String token) {
         try {

@@ -19,7 +19,8 @@ import microservises.mssegurity.Repositories.RoleRepository;
 import microservises.mssegurity.Repositories.UserRepository;
 import microservises.mssegurity.Services.JSONResponsesService;
 import microservises.mssegurity.Models.Role;
-import microservises.mssegurity.Models.User;;
+import microservises.mssegurity.Models.User;
+import microservises.mssegurity.Services.EncryptionService;
 
 @CrossOrigin
 @RestController
@@ -32,6 +33,8 @@ public class UserController {
     private JSONResponsesService jsonResponsesService;
     @Autowired
     private RoleRepository theRoleRepository;
+    @Autowired
+    private EncryptionService thEncryptionService;
 
     @SuppressWarnings("unused")
     @GetMapping("")
@@ -143,6 +146,7 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody User newUser) {
         try {
+            newUser.setPassword(thEncryptionService.convertSHA256(newUser.getPassword()));
             User user = this.userRepository.save(newUser);
             this.jsonResponsesService.setData(user);
             this.jsonResponsesService.setMessage("Usuario añadido satisfactoriamente");

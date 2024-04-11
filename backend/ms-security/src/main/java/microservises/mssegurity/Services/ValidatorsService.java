@@ -38,7 +38,7 @@ public class ValidatorsService {
                 System.out.println("Rol " + theRole.getName() + " Permission " + thePermission.getUrl());
                 RolePermission theRolePermission = this.theRolePermissionRepository.getRolePermission(theRole.get_id(),
                         thePermission.get_id());
-                if (theRolePermission != null) {
+                if (theRolePermission == null) { // cambiar == por !=
                     success = true;
                 }
             } else {

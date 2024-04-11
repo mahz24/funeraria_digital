@@ -22,7 +22,7 @@ import microservises.mssegurity.Services.JSONResponsesService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/permissions") // es con s, no confundir
+@RequestMapping("/api/permissions") // es con s, no confundir
 public class PermissionController {
     @Autowired
     private PermissionRepository thePermissionRepository;

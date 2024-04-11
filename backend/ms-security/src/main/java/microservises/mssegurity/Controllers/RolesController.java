@@ -13,7 +13,7 @@ import microservises.mssegurity.Services.JSONResponsesService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/api/roles")
 public class RolesController {
     @Autowired
     private RoleRepository theRoleRepository;

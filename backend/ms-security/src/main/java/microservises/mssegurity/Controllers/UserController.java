@@ -1,9 +1,14 @@
 package microservises.mssegurity.Controllers;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import microservises.mssegurity.Repositories.RoleRepository;
 import microservises.mssegurity.Repositories.UserRepository;
@@ -36,6 +42,8 @@ public class UserController {
     private RoleRepository theRoleRepository;
     @Autowired
     private EncryptionService thEncryptionService;
+    @Value("${ms-notifications.base-url}")
+    private String baseUrlNotifications;
 
     @SuppressWarnings("unused")
     @GetMapping("")
@@ -183,8 +191,50 @@ public class UserController {
         }
     }
 
-    //@PatchMapping("/reset-password")
-    //public ResponseEntity<?> resetPassword(RequestBody User user){
+    @PatchMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody User user){
+        try {
+            User current = userRepository.getUserByEmail(user.getEmail());
+            if (current != null) {
+                String genPass = generateRandomPassword(10);
+                current.setPassword(thEncryptionService.convertSHA256(genPass));
+                userRepository.save(current);
+                RestTemplate restTemplate= new RestTemplate();
+                String urlPost = baseUrlNotifications + "email_reset_password";
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                String requestBody = "{\"email\":\"" + user.getEmail() +"\",\"new_password\":\"" + genPass + "\"}";
+                HttpEntity<String> requestEntity = new HttpEntity<>(requestBody,headers);
+                ResponseEntity<String> res = restTemplate.postForEntity(urlPost, requestEntity, String.class);
+                System.out.println(res.getBody());
+                this.jsonResponsesService.setData(current);
+                this.jsonResponsesService.setMessage("Contraseña cambiada con exito, por favor revisa tu correo");
+                return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());
+            } else {
+                this.jsonResponsesService.setMessage("El usuario no se encuentra registrado en la base de datos");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.jsonResponsesService.getFinalJSON());
+            }
+        } catch (Exception e) {
+            this.jsonResponsesService.setData(null);
+            this.jsonResponsesService.setError(e.toString());
+            this.jsonResponsesService.setMessage("Error al generar una nueva contraseña");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(this.jsonResponsesService.getFinalJSON());
+        }
+    }
 
-    //}
+    public static String generateRandomPassword(int len) {
+        // Rango ASCII – alfanumérico (0-9, a-z, A-Z)
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+
+        // En cada iteración del bucle, elegimos aleatoriamente un carácter del rango ASCII
+        // y lo agregamos a la instancia `StringBuilder`
+        for (int i = 0; i < len; i++) {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+
+        return sb.toString();
+    }
 }

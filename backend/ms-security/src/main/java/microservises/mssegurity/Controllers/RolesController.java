@@ -20,6 +20,7 @@ public class RolesController {
     @Autowired
     private JSONResponsesService theJsonResponse;
 
+    @SuppressWarnings("unused")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         try {

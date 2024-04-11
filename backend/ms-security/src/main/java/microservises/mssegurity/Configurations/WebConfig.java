@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private SecurityInterceptor securityInterceptor;
 
+    @SuppressWarnings("null")
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 

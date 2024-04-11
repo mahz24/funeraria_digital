@@ -12,7 +12,6 @@ public class User {
     
     @Id
     private String _id;
-    private String name;
     private String email;
     private String password;
     @DBRef
@@ -22,8 +21,7 @@ public class User {
 
     }
 
-    public User(String name,String email, String password){
-        this.name=name;
+    public User(String email, String password){
         this.email = email;
         this.password = password;
     }

@@ -14,6 +14,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
     @Autowired
     private ValidatorsService validatorService;
 
+    @SuppressWarnings("null")
     @Override
     public boolean preHandle(HttpServletRequest request,
             HttpServletResponse response,
@@ -24,17 +25,19 @@ public class SecurityInterceptor implements HandlerInterceptor {
         return success;
     }
 
-    // @Override
-    // public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-    //         ModelAndView modelAndView) throws Exception {
-    //     // Lógica a ejecutar después de que se haya manejado la solicitud por el
-    //     // controlador
-    // }
+    @SuppressWarnings("null")
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        // Lógica a ejecutar después de que se haya manejado la solicitud por el
+        // controlador
+    }
 
-    // @Override
-    // public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-    //         Exception ex) throws Exception {
-    //     // Lógica a ejecutar después de completar la solicitud, incluso después de la
-    //     // renderización de la vista
-    // }
+    @SuppressWarnings("null")
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+            Exception ex) throws Exception {
+        // Lógica a ejecutar después de completar la solicitud, incluso después de la
+        // renderización de la vista
+    }
 }

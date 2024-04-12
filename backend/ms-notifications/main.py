@@ -79,6 +79,47 @@ def email_reset_password():
             ),
             500,
         )
+    
+@app.route("/email_2FA", methods=["POST"])
+def secondFactor():
+    try:
+        body = request.get_json()
+        user_email = body["email"]
+        token2FA = body["token2FA"]
+        template = (
+                    '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">'
+                    '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+                    "</head>"
+                    "<body><h3>Tu código de segunda verificación está listo.</h3>"
+                    f"<p>Tu código es: <strong>{token2FA}</strong></p></body>"
+                    )
+
+        message = {
+            "senderAddress": os.environ.get("SENDER_ADDRESS"),
+            "recipients": {
+                "to": [{"address": user_email}],
+            },
+            "content": {
+                "subject": "Código de autenticación",
+                "plainText": "Tu código de autenticación ya llegó.",
+                "html": template,
+            },
+        }
+
+        poller = client.begin_send(message)
+        result = poller.result()
+        return jsonify({"message": "Email enviado correctamente", "body": result})
+                       
+    except Exception as e:
+        return (
+            jsonify(
+                {
+                    "message": "Error al enviar el correo de la nueva contraseña",
+                    "error": e,
+                }
+            ),
+            500,
+        )
 
 
 if __name__ == '__main__':

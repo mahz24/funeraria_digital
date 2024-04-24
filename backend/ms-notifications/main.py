@@ -7,7 +7,7 @@ from azure.communication.email import EmailClient
 load_dotenv()
 app = Flask(__name__)
 
-connection_string = 'endpoint=https://correossudoku.unitedstates.communication.azure.com/;accesskey=I0T9W294WumtBmnxXVUMLax3ZCa0xpq5gkxqQ+TJ9pvBbUa2A2Y0vU6eFMD4E0wGsuJkD9OWmPcn2ntqUTDQMA=='
+connection_string = os.environ.get("CONNECTION_STRING")
 client = EmailClient.from_connection_string(connection_string)
 sender = os.environ.get("SENDER_ADDRESS")
 

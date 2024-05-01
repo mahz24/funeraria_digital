@@ -15,3 +15,5 @@ import './routes/service'
 import './routes/comment'
 import './routes/room'
 import './routes/message'
+
+import './routes/clients'

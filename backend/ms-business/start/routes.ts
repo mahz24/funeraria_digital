@@ -17,3 +17,6 @@ import './routes/room'
 import './routes/message'
 
 import './routes/clients'
+import './routes/admins'
+import './routes/holders'
+import './routes/benefactors'

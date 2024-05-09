@@ -4,7 +4,10 @@ import Message from 'App/Models/Message';
 export default class MessagesController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
-            return await Message.findOrFail(params.id);
+            let theMessage:Message=await Message.findOrFail(params.id);
+            //Cargar la relación
+            await theMessage.load("chat")
+            return theMessage; 
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {

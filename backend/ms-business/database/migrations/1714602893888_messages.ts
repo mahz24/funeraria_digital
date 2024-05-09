@@ -1,18 +1,17 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'comments'
+  protected tableName = 'messages'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('description')
-      table.integer('rating')
-      table.integer('executionservice_id')
-        .unsigned()
-        .references('executionservices.id')
-        .onDelete('CASCADE')
-      table.timestamp('date_comment', { useTz: true })
+      table.integer('chat_id')
+            .unsigned()
+            .references('chats.id')
+            .onDelete('CASCADE') 
+      table.string('content_message')
+      table.timestamp('date_send', { useTz: true })
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

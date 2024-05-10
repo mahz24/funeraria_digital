@@ -1,10 +1,13 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Executionservice from 'App/Models/Executionservice';
+import Executionservice from 'App/Models/Executionservice'
 
-export default class ExecutionServicesController {
+export default class ExecutionservicesController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
-            return await Executionservice.findOrFail(params.id);
+            const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id)
+            await theExecutionservice.load('client')
+            await theExecutionservice.load('service')
+            return theExecutionservice
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {
@@ -18,22 +21,22 @@ export default class ExecutionServicesController {
     }
     public async create({ request }: HttpContextContract) {
         const body = request.body();
-        const theExecution: Executionservice = await Executionservice.create(body);
-        return theExecution;
+        const theExecutionservice: Executionservice = await Executionservice.create(body);
+        return theExecutionservice;
     }
 
     public async update({ params, request }: HttpContextContract) {
-        const theExecution: Executionservice = await Executionservice.findOrFail(params.id);
+        const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id);
         const body = request.body();
-        theExecution.service_id = body.service_id;
-        theExecution.client_id = body.client_id;
-        theExecution.end_date = body.burial_date;
-        return await theExecution.save();
+        theExecutionservice.end_date = body.end_date;
+        theExecutionservice.client = body.client;
+        theExecutionservice.service = body.service;
+        return await theExecutionservice.save();
     }
 
     public async delete({ params, response }: HttpContextContract) {
-        const theExecution: Executionservice= await Executionservice.findOrFail(params.id);
+        const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id);
         response.status(204);
-        return await theExecution.delete();
+        return await theExecutionservice.delete();
     }
 }

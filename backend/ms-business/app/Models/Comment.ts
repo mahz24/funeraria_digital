@@ -15,7 +15,7 @@ export default class Comment extends BaseModel {
   @belongsTo(() => Executionservice, {
     foreignKey: 'executionservice_id'
   })
-  public executionservice_id: BelongsTo<typeof Executionservice>
+  public executionservice: BelongsTo<typeof Executionservice>
 
   @column.dateTime({ autoCreate: true })
   public date_comment: DateTime

@@ -1,4 +1,6 @@
 import { DateTime } from 'luxon'
+import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import PlanXService from './PlanXService'
 import { BaseModel, BelongsTo, HasMany, HasOne, belongsTo, column, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Executionservice from './Executionservice'
 import Cremation from './Cremation'
@@ -17,6 +19,11 @@ export default class Service extends BaseModel {
 
   @column()
   public estado:string
+
+  @hasMany(() => PlanXService,{
+    foreignKey: 'service_id'
+  })
+  public planservices: HasMany<typeof PlanXService>
 
   @hasMany(() => Executionservice, {
     foreignKey: 'room_id'

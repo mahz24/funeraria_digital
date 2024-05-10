@@ -1,0 +1,24 @@
+import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+
+export default class extends BaseSchema {
+  protected tableName = 'subscriptions'
+
+  public async up () {
+    this.schema.createTable(this.tableName, (table) => {
+      table.increments('id')
+      table.date('activation_date')
+      table.integer('client_id').unsigned().references('client_id')
+      table.integer('plan_id').unsigned().references('plan_id')
+
+      /**
+       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
+       */
+      table.timestamp('created_at', { useTz: true })
+      table.timestamp('updated_at', { useTz: true })
+    })
+  }
+
+  public async down () {
+    this.schema.dropTable(this.tableName)
+  }
+}

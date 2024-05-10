@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Holder from './Holder'
 import Benefactor from './Benefactor'
 
@@ -19,15 +19,15 @@ export default class Client extends BaseModel {
   @column()
   public is_alive: boolean
 
-  @hasMany(() => Holder,{
+  @hasOne(() => Holder,{
     foreignKey: 'client_id'
   })
-  public holder: HasMany<typeof Holder>
+  public holder: HasOne<typeof Holder>
 
-  @hasMany(() => Benefactor,{
+  @hasOne(() => Benefactor,{
     foreignKey: 'client_id'
   })
-  public benefactor: HasMany<typeof Benefactor>
+  public benefactor: HasOne<typeof Benefactor>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

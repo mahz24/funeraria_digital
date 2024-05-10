@@ -4,6 +4,8 @@ import Relocation from 'App/Models/Relocation';
 export default class RelocationsController {
      public async find({ request, params }: HttpContextContract) {
         if (params.id) {
+            const theRelocation: Relocation = await Relocation.findOrFail(params.id)
+            await theRelocation.load('service')
             return await Relocation.findOrFail(params.id);
         } else {
             const data = request.all()

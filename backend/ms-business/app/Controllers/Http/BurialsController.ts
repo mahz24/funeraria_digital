@@ -4,10 +4,13 @@ import Burial from 'App/Models/Burial';
 export default class BurialsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
+            const theBurial: Burial = await Burial.findOrFail(params.id)
+            await theBurial.load('service')
+            await theBurial.load('room')
             return await Burial.findOrFail(params.id);
-        } else {
-            const data = request.all()
-            if ("page" in data && "per_page" in data) {
+            } else {
+                const data = request.all()
+            if("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
                 return await Burial.query().paginate(page, perPage)

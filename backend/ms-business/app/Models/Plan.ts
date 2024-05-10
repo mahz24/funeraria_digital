@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import PlanXService from './PlanXService'
 
 export default class Plan extends BaseModel {
   @column({ isPrimary: true })
@@ -19,6 +20,11 @@ export default class Plan extends BaseModel {
 
   @column()
   public discount:number
+
+  @hasMany(() => PlanXService,{
+    foreignKey: 'plan_id'
+  })
+  public planservices: HasMany<typeof PlanXService>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

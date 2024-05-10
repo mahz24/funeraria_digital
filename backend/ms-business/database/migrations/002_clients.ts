@@ -10,9 +10,6 @@ export default class extends BaseSchema {
       table.string('direction')
       table.string('gender')
       table.boolean('is_alive')
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

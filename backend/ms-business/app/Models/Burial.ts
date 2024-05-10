@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import Room from './Room'
+import Service from './Service'
 
 export default class Burial extends BaseModel {
   @column({ isPrimary: true })
@@ -10,6 +12,16 @@ export default class Burial extends BaseModel {
 
   @column()
   public burial_type: string
+
+  @belongsTo(() => Room, {
+    foreignKey: 'room_id'
+  })
+  public room: BelongsTo<typeof Room>
+
+  @belongsTo(() => Service, {
+    foreignKey: 'service_id'
+  })
+  public service: BelongsTo<typeof Service>
 
   @column()
   public burial_date: DateTime

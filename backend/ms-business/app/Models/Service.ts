@@ -1,16 +1,10 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasMany, HasOne, column, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import PlanXService from './PlanXService'
-<<<<<<< HEAD
-import Relocation from './Relocation'
-import Executionservice from './Executionservice'
-=======
-import { BaseModel, BelongsTo, HasMany, HasOne, belongsTo, column, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Executionservice from './Executionservice'
 import Cremation from './Cremation'
 import Burial from './Burial'
 import Relocation from './Relocation'
->>>>>>> de59c15b4777de9dac287dbd9f5d8aabbaca0a57
 
 export default class Service extends BaseModel {
   @column({ isPrimary: true })

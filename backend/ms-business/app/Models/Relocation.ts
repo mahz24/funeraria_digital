@@ -18,17 +18,10 @@ export default class Relocation extends BaseModel {
   @column()
   public arrival_time: DateTime
 
-<<<<<<< HEAD
   @belongsTo(() => Service,{
     foreignKey: 'service_id'
   })
   public service_id: BelongsTo<typeof Service>
-=======
-  @belongsTo(() => Service, {
-    foreignKey: 'service_id'
-  })
-  public service: BelongsTo<typeof Service>
->>>>>>> de59c15b4777de9dac287dbd9f5d8aabbaca0a57
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

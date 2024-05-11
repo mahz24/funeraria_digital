@@ -4,6 +4,8 @@ import Room from 'App/Models/Room';
 export default class RoomsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
+            const theRoom = await Room.findOrFail(params.id)
+            await theRoom.load('headquarter')
             return await Room.findOrFail(params.id);
         } else {
             const data = request.all()

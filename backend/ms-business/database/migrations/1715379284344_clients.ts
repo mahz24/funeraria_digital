@@ -9,10 +9,13 @@ export default class extends BaseSchema {
       table.string('user_id')
       table.string('direction')
       table.boolean('is_alive')
+<<<<<<< HEAD:backend/ms-business/database/migrations/1714597991277_clients.ts
+=======
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
+>>>>>>> 76da8987d95f807df22fb8095d6ac8f250d5b47a:backend/ms-business/database/migrations/1715379284344_clients.ts
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

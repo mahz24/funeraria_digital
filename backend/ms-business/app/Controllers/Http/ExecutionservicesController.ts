@@ -29,8 +29,8 @@ export default class ExecutionservicesController {
         const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id);
         const body = request.body();
         theExecutionservice.end_date = body.end_date;
-        theExecutionservice.client_id = body.client_id;
-        theExecutionservice.service_id = body.service_id;
+        theExecutionservice.client = body.client;
+        theExecutionservice.service = body.service;
         return await theExecutionservice.save();
     }
 

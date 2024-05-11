@@ -4,6 +4,9 @@ import Cremation from 'App/Models/Cremation';
 export default class CremationsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
+            const theCremation: Cremation = await Cremation.findOrFail(params.id)
+            await theCremation.load('service')
+            await theCremation.load('room')
             return await Cremation.findOrFail(params.id);
         } else {
             const data = request.all()

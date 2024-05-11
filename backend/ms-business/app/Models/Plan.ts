@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import PlanXService from './PlanXService'
+import Subscription from './Subscription'
 
 export default class Plan extends BaseModel {
   @column({ isPrimary: true })
@@ -20,6 +21,11 @@ export default class Plan extends BaseModel {
 
   @column()
   public discount:number
+
+  @hasMany(() => Subscription,{
+    foreignKey: 'plan_id'
+  })
+  public subscriptions: HasMany<typeof Subscription>
 
   @hasMany(() => PlanXService,{
     foreignKey: 'plan_id'

@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import Service from './Service'
 
 export default class Relocation extends BaseModel {
   @column({ isPrimary: true })
@@ -9,13 +10,18 @@ export default class Relocation extends BaseModel {
   public location: string
 
   @column()
-  public status: string
+  public status: number
 
   @column()
   public departure_time: DateTime
 
   @column()
   public arrival_time: DateTime
+
+  @belongsTo(() => Service,{
+    foreignKey: 'service_id'
+  })
+  public service_id: BelongsTo<typeof Service>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

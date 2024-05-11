@@ -8,23 +8,23 @@ export default class Subscription extends BaseModel {
   public id: number
 
   @column()
-  public activation_date: Date
+  public activation_date: DateTime
 
   @column()
-  public client_id: number
+  public number_benefactors: number
 
   @column()
-  public plan_id: number
+  public status:number
 
   @belongsTo(() => Client, {
     foreignKey: 'client_id'
   })
-  public client: BelongsTo<typeof Client>
+  public client_id: BelongsTo<typeof Client>
 
   @belongsTo(() => Plan, {
     foreignKey: 'plan_id'
   })
-  public plan: BelongsTo<typeof Plan>
+  public plan_id: BelongsTo<typeof Plan>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

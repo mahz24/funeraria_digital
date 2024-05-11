@@ -8,23 +8,17 @@ export default class PlanXService extends BaseModel {
   public id: number
 
   @column()
-  public date: Date
-
-  @column()
-  public service_id: number
-
-  @column()
-  public plan_id: number
+  public started_at: Date
 
   @belongsTo(() => Service,{
     foreignKey: 'service_id'
   })
-  public service: BelongsTo<typeof Service>  
+  public service_id: BelongsTo<typeof Service>  
 
   @belongsTo(() => Plan,{
     foreignKey: 'plan_id'
   })
-  public plan: BelongsTo<typeof Plan>
+  public plan_id: BelongsTo<typeof Plan>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

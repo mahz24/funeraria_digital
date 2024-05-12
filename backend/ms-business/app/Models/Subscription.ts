@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Client from './Client'
 import Plan from './Plan'
+import Bill from './Bill'
 
 export default class Subscription extends BaseModel {
   @column({ isPrimary: true })
@@ -11,20 +12,22 @@ export default class Subscription extends BaseModel {
   public activation_date: DateTime
 
   @column()
-  public number_benefactors: number
-
-  @column()
   public status:number
 
   @belongsTo(() => Client, {
     foreignKey: 'client_id'
   })
-  public client_id: BelongsTo<typeof Client>
+  public client: BelongsTo<typeof Client>
 
   @belongsTo(() => Plan, {
     foreignKey: 'plan_id'
   })
-  public plan_id: BelongsTo<typeof Plan>
+  public plan: BelongsTo<typeof Plan>
+
+  @hasMany(() => Bill,{
+    foreignKey: 'plan_id'
+  })
+  public bills: HasMany<typeof Bill>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

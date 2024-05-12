@@ -16,6 +16,9 @@ export default class Client extends BaseModel {
   public direction:string
 
   @column()
+  public gender:string
+
+  @column()
   public is_alive: boolean
 
   @hasOne(() => Holder,{

@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.string('name')
       table.string('location')
       table.integer('status')
-
+      table.integer('department_id').unsigned().references('departments.id')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

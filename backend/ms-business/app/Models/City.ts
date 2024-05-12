@@ -12,10 +12,13 @@ export default class City extends BaseModel {
   @column()
   public location: string
 
+  @column()
+  public status: string
+
   @belongsTo(() => Department,{
-    foreignKey: 'depto_id'
+    foreignKey: 'department_id'
   })
-  public depto_id: BelongsTo<typeof Department>
+  public department: BelongsTo<typeof Department>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

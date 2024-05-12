@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('user_id')
       table.string('direction')
-      table.integer('headquarter_id').unsigned().references('headquarter_id')
+      table.integer('headquarter_id').unsigned().references('headquarters.id')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

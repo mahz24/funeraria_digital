@@ -9,9 +9,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.integer('amount')
       table.date('date')
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
+      table.integer('subscription_id').unsigned().references('subscriptions.id')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

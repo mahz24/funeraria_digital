@@ -21,7 +21,7 @@ export default class Relocation extends BaseModel {
   @belongsTo(() => Service,{
     foreignKey: 'service_id'
   })
-  public service_id: BelongsTo<typeof Service>
+  public service: BelongsTo<typeof Service>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

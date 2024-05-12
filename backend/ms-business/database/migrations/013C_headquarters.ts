@@ -8,9 +8,11 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('name')
+      table.string('direction')
+      table.string('description')
       table.integer('capacity')
       table.integer('status')
-
+      table.integer('city_id').unsigned().references('cities.id')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

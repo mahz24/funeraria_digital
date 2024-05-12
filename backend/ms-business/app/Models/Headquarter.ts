@@ -10,7 +10,10 @@ export default class Headquarter extends BaseModel {
   public name:string
 
   @column()
-  public capacity: number
+  public direction:string
+
+  @column()
+  public description:string
 
   @column()
   public status: number

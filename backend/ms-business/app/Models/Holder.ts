@@ -7,9 +7,6 @@ export default class Holder extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
-  public client_id: number
-
   @belongsTo(() => Client,{
     foreignKey: 'client_id'
   })

@@ -12,8 +12,11 @@ export default class Department extends BaseModel {
   @column()
   public location: string
 
+  @column()
+  public status: string
+
   @hasMany(() => City,{
-    foreignKey: 'depto_id'
+    foreignKey: 'department_id'
   })
   public cities: HasMany<typeof City>
 

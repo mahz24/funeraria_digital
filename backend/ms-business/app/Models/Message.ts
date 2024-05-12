@@ -7,6 +7,9 @@ export default class Message extends BaseModel {
   public id: number
 
   @column()
+  public user_id: number
+
+  @column()
   public content_message: string
 
   @belongsTo(() => Chat, {

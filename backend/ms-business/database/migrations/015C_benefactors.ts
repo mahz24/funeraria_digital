@@ -9,8 +9,8 @@ export default class extends BaseSchema {
       table.increments('id')
       table.boolean('isprincipal_benefactor')
       table.boolean('isemergency_contact')
-      table.integer('client_id').unsigned().references('client_id')
-      table.integer('holder_id').unsigned().references('holder_id')
+      table.integer('client_id').unsigned().references('clients.id')
+      table.integer('holder_id').unsigned().references('holders.id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

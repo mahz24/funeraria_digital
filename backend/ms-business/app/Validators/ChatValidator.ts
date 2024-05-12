@@ -7,7 +7,7 @@ export default class ChatValidator {
   /*
    * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
    *
-   * For example:
+   * For examplezlm
    * 1. The username must be of data type string. But then also, it should
    *    not contain special characters or numbers.
    *    ```

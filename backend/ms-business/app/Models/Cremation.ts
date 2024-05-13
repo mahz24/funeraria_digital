@@ -7,7 +7,7 @@ export default class Cremation extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
+  @column.dateTime()
   public cremation_date: DateTime
 
   @column()

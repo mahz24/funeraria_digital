@@ -23,7 +23,7 @@ export default class Burial extends BaseModel {
   })
   public service: BelongsTo<typeof Service>
 
-  @column()
+  @column.dateTime()
   public burial_date: DateTime
 
   @column.dateTime({ autoCreate: true })

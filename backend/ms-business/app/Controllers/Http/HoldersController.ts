@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Holder from 'App/Models/Holder';
+import HolderValidator from 'App/Validators/HolderValidator';
 
 export default class HoldersController {
     public async find({ request, params }: HttpContextContract) {
@@ -19,7 +20,7 @@ export default class HoldersController {
         }
     }
     public async create({ request }: HttpContextContract) {
-        const body = request.body();
+        const body = await request.validate(HolderValidator);
         const theHolder: Holder = await Holder.create(body);
         return theHolder;
     }

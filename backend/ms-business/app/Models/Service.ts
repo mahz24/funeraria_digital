@@ -19,11 +19,6 @@ export default class Service extends BaseModel {
   @column()
   public description: string
 
-  @hasOne(() => Relocation,{
-    foreignKey: 'service_id'
-  })
-  public relocation: HasOne<typeof Relocation>
-
   @hasMany(() => Executionservice,{
     foreignKey: 'service_id'
   })
@@ -33,11 +28,6 @@ export default class Service extends BaseModel {
     foreignKey: 'service_id'
   })
   public planservices: HasMany<typeof PlanXService>
-
-  @hasMany(() => Executionservice, {
-    foreignKey: 'room_id'
-  })
-  public executionservice: HasMany<typeof Executionservice>
 
   @hasOne(() => Cremation, {
     foreignKey: 'service_id'
@@ -53,12 +43,6 @@ export default class Service extends BaseModel {
     foreignKey: 'service_id'
   })
   public relocations: HasOne<typeof Relocation>
-
-
-  //  @belongsTo(() => PlanService, {
-  //   foreignKey: 'room_id'
-  // })
-  // public planservice: BelongsTo<typeof PlanService>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

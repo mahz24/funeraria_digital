@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Headquarter from 'App/Models/Headquarter';
+import HeadquarterValidator from 'App/Validators/HeadquarterValidator';
 
 export default class HeadquartersController {
     public async find({ request, params }: HttpContextContract) {
@@ -19,7 +20,7 @@ export default class HeadquartersController {
         }
     }
     public async create({ request }: HttpContextContract) {
-        const body = request.body();
+        const body = await request.validate(HeadquarterValidator);
         const theHeadquarter: Headquarter = await Headquarter.create(body);
         return theHeadquarter;
     }

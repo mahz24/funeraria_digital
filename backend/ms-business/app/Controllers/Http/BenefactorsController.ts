@@ -1,12 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Benefactor from 'App/Models/Benefactor'
+import BenefactorValidator from 'App/Validators/BenefactorValidator'
 
 export default class BenefactorsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
             const theBenefactor: Benefactor = await Benefactor.findOrFail(params.id)
             await theBenefactor.load('client')
-            await theBenefactor.load('holder')
+            await theBenefactor.load('holder', actualHolder => {
+                actualHolder.preload('client')
+            })
             return theBenefactor
         } else {
             const data = request.all()
@@ -20,7 +23,7 @@ export default class BenefactorsController {
         }
     }
     public async create({ request }: HttpContextContract) {
-        const body = request.body();
+        const body = await request.validate(BenefactorValidator);
         const theBenefactor: Benefactor = await Benefactor.create(body);
         return theBenefactor;
     }

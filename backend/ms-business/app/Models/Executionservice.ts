@@ -24,7 +24,7 @@ export default class Executionservice extends BaseModel {
   })
   public client: BelongsTo<typeof Client>
 
-  @column()
+  @column.dateTime()
   public end_date: DateTime
 
   @hasMany(() => Comment, {

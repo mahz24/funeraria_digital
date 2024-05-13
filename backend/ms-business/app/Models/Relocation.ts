@@ -20,10 +20,10 @@ export default class Relocation extends BaseModel {
   @column()
   public status: string
 
-  @column()
+  @column.dateTime()
   public departure_time: DateTime
 
-  @column()
+  @column.dateTime()
   public arrival_time: DateTime
 
   @column.dateTime({ autoCreate: true })

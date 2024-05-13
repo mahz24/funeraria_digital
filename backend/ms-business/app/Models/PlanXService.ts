@@ -7,8 +7,8 @@ export default class PlanXService extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
-  public started_at: Date
+  @column.dateTime()
+  public started_at: DateTime
 
   @column()
   public plan_id: number

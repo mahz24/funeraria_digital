@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Client from 'App/Models/Client';
+import axios from 'axios';
 
 export default class ClientsController {
     public async find({ request, params }: HttpContextContract) {
@@ -17,7 +18,18 @@ export default class ClientsController {
         }
     }
     public async create({ request }: HttpContextContract) {
-        const body = request.body();
+        let body = request.body();
+        const urlPost: string = "localhost:8181/users"
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        axios.post(urlPost, body, { headers: headers })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         const theClient: Client = await Client.create(body);
         return theClient;
     }

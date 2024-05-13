@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Benefactor from 'App/Models/Benefactor'
+import axios from 'axios';
 
 export default class BenefactorsController {
     public async find({ request, params }: HttpContextContract) {
@@ -21,6 +22,16 @@ export default class BenefactorsController {
     }
     public async create({ request }: HttpContextContract) {
         const body = request.body();
+        // RestTemplate restTemplate = new RestTemplate();
+        // String urlPost = baseUrlNotifications + "email_2FA";
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+        // String requestBody = "{\"email\":\"" + actualUser.getEmail() +"\",\"token2FA\":\"" + token2FA + "\"}";
+        // HttpEntity<String> requestEntity = new HttpEntity<>(requestBody,headers);
+        // String requestBody = "{\"email\":\"" + actualUser.getEmail() + "\",\"token2FA\":\"" + token2FA + "\"}";
+        // HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        // ResponseEntity<String> res = restTemplate.postForEntity(urlPost, requestEntity, String.class);
+        // System.out.println(res.getBody());
         const theBenefactor: Benefactor = await Benefactor.create(body);
         return theBenefactor;
     }

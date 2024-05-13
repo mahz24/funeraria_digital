@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Room from 'App/Models/Room';
+import RoomValidator from 'App/Validators/RoomValidator';
 
 export default class RoomsController {
     public async find({ request, params }: HttpContextContract) {
@@ -21,7 +22,7 @@ export default class RoomsController {
 
     }
     public async create({ request }: HttpContextContract) {
-        const body = request.body();
+        const body = await request.validate(RoomValidator);
         const theRoom: Room = await Room.create(body);
         return theRoom;
     }

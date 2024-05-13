@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Executionservice from 'App/Models/Executionservice'
+import ExecutionserviceValidator from 'App/Validators/ExecutionserviceValidator'
 
 export default class ExecutionservicesController {
     public async find({ request, params }: HttpContextContract) {
@@ -20,7 +21,7 @@ export default class ExecutionservicesController {
         }
     }
     public async create({ request }: HttpContextContract) {
-        const body = request.body();
+        const body = await request.validate(ExecutionserviceValidator);
         const theExecutionservice: Executionservice = await Executionservice.create(body);
         return theExecutionservice;
     }

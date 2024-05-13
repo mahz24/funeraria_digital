@@ -11,7 +11,7 @@ export default class Service extends BaseModel {
   public id: number
 
   @column()
-  public status: number
+  public status: string
 
   @column()
   public price: number

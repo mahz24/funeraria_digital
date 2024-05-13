@@ -6,13 +6,14 @@ export default class BurialValidator {
 
   public schema = schema.create({
     burial_id:schema.number([rules.exists({ table: 'burials', column: 'id' })]),
-    location:schema.string([rules.minLength(2),rules.unique({
-      table:'theaters',
-      column: 'location',
-      caseInsensitive: true,
-    })]),
-    capacity:schema.number([rules.range(1,100)])
+    location:schema.string([rules.minLength(2), rules.maxLength(30)]),
+    burial_type:schema.string([rules.minLength(2), rules.maxLength(15)]),
+    burial_date:schema.date()
   })
 
   public messages: CustomMessages = {}
 }
+ 
+
+//   where: { theater_id: this.ctx.request.body()["theater_id"] }
+// })]),

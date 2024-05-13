@@ -28,9 +28,9 @@ export default class PlanXServicesController {
     public async update({ params, request }: HttpContextContract) {
         const thePlanXService: PlanXService = await PlanXService.findOrFail(params.id);
         const body = request.body();
-        thePlanXService.date = body.date;
-        thePlanXService.service_id = body.service_id
-        thePlanXService.plan_id = body.plan_id;
+        thePlanXService.started_at = body.started_at;
+        thePlanXService.service = body.service;
+        thePlanXService.plan = body.plan;
         return await thePlanXService.save();
     }
 

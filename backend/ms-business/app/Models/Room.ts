@@ -18,6 +18,9 @@ export default class Room extends BaseModel {
   public capacity:number
 
   @column()
+  public headquarter_id:number
+
+  @column()
   public status:string
 
   @hasMany(() => Burial, {

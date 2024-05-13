@@ -7,6 +7,9 @@ export default class City extends BaseModel {
   public id: number
 
   @column()
+  public department_id:number
+
+  @column()
   public name:string
 
   @column()

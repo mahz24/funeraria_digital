@@ -5,7 +5,9 @@ import Comment from "App/Models/Comment";
 export default class CommentsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
-            return await Comment.findOrFail(params.id);
+            const theComment: Comment = await Comment.findOrFail(params.id)
+            await theComment.load('executionservice')
+            return theComment
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {

@@ -10,10 +10,13 @@ export default class Message extends BaseModel {
   public user_id: number
 
   @column()
+  public chat_id: number
+
+  @column()
   public content_message: string
 
   @belongsTo(() => Chat, {
-    foreignKey: 'chats_id'
+    foreignKey: 'chat_id'
   })
   public chat: BelongsTo<typeof Chat>
 

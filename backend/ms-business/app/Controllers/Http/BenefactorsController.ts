@@ -6,9 +6,7 @@ export default class BenefactorsController {
         if (params.id) {
             const theBenefactor: Benefactor = await Benefactor.findOrFail(params.id)
             await theBenefactor.load('client')
-            await theBenefactor.load('holder', actualHolder =>{
-                actualHolder.preload('client')
-            })
+            await theBenefactor.load('holder')
             return theBenefactor
         } else {
             const data = request.all()
@@ -32,8 +30,8 @@ export default class BenefactorsController {
         const body = request.body();
         theBenefactor.isemergency_contact = body.isemergency_contact;
         theBenefactor.isprincipal_benefactor = body.isprincipal_benefactor;
-        theBenefactor.holder_id = body.holder_id;
-        theBenefactor.client_id = body.client_id;
+        theBenefactor.holder = body.holder;
+        theBenefactor.client = body.client;
         return await theBenefactor.save();
     }
 

@@ -12,7 +12,13 @@ export default class Subscription extends BaseModel {
   public activation_date: DateTime
 
   @column()
-  public status:number
+  public status:string
+
+  @column()
+  public client_id:number
+
+  @column()
+  public plan_id:number
 
   @belongsTo(() => Client, {
     foreignKey: 'client_id'

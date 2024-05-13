@@ -12,6 +12,9 @@ export default class Bill extends BaseModel {
   @column()
   public date: Date
 
+  @column()
+  public subscription_id: number
+
   @belongsTo(() => Subscription,{
     foreignKey: 'subscription_id'
   })

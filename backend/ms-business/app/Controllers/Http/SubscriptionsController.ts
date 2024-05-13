@@ -28,9 +28,10 @@ export default class SubscriptionsController {
     public async update({ params, request }: HttpContextContract) {
         const theSubscription: Subscription = await Subscription.findOrFail(params.id);
         const body = request.body();
-        theSubscription.activation_date= body.activation_date;
-        theSubscription.client_id = body.client_id;
-        theSubscription.plan_id = body.plan_id;
+        theSubscription.activation_date = body.activation_date;
+        theSubscription.status = body.status;
+        theSubscription.client = body.client;
+        theSubscription.plan = body.plan;
         return await theSubscription.save();
     }
 

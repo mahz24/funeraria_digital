@@ -10,6 +10,9 @@ export default class Admin extends BaseModel {
   public user_id: number
 
   @column()
+  public headquarter_id: number
+
+  @column()
   public direction: string
 
   @belongsTo(() => Headquarter,{

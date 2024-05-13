@@ -4,7 +4,9 @@ import Bill from 'App/Models/Bill';
 export default class BillsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
-            return await Bill.findOrFail(params.id);
+            const theBill: Bill = await Bill.findOrFail(params.id)
+            await theBill.load('subscription')
+            return theBill
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {

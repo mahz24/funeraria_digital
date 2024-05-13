@@ -8,6 +8,12 @@ export default class Executionservice extends BaseModel {
   @column({ isPrimary: true })
   public id: number
   
+  @column()
+  public service_id: number
+
+  @column()
+  public client_id: number
+
   @belongsTo(() => Service, {
     foreignKey: 'service_id'
   })

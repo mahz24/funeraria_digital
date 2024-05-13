@@ -13,6 +13,12 @@ export default class Benefactor extends BaseModel {
   @column()
   public isemergency_contact: boolean
 
+  @column()
+  public client_id: number
+
+  @column()
+  public holder_id: number
+
   @belongsTo(() => Client,{
     foreignKey: 'client_id'
   })

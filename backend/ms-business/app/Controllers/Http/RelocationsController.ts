@@ -2,7 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Relocation from 'App/Models/Relocation';
 
 export default class RelocationsController {
-     public async find({ request, params }: HttpContextContract) {
+    public async find({ request, params }: HttpContextContract) {
         if (params.id) {
             const theRelocation: Relocation = await Relocation.findOrFail(params.id)
             await theRelocation.load('service')
@@ -31,6 +31,7 @@ export default class RelocationsController {
         theRelocation.status = body.status;
         theRelocation.departure_time = body.departure_time;
         theRelocation.arrival_time = body.arrival_time;
+        theRelocation.service = body.service
         return await theRelocation.save();
     }
 

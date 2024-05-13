@@ -4,7 +4,9 @@ import Headquarter from 'App/Models/Headquarter';
 export default class HeadquartersController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
-            return await Headquarter.findOrFail(params.id);
+            const theHeadquarter: Headquarter = await Headquarter.findOrFail(params.id)
+            await theHeadquarter.load('city')
+            return theHeadquarter
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {
@@ -26,8 +28,10 @@ export default class HeadquartersController {
         const theHeadquarter: Headquarter = await Headquarter.findOrFail(params.id);
         const body = request.body();
         theHeadquarter.name = body.name;
-        theHeadquarter.capacity = body.capacity;
+        theHeadquarter.direction = body.direction;
+        theHeadquarter.description = body.description;
         theHeadquarter.status = body.status;
+        theHeadquarter.city = body.city;
         return await theHeadquarter.save();
     }
 

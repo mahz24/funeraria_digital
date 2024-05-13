@@ -12,6 +12,9 @@ export default class Comment extends BaseModel {
   @column()
   public rating:number
 
+  @column()
+  public executionservice_id:number
+
   @belongsTo(() => Executionservice, {
     foreignKey: 'executionservice_id'
   })

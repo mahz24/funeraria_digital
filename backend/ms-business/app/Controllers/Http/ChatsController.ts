@@ -4,7 +4,9 @@ import Chat from 'App/Models/Chat';
 export default class ChatsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
-            return await Chat.findOrFail(params.id);
+            const theChat: Chat = await Chat.findOrFail(params.id)
+            await theChat.load('executionservice')
+            return theChat
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {

@@ -30,6 +30,10 @@ export default class CremationsController {
         const body = request.body();
         theCremation.cremation_date = body.cremation_date;
         theCremation.status = body.status;
+        theCremation.room = body.room
+        theCremation.service = body.service;
+        ;
+
         return await theCremation.save();
     }
 

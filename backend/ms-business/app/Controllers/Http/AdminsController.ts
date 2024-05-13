@@ -20,6 +20,38 @@ export default class AdminsController {
         }
     }
     public async create({ request }: HttpContextContract) {
+        
+        // RestTemplate restTemplate = new RestTemplate();
+        // String urlPost = baseUrlNotifications + "email_2FA";
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+        // String requestBody = "{\"email\":\"" + actualUser.getEmail() + "\",\"token2FA\":\"" + token2FA + "\"}";
+        // HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        // ResponseEntity<String> res = restTemplate.postForEntity(urlPost, requestEntity, String.class);
+        // System.out.println(res.getBody());
+
+        // connection: Env.get('DB_CONNECTION'),
+
+        // connections: {
+          /*
+          */
+        //   mysql: {
+        //     client: 'mysql2',
+        //     connection: {
+        //       host: Env.get('MYSQL_HOST'),
+        //       port: Env.get('MYSQL_PORT'),
+        //       user: Env.get('MYSQL_USER'),
+        //       password: Env.get('MYSQL_PASSWORD', ''),
+        //       database: Env.get('MYSQL_DB_NAME'),
+        //     },
+        //     migrations: {
+        //       naturalSort: true,
+        //     },
+        //     healthCheck: false,
+        //     debug: false,
+        //   },
+      
+        // }
         const body = request.body();
         const theAdmin: Admin = await Admin.create(body);
         return theAdmin;
@@ -29,7 +61,7 @@ export default class AdminsController {
         const theAdmin: Admin = await Admin.findOrFail(params.id);
         const body = request.body();
         theAdmin.direction = body.direction;
-        theAdmin.headquarter_id = body.headquarter_id;
+        theAdmin.headquarter = body.headquarter;
         return await theAdmin.save();
     }
 

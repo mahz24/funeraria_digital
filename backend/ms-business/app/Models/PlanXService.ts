@@ -10,6 +10,12 @@ export default class PlanXService extends BaseModel {
   @column()
   public started_at: Date
 
+  @column()
+  public plan_id: number
+
+  @column()
+  public service_id: number
+
   @belongsTo(() => Service,{
     foreignKey: 'service_id'
   })

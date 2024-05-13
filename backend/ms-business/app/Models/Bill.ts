@@ -9,8 +9,8 @@ export default class Bill extends BaseModel {
   @column()
   public amount: number
 
-  @column()
-  public date: Date
+  @column.dateTime()
+  public date: DateTime
 
   @column()
   public subscription_id: number
@@ -19,7 +19,6 @@ export default class Bill extends BaseModel {
     foreignKey: 'subscription_id'
   })
   public subscription: BelongsTo<typeof Subscription>
-
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

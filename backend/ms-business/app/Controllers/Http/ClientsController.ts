@@ -5,14 +5,14 @@ import Env from "@ioc:Adonis/Core/Env";
 import ClientValidator from 'App/Validators/ClientValidator';
 
 export default class ClientsController {
-    public async find({ request, response }: HttpContextContract) {
+    public async find({ /*request,*/ response }: HttpContextContract) {
         try{
-            const page = request.input("page", 1);
-            const perPage = request.input("per_page", 20);
+            //const page = request.input("page", 1);
+            //const perPage = request.input("per_page", 20);
             let clients: Client[] = await Client.query()
             .preload("benefactor")
             .preload("holder")
-            .paginate(page, perPage);
+            //.paginate(page, perPage);
             if (clients && clients.length > 0){
                 await Promise.all(
                     clients.map(async (client) => {
@@ -20,10 +20,7 @@ export default class ClientsController {
                         client.user = userResponse.data;
                     })
                 );
-                return response.status(200).json({
-                    mensaje: "Registro completo de clientes",
-                    data: clients
-                })
+                return clients;
             }else{
                 return response.status(404).json({
                     mensaje: "No se encontraron registros de clientes",

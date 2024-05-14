@@ -23,7 +23,7 @@ export class ManageComponent implements OnInit {
     this.trySend = false
     this.mode = 1;
     this.client = {
-      id: 0, gender: "", direction: "", user_id:0, is_alive:false
+      id: 0, gender: "", direction: "", user_id:"", is_alive:false, user:{"Full_name": "", "Birthday": "", "number_phone": "", "email": ""}
     }
     this.configFormGroup()
   }

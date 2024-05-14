@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.Query;
 import microservises.mssegurity.Models.Profile;
 
 public interface ProfileRepository extends MongoRepository<Profile, String>{
-    @Query("{'user.$id': ObjectId(?0)}")
+    @Query("{'theUser.$id': ObjectId(?0)}")
     Profile getProfilebyUserId(String userId);
 }

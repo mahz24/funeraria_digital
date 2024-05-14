@@ -125,24 +125,24 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> findById(@PathVariable String id) {
+    public User findById(@PathVariable String id) { // es ResponseEntity
         try {
             User user = this.userRepository.findById(id).orElse(null);
             if (user != null) {
                 this.jsonResponsesService.setData(user);
                 this.jsonResponsesService.setMessage("Usuario encontrado con éxito");
-                return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());
+                //return ResponseEntity.status(HttpStatus.OK).body(this.jsonResponsesService.getFinalJSON());
+                return user;
             } else {
                 this.jsonResponsesService.setData(null);
                 this.jsonResponsesService.setMessage("No se encontro al usuario buscado");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.jsonResponsesService.getFinalJSON());
+                return user;
             }
         } catch (Exception e) {
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setMessage("Error al buscar usuario");
             this.jsonResponsesService.setError(e.toString());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            return null;
         }
     }
 

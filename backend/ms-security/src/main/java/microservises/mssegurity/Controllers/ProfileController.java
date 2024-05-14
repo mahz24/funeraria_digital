@@ -99,22 +99,26 @@ public class ProfileController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> findByUser(@PathVariable String id){
+    public Profile findByUser(@PathVariable String id){
         try{
-            Profile theProfile = this.theProfileRepository.findById(id).orElse(null);
+            Profile theProfile = this.theProfileRepository.getProfilebyUserId(id);
+            System.out.println(theProfile);
             if(theProfile != null){
                 theJsonResponse.setData(theProfile);
                 theJsonResponse.setMessage("Se ha encontrado el perfil.");
-                return ResponseEntity.status(HttpStatus.OK).body(this.theJsonResponse.getFinalJSON());
+                //return ResponseEntity.status(HttpStatus.OK).body(this.theJsonResponse.getFinalJSON());
+                return theProfile;
             }else{
                 this.theJsonResponse.setMessage("No se encontró perfil.");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.theJsonResponse.getFinalJSON());
+                //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.theJsonResponse.getFinalJSON());
+                return theProfile;
             }
         }catch (Exception e){
             this.theJsonResponse.setData(null);
             this.theJsonResponse.setMessage("Error al buscar perfil.");
             this.theJsonResponse.setError(e.toString());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(this.theJsonResponse.getFinalJSON());
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(this.theJsonResponse.getFinalJSON());
+            return null;
         }
     }
 }

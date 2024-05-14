@@ -7,13 +7,16 @@ export default class Admin extends BaseModel {
   public id: number
 
   @column()
-  public user_id: number
+  public user_id: String
 
   @column()
   public headquarter_id: number
 
   @column()
   public direction: string
+
+  @column()
+  public user: any
 
   @belongsTo(() => Headquarter,{
     foreignKey: 'headquarter_id'

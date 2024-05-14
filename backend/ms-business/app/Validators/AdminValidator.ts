@@ -5,11 +5,7 @@ export default class AdminValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    user_id: schema.string([rules.unique({
-      table: 'admin',
-      column:'user_id',
-      caseInsensitive: true,
-    })]),
+    user_id: schema.string([rules.minLength(2), rules.maxLength(100)]), 
     headquarter_id: schema.number(
       [rules.exists({ 
         table: 'headquarters', column: 'id' 

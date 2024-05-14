@@ -21,6 +21,9 @@ export default class Client extends BaseModel {
   @column()
   public is_alive: boolean
 
+  @column()
+  public user: any
+
   @hasOne(() => Holder,{
     foreignKey: 'client_id'
   })

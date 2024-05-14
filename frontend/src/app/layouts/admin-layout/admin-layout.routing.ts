@@ -30,15 +30,39 @@ export const AdminLayoutRoutes: Routes = [
         loadChildren: () => import('src/app/pages/messages/messages.module').then(m => m.MessagesModule)
     },
     {
-        path: 'executionservice',
-        loadChildren: () => import('src/app/pages/burials/burials.module').then(m => m.BurialsModule)
-    },
-    {
-        path: 'executionservice',
+        path: 'cremations',
         loadChildren: () => import('src/app/pages/cremations/cremations.module').then(m => m.CremationsModule)
     },
     {
-        path: 'executionservice',
+        path: 'relocations',
         loadChildren: () => import('src/app/pages/relocations/relocations.module').then(m => m.RelocationsModule)
+    },
+    {
+        path: 'burials',
+        loadChildren: () => import('src/app/pages/burials/burials.module').then(m => m.BurialsModule)
+    },
+    {
+        path: 'executionservices',
+        loadChildren: () => import('src/app/pages/executionservices/executionservice.module').then(m => m.ExecutionserviceModule)
+    },
+    {
+        path: 'cities',
+        loadChildren: () => import('src/app/pages/cities/cities.module').then(m => m.CitiesModule)
+    },
+    {
+        path: 'departments',
+        loadChildren: () => import('src/app/pages/departments/departments.module').then(m => m.DepartmentsModule)
+    },
+    {
+        path: 'rooms',
+        loadChildren: () => import('src/app/pages/rooms/rooms.module').then(m => m.RoomsModule)
+    },
+    {
+        path: 'headquarters',
+        loadChildren: () => import('src/app/pages/headquarters/headquarters.module').then(m => m.HeadquartersModule)
+    },
+    {
+        path: 'planservice',
+        loadChildren: () => import('src/app/pages/planservice/planservice.module').then(m => m.PlanserviceModule)
     }
 ];

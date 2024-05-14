@@ -1,3 +1,4 @@
+import { Room } from "./room"
 import { Service } from "./service.model"
 
 export class Burial {
@@ -8,5 +9,6 @@ export class Burial {
     room_id: number
     service_id: number
     service?:Service
-    // room?:Room
+    room?:Room
+
 }

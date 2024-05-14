@@ -13,6 +13,14 @@ export default class Cremation extends BaseModel {
   @column()
   public status: string
 
+
+  @column()
+  public service_id: number
+
+  
+  @column()
+  public room_id: number
+
   @belongsTo(() => Room, {
     foreignKey: 'room_id'
   })

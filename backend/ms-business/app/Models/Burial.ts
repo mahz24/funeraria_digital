@@ -13,6 +13,12 @@ export default class Burial extends BaseModel {
   @column()
   public burial_type: string
 
+  @column()
+  public room_id: number
+
+  @column()
+  public service_id: number
+
   @belongsTo(() => Room, {
     foreignKey: 'room_id'
   })

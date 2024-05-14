@@ -6,8 +6,8 @@ export default class BurialsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
             const theBurial: Burial = await Burial.findOrFail(params.id)
-            await theBurial.load('service')
             await theBurial.load('room')
+            await theBurial.load('service')
             return await Burial.findOrFail(params.id);
             } else {
                 const data = request.all()

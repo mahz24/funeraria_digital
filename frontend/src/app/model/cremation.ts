@@ -1,3 +1,5 @@
+import { Service } from "./service.model"
+
 export class Cremation {
 id?:number
     cremation_date: Date

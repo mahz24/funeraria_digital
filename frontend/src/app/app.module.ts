@@ -12,7 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-
+import { ListComponent } from './pages/executionservices/list/list.component';
+import { ManageComponent } from './pages/executionservices/manage/manage.component';
 
 
 @NgModule({

@@ -16,18 +16,18 @@ export class CityService {
   }
 
   view(id: number): Observable<City> {
-    return this.http.get<City>(`${environment.url_ms_business}/Citys/${id},
+    return this.http.get<City>(`${environment.url_ms_business}/cities/${id},
     `);
   }
   create(theCity: City): Observable<City> {
-    return this.http.post<City>(`${environment.url_ms_business}/Citys/`, theCity
+    return this.http.post<City>(`${environment.url_ms_business}/cities/`, theCity
     );
   }
   update(theCity: City): Observable<City> {
-    return this.http.put<City>(`${environment.url_ms_business}/Citys/${theCity.id}`, theCity);
+    return this.http.put<City>(`${environment.url_ms_business}/cities/${theCity.id}`, theCity);
   }
   delete(id: number) {
-    return this.http.delete<City>(`${environment.url_ms_business}/Citys/${id}`,
+    return this.http.delete<City>(`${environment.url_ms_business}/cities/${id}`,
     );
   }
 

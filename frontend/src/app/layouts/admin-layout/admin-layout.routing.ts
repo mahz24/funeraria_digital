@@ -64,5 +64,9 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'planservice',
         loadChildren: () => import('src/app/pages/planservice/planservice.module').then(m => m.PlanserviceModule)
+    },
+    {
+        path: 'services',
+        loadChildren: () => import('src/app/pages/services/services.module').then(m => m.ServicesModule)
     }
 ];

@@ -11,11 +11,23 @@ export class ServiceService {
 
   constructor(private http: HttpClient) { }
 
-  list(): Observable<Service[]>{
-    return this.http.get<Service[]>(`${environment.url_ms_business}/services`)
+  list(): Observable<Service[]> {
+    return this.http.get<Service[]>(`${environment.url_ms_business}/services`);
   }
 
-  delete(id:number){
-    return this.http.delete<Service>(`${environment.url_ms_business}/services`)
+  view(id: number): Observable<Service> {
+    return this.http.get<Service>(`${environment.url_ms_business}/services/${id},
+    `);
+  }
+  create(theService: Service): Observable<Service> {
+    return this.http.post<Service>(`${environment.url_ms_business}/services/`, theService
+    );
+  }
+  update(theService: Service): Observable<Service> {
+    return this.http.put<Service>(`${environment.url_ms_business}/services/${theService.id}`, theService);
+  }
+  delete(id: number) {
+    return this.http.delete<Service>(`${environment.url_ms_business}/services/${id}`,
+    );
   }
 }

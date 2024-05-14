@@ -26,13 +26,13 @@ export default class RelocationsController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(RelocationValidator);
         const theRelocation: Relocation = await Relocation.findOrFail(params.id);
-        const body = request.body();
         theRelocation.location = body.location;
         theRelocation.status = body.status;
         theRelocation.departure_time = body.departure_time;
         theRelocation.arrival_time = body.arrival_time;
-        theRelocation.service = body.service
+        theRelocation.service_id = body.service_id
         return await theRelocation.save();
     }
 

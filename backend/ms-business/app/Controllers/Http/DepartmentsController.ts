@@ -24,8 +24,8 @@ export default class DepartmentsController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(DepartmentValidator);
         const theDepartment: Department = await Department.findOrFail(params.id);
-        const body = request.body();
         theDepartment.name = body.name;
         theDepartment.location = body.location;
         theDepartment.status = body.status;

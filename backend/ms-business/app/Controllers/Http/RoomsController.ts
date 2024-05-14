@@ -28,12 +28,13 @@ export default class RoomsController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(RoomValidator);
         const theRoom: Room = await Room.findOrFail(params.id);
-        const body = request.body();
         theRoom.name = body.name;
         theRoom.description = body.description;
         theRoom.capacity = body.capacity;
         theRoom.status = body.status;
+        theRoom.headquarter_id = body.headquarter_id
         return await theRoom.save();
     }
 

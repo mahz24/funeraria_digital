@@ -26,8 +26,8 @@ export default class ChatsController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(ChatValidator);
         const theChat: Chat = await Chat.findOrFail(params.id);
-        const body = request.body();
         theChat.name = body.name;
         theChat.status = body.status;
         return await theChat.save();

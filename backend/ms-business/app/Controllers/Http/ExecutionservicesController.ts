@@ -27,8 +27,8 @@ export default class ExecutionservicesController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(ExecutionserviceValidator);
         const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id);
-        const body = request.body();
         theExecutionservice.end_date = body.end_date;
         theExecutionservice.client_id = body.client_id;
         theExecutionservice.service_id = body.service_id;

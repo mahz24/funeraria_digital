@@ -26,9 +26,9 @@ export default class HoldersController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(HolderValidator);
         const theHolder: Holder = await Holder.findOrFail(params.id);
-        const body = request.body();
-        theHolder.client = body.client;
+        theHolder.client_id = body.client_id;
         return await theHolder.save();
     }
 

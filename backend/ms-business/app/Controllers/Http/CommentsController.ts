@@ -29,8 +29,8 @@ export default class CommentsController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(CommentValidator);
         const theComment: Comment = await Comment.findOrFail(params.id);
-        const body = request.body();
         theComment.description = body.description;
         theComment.rating = body.rating;
         return await theComment.save();

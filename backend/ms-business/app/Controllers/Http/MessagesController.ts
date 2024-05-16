@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Message from 'App/Models/Message';
 import MessageValidator from 'App/Validators/MessageValidator';
+import Env from "@ioc:Adonis/Core/Env";
+import axios from 'axios';
 
 export default class MessagesController {
     public async find({ request, params }: HttpContextContract) {
@@ -22,10 +24,19 @@ export default class MessagesController {
         }
 
     }
-    public async create({ request }: HttpContextContract) {
+    public async create({ request, response }: HttpContextContract) {
         const body = await request.validate(MessageValidator);
-        const theMessage: Message = await Message.create(body);
-        return theMessage;
+        let api_response = await axios.get(`${Env.get('MS_SECURITY_URL')}/users/${body.user_id}`)
+        let user = await api_response.data;
+        if(user =! null){
+            const theMessage: Message = await Message.create(body);
+            return theMessage;
+        }else{
+            return response.status(400).json({
+                "mensaje": "El usuario del mensaje no fue encontrado.",
+                "data": body
+            })
+        }   
     }
 
     public async update({ params, request }: HttpContextContract) {

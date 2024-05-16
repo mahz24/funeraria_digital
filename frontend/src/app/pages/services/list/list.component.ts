@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { City } from 'src/app/model/city';
-import { CityService } from 'src/app/services/city.service';
+import { Service } from 'src/app/model/service.model';
+import { ServiceService } from 'src/app/services/service.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,9 +11,10 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
 
-  cities: City[];
-  constructor(private service: CityService, private router: Router) {
-    this.cities = []
+  
+  services: Service[];
+  constructor(private service: ServiceService, private router: Router) {
+    this.services = []
   }
 
   ngOnInit(): void {
@@ -23,21 +24,21 @@ export class ListComponent implements OnInit {
 
   list() {
     this.service.list().subscribe(data => {
-      this.cities = data
-      console.log(JSON.stringify(this.cities));
+      this.services = data
+      console.log(JSON.stringify(this.services));
     })
   }
 
   view(id: number) {
-    this.router.navigate(["cities/view/" + id])
+    this.router.navigate(["services/view/" + id])
   }
 
   create() {
-    this.router.navigate(["cities/create"])
+    this.router.navigate(["services/create"])
   }
 
   update(id: string) {
-    this.router.navigate(["cities/update/" + id])
+    this.router.navigate(["services/update/" + id])
   }
 
   delete(id: number): void {
@@ -55,7 +56,7 @@ export class ListComponent implements OnInit {
         this.service.delete(id).subscribe(data => {
           Swal.fire(
             'Eliminado!',
-            'La ciudad ha sido eliminada correctamente',
+            'El servicio ha sido eliminado correctamente',
             'success'
           )
           this.ngOnInit();
@@ -63,5 +64,6 @@ export class ListComponent implements OnInit {
       }
     })
   }
+
 
 }

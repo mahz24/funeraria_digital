@@ -26,13 +26,13 @@ export default class HeadquartersController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(HeadquarterValidator);
         const theHeadquarter: Headquarter = await Headquarter.findOrFail(params.id);
-        const body = request.body();
         theHeadquarter.name = body.name;
         theHeadquarter.direction = body.direction;
         theHeadquarter.description = body.description;
         theHeadquarter.status = body.status;
-        theHeadquarter.city = body.city;
+        theHeadquarter.city_id = body.city_id;
         return await theHeadquarter.save();
     }
 

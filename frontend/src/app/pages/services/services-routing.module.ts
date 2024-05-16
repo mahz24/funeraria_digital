@@ -9,14 +9,6 @@ const routes: Routes = [
     component: ListComponent
   },
   {
-    path: "create",
-    component: ManageComponent
-  },
-  {
-    path: "update/:id",
-    component: ManageComponent
-  },
-  {
     path: "list",
     component: ListComponent
   },
@@ -26,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RoomsRoutingModule { }
+export class ServicesRoutingModule { }

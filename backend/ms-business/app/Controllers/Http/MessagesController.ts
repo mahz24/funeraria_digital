@@ -40,12 +40,11 @@ export default class MessagesController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(MessageValidator);
         const theMessage: Message = await Message.findOrFail(params.id);
-        const body = request.body();
-        theMessage.user_id = body.user;
+        theMessage.user_id = body.user_id;
         theMessage.content_message = body.content_message;
-        theMessage.date_send = body.date_send;
-        theMessage.chat = body.chat;
+        theMessage.chat_id = body.chat_id;
         return await theMessage.save();
     }
 

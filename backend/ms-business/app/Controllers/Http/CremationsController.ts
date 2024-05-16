@@ -27,12 +27,12 @@ export default class CremationsController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(CremationValidator);
         const theCremation: Cremation = await Cremation.findOrFail(params.id);
-        const body = request.body();
         theCremation.cremation_date = body.cremation_date;
         theCremation.status = body.status;
-        theCremation.room = body.room
-        theCremation.service = body.service;
+        theCremation.room_id = body.room_id
+        theCremation.service_id = body.service_id;
         ;
 
         return await theCremation.save();

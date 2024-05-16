@@ -26,8 +26,8 @@ export default class CitiesController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(CityValidator);
         const theCity: City = await City.findOrFail(params.id);
-        const body = request.body();
         theCity.name = body.name;
         theCity.location = body.location;
         theCity.status = body.status;

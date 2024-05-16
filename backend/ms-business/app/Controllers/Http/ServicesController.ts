@@ -28,8 +28,8 @@ export default class ServicesController {
     }
 
     public async update({ params, request }: HttpContextContract) {
+        const body = await request.validate(ServiceValidator);
         const theService: Service = await Service.findOrFail(params.id);
-        const body = request.body();
         theService.status = body.status;
         theService.price = body.price;
         theService.description = body.description;

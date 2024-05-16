@@ -7,7 +7,10 @@ export default class PlanValidator {
   public schema = schema.create({
     name:schema.string([rules.minLength(2)]),
     description: schema.string([rules.minLength(2)]),
-    price: schema.number([rules.range(1,100000)])
+    price: schema.number([rules.range(1,100000)]),
+    beneficiaries_number: schema.number([rules.range(1,8)]),
+    discount: schema.number([rules.range(0,80)])
+
   })
 
   /**

@@ -40,7 +40,7 @@ public class SecurityController {
     @Value("${ms-notifications.base-url}")
     private String baseUrlNotifications;
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User theUser, final HttpServletResponse response) throws IOException {
         try {
             // String token = null;
@@ -89,7 +89,7 @@ public class SecurityController {
         }
     }
 
-    @PostMapping("2FA-login/{userId}")
+    @PostMapping("/2FA-login/{userId}")
     public ResponseEntity<?> factorAuthetication(@RequestBody Session theSession, @PathVariable String userId) {
         try {
             System.out.println("hola1");

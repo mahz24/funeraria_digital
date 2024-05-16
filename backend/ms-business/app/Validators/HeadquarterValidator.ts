@@ -2,16 +2,16 @@ import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class HeadquarterValidator {
-  constructor(protected ctx: HttpContextContract) {}
+  constructor(protected ctx: HttpContextContract) { }
 
   public schema = schema.create({
     name: schema.string([rules.minLength(2), rules.maxLength(50)]),
     direction: schema.string([rules.minLength(2), rules.maxLength(100)]),
     description: schema.string([rules.minLength(2), rules.maxLength(100)]),
-    status: schema.number([rules.range(1, 4)]),
+    status: schema.string([rules.regex(/^(ACTIVO|INACTIVO)$/)]),
     city_id: schema.number(
-      [rules.exists({ 
-        table: 'cities', column: 'id' 
+      [rules.exists({
+        table: 'cities', column: 'id'
       })])
   })
 

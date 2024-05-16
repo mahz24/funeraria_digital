@@ -14,8 +14,7 @@ export default class SubscriptionValidator {
         table: 'plans', column: 'id' 
       })]),
       activation_date: schema.date()
-      ,    status: schema.string([rules.regex(/^(ACTIVO|INACTIVO|CANCELADO)$/)]),
-
+    
   })
 
   /**

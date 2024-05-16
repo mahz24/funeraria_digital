@@ -30,3 +30,5 @@ import './routes/planservices'
 import './routes/subscriptions'
 
 import './routes/drivers'
+
+import './routes/camaras'

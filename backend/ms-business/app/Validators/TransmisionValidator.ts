@@ -5,12 +5,8 @@ export default class TransmisionValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    fecha_inicio: schema.date({
-      format: 'yyyy-MM-dd HH:mm:ss'
-    }),
-    fecha_fin: schema.date({
-      format: 'yyyy-MM-dd HH:mm:ss'
-    },[rules.after['fecha_inicio']]),
+    fecha_inicio: schema.date(), // se quitó el formato
+    fecha_fin: schema.date(rules.after['fecha_inicio']), //se quitó el formato
     camara_id: schema.number([rules.exists({
       table: 'camaras', column: 'id'
     })]),

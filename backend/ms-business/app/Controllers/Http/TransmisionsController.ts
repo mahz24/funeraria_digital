@@ -20,11 +20,14 @@ export default class TransmisionsController {
         let ejecucion: Executionservice = await Executionservice.findOrFail(body.executionservice_id);
         let cliente: Client = await Client.findOrFail(ejecucion.client_id);
         let puntos = await (await axios.get(`${Env.get('MS_SECURITY_URL')}/fidelidad/${cliente.user_id}`)).data
-        if(puntos.puntos > 10){
+        if(puntos.puntos >= 10){ //se cambió el > por un >=
+            const headers = {
+                'Content-Type': 'application/json' // nuevo
+            }
             const theTransmision: Transmision = await Transmision.create(body);
             await axios.put(`${Env.get('MS_SECURITY_URL')}/fidelidad/${cliente.user_id}`, {
                 "puntos": puntos.puntos - 10
-            })
+            }, {headers:headers})       //nuevo
             return theTransmision;
         }else{
             return response.status(400).json({

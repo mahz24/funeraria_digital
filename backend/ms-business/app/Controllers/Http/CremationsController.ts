@@ -8,7 +8,7 @@ export default class CremationsController {
             const theCremation: Cremation = await Cremation.findOrFail(params.id)
             await theCremation.load('service')
             await theCremation.load('room')
-            return await Cremation.findOrFail(params.id);
+            return theCremation;
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {

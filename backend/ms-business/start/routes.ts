@@ -28,3 +28,7 @@ import './routes/holders'
 import './routes/benefactors'
 import './routes/planservices'
 import './routes/subscriptions'
+
+import './routes/drivers'
+import './routes/camaras'
+import './routes/transmisions'

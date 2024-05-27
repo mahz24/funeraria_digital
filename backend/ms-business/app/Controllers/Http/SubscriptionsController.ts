@@ -30,7 +30,7 @@ export default class SubscriptionsController {
         const body = await request.validate(SubscriptionValidator);
         const theSubscription: Subscription = await Subscription.findOrFail(params.id);
         theSubscription.activation_date = body.activation_date;
-        theSubscription.status = body.status;
+        // theSubscription.status = body.status;
         theSubscription.client_id = body.client_id;
         theSubscription.plan_id = body.plan_id;
         return await theSubscription.save();

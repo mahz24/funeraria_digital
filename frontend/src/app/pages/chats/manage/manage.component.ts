@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit {
+  mode: number; //1 view, 2 create, 3 update
+  constructor(private activateRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
       

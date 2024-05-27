@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage',
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit {
-
-  constructor() { }
+  mode: number; //1 view, 2 create, 3 update
+  constructor(private activateRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
   }

@@ -23,7 +23,7 @@ export class RoomService {
     );
   }
   update(theRoom: Room): Observable<Room> {
-    return this.http.put<Room>(`${environment.url_ms_business}/rooms/${theRoom.id}`, theRoom);
+    return this.http.put<Room>(`${environment.url_ms_business}/rooms/${theRoom.num}`, theRoom);
   }
   delete(id: number) {
     return this.http.delete<Room>(`${environment.url_ms_business}/rooms/${id}`,

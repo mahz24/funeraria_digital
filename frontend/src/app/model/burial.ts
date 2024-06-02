@@ -6,8 +6,6 @@ export class Burial {
     location: string
     burial_type: string
     burial_date: Date
-    room_id: number
-    service_id: number
     service?:Service
     room?:Room
 

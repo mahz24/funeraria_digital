@@ -6,21 +6,20 @@ import { ManageComponent } from './manage/manage.component';
 const routes: Routes = [
   {
     path: "list",
-    component: ListComponent
+    component:ListComponent
   },
   {
-    path: "create",
+    path:"create",
+    component:ManageComponent,
+  },
+  {
+    path:"update/:id",
     component: ManageComponent
   },
   {
-    path: "update/:id",
-    component: ManageComponent
-  },
-  {
-    path: "list",
-    component: ListComponent
-  },
-
+    path:"view/:id",
+    component:ManageComponent
+  }
 ];
 
 @NgModule({

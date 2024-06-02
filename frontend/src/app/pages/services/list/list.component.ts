@@ -19,13 +19,11 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.list()
-    console.log("holii")
   }
 
   list() {
     this.service.list().subscribe(data => {
       this.services = data
-      console.log(JSON.stringify(this.services));
     })
   }
 

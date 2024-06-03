@@ -92,7 +92,7 @@
                                 class="btn btn-primary btn-block">Crear</button>
                                 <button *ngIf="mode==3" (click)="update()" type="button" 
                                 class="btn btn-primary btn-block">Actualizar</button>
-                                <button *ngIf="mode==1" type="button" 
+                                <button *ngIf="mode==1" (click)="btnService()" type="button" 
                                 class="btn btn-danger">Ver Servicio</button>
                                 <button *ngIf="mode==1" type="button" 
                                 class="btn btn-warning">Ver Habitación</button>

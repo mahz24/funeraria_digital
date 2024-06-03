@@ -18,6 +18,11 @@ export const AdminLayoutRoutes: Routes = [
     }
     ,
     {
+        path: 'plans',
+        loadChildren: () => import('src/app/pages/plan/plan.module').then(m => m.PlanModule)
+    }
+    ,
+    {
         path: 'chats',
         loadChildren: () => import('src/app/pages/chats/chats.module').then(m => m.ChatsModule)
     },

@@ -1,7 +1,7 @@
 import { Headquarter } from "./headquarter"
 
 export class Room {
-    id?:number
+    num?:number
     name:string
     description:string
     capacity:number

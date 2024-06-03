@@ -1,6 +1,91 @@
-<!-- <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
 </div>
- Page content
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 *ngIf="mode==1">Visualizar</h3>
+          <h3 *ngIf="mode==2">Crear</h3>
+          <h3 *ngIf="mode==3">Actualizar</h3>
+        </div>
+      
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        Id:
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" [(ngModel)]="client.id" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Nombre Completo:
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" [(ngModel)]="client.user.Full_name" [disabled]="mode==1">
+                    </div>        
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Fecha de nacimiento:
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" [(ngModel)]="client.user.Birthday" [disabled]="mode==1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Número Telefónico:
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" [(ngModel)]="client.user.Number_phone" [disabled]="mode==1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Correo Electrónico:
+                    </div>
+                    <div class="col-8">
+                        <input type="email" class="form-control" [(ngModel)]="client.user.Email" [disabled]="mode==1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Dirección:
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" [(ngModel)]="client.direction" [disabled]="mode==1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Género:
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" [(ngModel)]="client.gender" [disabled]="mode==1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        ¿Está vivo?:
+                    </div>
+                    <div class="col-4">
+                        <input type="checkbox" class="form-control" [(ngModel)]="client.is_alive" [disabled]="mode==1">
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+</div>
+</div>
+</div>
+
+ <!--Page content 
 <div class="container-fluid mt--7">
      Table 
     <div class="row">
@@ -12,6 +97,7 @@
                     <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
                 </div>
                 <div class="card-body">
+                    <form class="form" [formGroup]="theFormGroup">
                         <div class="container">
                             <div class="row">
                                 <div class="col-4">Id:</div>
@@ -34,13 +120,13 @@
                             <div class="row">
                                 <div class="col-4">Cumpleaños</div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="client.user.birthday" [disabled]="mode==1">
+                                    <input type="text" class="form-control" [(ngModel)]="client.user.Birthday" [disabled]="mode==1">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-4">Dirección</div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="client.direction" [disabled]="mode==1">
+                                    <input type="text" class="form-control" [(ngModel)]="client.direction" [disabled]="mode==1" formControlName="direction">
                                 </div>
                             </div>
                             <div class="row">
@@ -52,7 +138,7 @@
                             <div class="row">
                                 <div class="col-4">Email</div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="client.user.Email" [disabled]="mode==1">
+                                    <input type="text" class="form-control" [(ngModel)]="client.user.email" [disabled]="mode==1">
                                 </div>
                             </div>
                             <div class="row">
@@ -69,8 +155,9 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div> -->
+</div>-->

@@ -25,12 +25,13 @@ export class ListComponent implements OnInit {
   list() {
     this.service.list().subscribe(data => {
       this.clients = data
-      console.log(JSON.stringify(this.clients));
     })
   }
 
   view(id: number) {
-    this.router.navigate(["clients/view/" + id])
+    console.log("El id es ", id);
+    
+    this.router.navigate(["clients/view/"+id])
   }
 
   create() {

@@ -8,7 +8,7 @@ export default class BurialsController {
             const theBurial: Burial = await Burial.findOrFail(params.id)
             await theBurial.load('room')
             await theBurial.load('service')
-            return await Burial.findOrFail(params.id);
+            return await theBurial;
             } else {
                 const data = request.all()
             if("page" in data && "per_page" in data) {
@@ -22,7 +22,13 @@ export default class BurialsController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(BurialValidator);
-        const theBurial: Burial = await Burial.create(body);
+        let burial:Burial = new Burial()
+        burial.service_id = body.service.id;
+        burial.room_id = body.room.num
+        burial.location = body.location
+        burial.burial_date = body.burial_date
+        burial.burial_type = body.burial_type
+        const theBurial: Burial = await Burial.create(burial);
         return theBurial;
     }
 
@@ -32,6 +38,8 @@ export default class BurialsController {
         theBurial.burial_date = body.burial_date;
         theBurial.burial_type = body.burial_type;
         theBurial.location = body.location;
+        theBurial.service_id = body.service.id;
+        theBurial.room_id = body.room.num;
         return await theBurial.save();
     }
 

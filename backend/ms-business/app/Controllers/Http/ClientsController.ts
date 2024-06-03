@@ -50,7 +50,7 @@ export default class ClientsController {
                 "Email": userResponse.email
             }
             theClient.user = profile;
-            return response.status(200).json({ mensaje: "Registro del cliente fue encontrado", data: theClient });
+            return response.status(200).json(theClient);
         }else{
             return response.status(400).json({ mensaje: "Registro del cliente no fue encontrado", data: theClient });
         }

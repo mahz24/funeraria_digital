@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CommentsRoutingModule } from './comments-routing.module';
 import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { ListComponent } from './list/list.component';
     ManageComponent],
   imports: [
     CommonModule,
-    CommentsRoutingModule
+    CommentsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CommentsModule { }

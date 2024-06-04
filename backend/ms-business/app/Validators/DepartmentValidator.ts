@@ -6,7 +6,7 @@ export default class DepartmentValidator {
 
   public schema = schema.create({
     name: schema.string([rules.minLength(2), rules.maxLength(30)]),
-    location: schema.string([rules.minLength(2), rules.maxLength(100),rules.unique]),
+    location: schema.string([rules.minLength(2), rules.maxLength(100)]),
     status: schema.string([rules.minLength(2), rules.maxLength(10), rules.regex(/^(ACTIVO|INACTIVO)$/)])
   })
 

@@ -8,10 +8,9 @@ export default class CityValidator {
     name: schema.string([rules.minLength(2), rules.maxLength(30)]),
     location: schema.string([rules.minLength(2), rules.maxLength(100)]),
     status: schema.string([rules.minLength(2), rules.maxLength(10), rules.regex(/^(ACTIVO|INACTIVO)$/)]),
-    department_id: schema.number(
-      [rules.exists({ 
-        table: 'departments', column: 'id' 
-      })])
+    department: schema.object().members({
+      id:schema.number([rules.exists({ table: 'departments', column: 'id' })])
+    })
   })
 
   /**

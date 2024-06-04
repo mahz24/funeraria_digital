@@ -19,9 +19,26 @@ export default class HeadquartersController {
             }
         }
     }
+
+    public async findAll(){
+        try {
+            let headquarter: Headquarter[] = await Headquarter.query()
+            .preload('city')
+            return headquarter; 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(HeadquarterValidator);
-        const theHeadquarter: Headquarter = await Headquarter.create(body);
+        let headquarter: Headquarter = new Headquarter()
+        headquarter.name = body.name
+        headquarter.description = body.description
+        headquarter.direction = body.direction
+        headquarter.status = body.status
+        headquarter.city_id = body.city.id
+        const theHeadquarter: Headquarter = await Headquarter.create(headquarter);
         return theHeadquarter;
     }
 
@@ -32,7 +49,7 @@ export default class HeadquartersController {
         theHeadquarter.direction = body.direction;
         theHeadquarter.description = body.description;
         theHeadquarter.status = body.status;
-        theHeadquarter.city_id = body.city_id;
+        theHeadquarter.city_id = body.city.id;
         return await theHeadquarter.save();
     }
 

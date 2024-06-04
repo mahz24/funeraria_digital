@@ -5,16 +5,14 @@ export default class SubscriptionValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    client_id: schema.number(
-      [rules.exists({ 
-        table: 'clients', column: 'id' 
-      })]),
-    plan_id: schema.number(
-      [rules.exists({ 
-        table: 'plans', column: 'id' 
-      })]),
-      activation_date: schema.date()
-      ,    status: schema.string([rules.regex(/^(ACTIVO|INACTIVO|CANCELADO)$/)]),
+      activation_date: schema.date(),
+      client:schema.object().members({
+        id:schema.number([rules.exists({ table: 'clients', column: 'id' })])
+      }),
+      plan:schema.object().members({
+        id:schema.number([rules.exists({ table: 'plans', column: 'id' })])
+      })    
+      //status: schema.string([rules.regex(/^(ACTIVO|INACTIVO|CANCELADO)$/)]),
 
   })
 

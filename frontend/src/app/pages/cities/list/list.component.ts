@@ -18,7 +18,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.list()
-    console.log("holii")
   }
 
   list() {

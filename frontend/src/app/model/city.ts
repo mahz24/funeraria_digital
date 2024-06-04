@@ -5,6 +5,5 @@ export class City {
     name: string
     location: string
     status: string
-    department_id: number
     department?: Department
 }

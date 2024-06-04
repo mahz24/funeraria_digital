@@ -3,25 +3,31 @@ import City from 'App/Models/City';
 import CityValidator from 'App/Validators/CityValidator';
 
 export default class CitiesController {
-    public async find({ request, params }: HttpContextContract) {
-        if (params.id) {
-            const theCity: City = await City.findOrFail(params.id)
-            await theCity.load('department')
-            return theCity
-        } else {
-            const data = request.all()
-            if ("page" in data && "per_page" in data) {
-                const page = request.input('page', 1);
-                const perPage = request.input("per_page", 20);
-                return await City.query().paginate(page, perPage)
-            } else {
-                return await City.query()
-            }
+    public async find({ params }: HttpContextContract) {
+        const theCity: City = await City.findOrFail(params.id)
+        await theCity.load('department')
+        return theCity
+    }
+
+    public async findAll(){
+        try {
+            let cities: City[] = await City.query()
+            .preload('department')
+            return cities; 
+        } catch (error) {
+            console.log(error);
         }
     }
+
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(CityValidator);
-        const theCity: City = await City.create(body);
+        let city: City = new City()
+        city.location = body.location
+        city.name = body.name
+        city.status = body.status
+        city.department_id = body.department.id
+        const theCity: City = await City.create(city);
         return theCity;
     }
 
@@ -31,6 +37,7 @@ export default class CitiesController {
         theCity.name = body.name;
         theCity.location = body.location;
         theCity.status = body.status;
+        theCity.department_id = body.department.id
         return await theCity.save();
     }
 

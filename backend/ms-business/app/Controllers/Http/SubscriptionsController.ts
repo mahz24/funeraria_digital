@@ -14,15 +14,24 @@ export default class SubscriptionsController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Subscription.query().paginate(page, perPage)
-            } else {
                 return await Subscription.query()
+                .preload('client')
+                .preload('plan')
+                .paginate(page, perPage)
+            } else {
+                return await Subscription.query().preload('client').preload('plan')
             }
         }
     }
+
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(SubscriptionValidator);
-        const theSubscription: Subscription = await Subscription.create(body);
+        let subs: Subscription = new Subscription()
+        subs.activation_date = body.activation_date
+        subs.client_id = body.client.id
+        subs.plan_id = body.plan.id
+        const theSubscription: Subscription = await Subscription.create(subs);
         return theSubscription;
     }
 
@@ -30,9 +39,8 @@ export default class SubscriptionsController {
         const body = await request.validate(SubscriptionValidator);
         const theSubscription: Subscription = await Subscription.findOrFail(params.id);
         theSubscription.activation_date = body.activation_date;
-        theSubscription.status = body.status;
-        theSubscription.client_id = body.client_id;
-        theSubscription.plan_id = body.plan_id;
+        theSubscription.client_id = body.client.id
+        theSubscription.plan_id = body.plan.id
         return await theSubscription.save();
     }
 

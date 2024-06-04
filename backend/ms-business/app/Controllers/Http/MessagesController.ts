@@ -28,7 +28,7 @@ export default class MessagesController {
         const body = await request.validate(MessageValidator);
         let api_response = await axios.get(`${Env.get('MS_SECURITY_URL')}/users/${body.user_id}`)
         let user = await api_response.data;
-        if(user =! null){
+        if(user != null){
             const theMessage: Message = await Message.create(body);
             return theMessage;
         }else{

@@ -1,0 +1,81 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 *ngIf="mode==1">Visualizar</h3>
+                    <h3 *ngIf="mode==2">Crear</h3>
+                    <h3 *ngIf="mode==3">Actualizar</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="theFormGroup">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                Id:
+                            </div>
+                            <div class="col-8">
+                                {{ sub.id }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Fecha de Activación:
+                            </div>
+                            <div class="col-8">
+                                <input type="text" 
+                                class="form-control" 
+                                [(ngModel)]="sub.activation_date" 
+                                [disabled]="mode == 1" 
+                                formControlName="activation_date">
+                                <div *ngIf="getTheFormGroup.activation_date.errors && (getTheFormGroup.activation_date.dirty || getTheFormGroup.activation_date.touched || trySend)">
+                                    <strong *ngIf="getTheFormGroup.activation_date.errors.required" class="msnError">Requerido</strong>
+                                    <strong *ngIf="getTheFormGroup.activation_date.errors.minlength || getTheFormGroup.activation_date.errors.maxlength" class="msnError">Inválido</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Cliente:
+                            </div>
+                            <div class="col-8">
+                                <select class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id">
+                                    <option *ngFor="let option of clients" [value]="option.id">{{ option.id }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Plan:
+                            </div>
+                            <div class="col-8">
+                                <select class="form-control" formControlName="idPlan" [(ngModel)]="sub.plan.id">
+                                    <option *ngFor="let option of plans" [value]="option.id">{{ option.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-8">
+                                <button *ngIf="mode==2" (click)="create()" type="button" 
+                                class="btn btn-primary btn-block">Crear</button>
+                                <button *ngIf="mode==3" (click)="update()" type="button" 
+                                class="btn btn-primary btn-block">Actualizar</button>
+                                <button *ngIf="mode==1" (click)="btnClient()" type="button" 
+                                class="btn btn-secondary">Ver Cliente</button>
+                                <button *ngIf="mode==1" (click)="btnPlan()" type="button" 
+                                class="btn btn-secondary">Ver Plan</button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

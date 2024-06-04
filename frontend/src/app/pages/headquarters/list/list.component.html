@@ -23,8 +23,8 @@
                             <th class="col-1">ID</th>
                             <th class="col-3">Nombre</th>
                             <th class="col-3">Direccion</th>
-                            <th class="col-5">Ciudad ID</th>
-                            <th class="col-5">Estado</th>
+                            <th class="col-3">Ciudad</th>
+                            <th class="col-3">Estado</th>
                             <th class="col-5">Descripcion</th>
                         </tr>
                     </thead>
@@ -33,7 +33,7 @@
                             <td>{{actual.id}}</td>
                             <td>{{actual.name}}</td>
                             <td>{{actual.direction}}</td>
-                            <td>{{actual.city_id}}</td>
+                            <td>{{actual.city.name}}</td>
                             <td>{{actual.status}}</td>
                             <td>{{actual.description}}</td>
 
@@ -45,9 +45,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="card-header bg-transparent">
-                    <h3 class="mb-0">Icons</h3>
-                </div>
                 <div class="card-body">
 
                 </div>

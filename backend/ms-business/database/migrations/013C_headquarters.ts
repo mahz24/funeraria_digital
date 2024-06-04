@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.string('name')
       table.string('direction')
       table.string('description')
-      table.string('status')
+      table.integer('status')
       table.integer('city_id').unsigned().references('cities.id')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

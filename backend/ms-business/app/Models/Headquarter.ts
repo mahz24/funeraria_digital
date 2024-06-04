@@ -19,7 +19,7 @@ export default class Headquarter extends BaseModel {
   public description: string
 
   @column()
-  public status: string
+  public status: number
 
   @column()
   public city_id: number

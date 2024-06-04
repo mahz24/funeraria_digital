@@ -6,9 +6,6 @@ export class Headquarter {
     name:string
     direction:string
     description:string
-    capacity:number
-    status:string
-    city_id:number
+    status:number
     city?:City
-    rooms?:Room[]
 }

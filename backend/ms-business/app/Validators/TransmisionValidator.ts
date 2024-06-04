@@ -5,26 +5,18 @@ export default class TransmisionValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    fecha_inicio: schema.date(), // se quitó el formato
-    fecha_fin: schema.date(rules.after['fecha_inicio']), //se quitó el formato
-    camara_id: schema.number([rules.exists({
-      table: 'camaras', column: 'id'
-    })]),
-    executionservice_id: schema.number([rules.exists({
-      table: 'executionservices', column: 'id'
-    })])
+    executionservice_id: schema.number(
+      [rules.exists({ 
+        table: 'executionservices', column: 'id' 
+      })]),
+    camara_id: schema.number(
+      [rules.exists({ 
+        table: 'camaras', column: 'id' 
+      })]),
+      fecha_inicio: schema.date(),
+      fecha_fin: schema.date()
+
   })
 
-  /**
-   * Custom messages for validation failures. You can make use of dot notation `(.)`
-   * for targeting nested fields and array expressions `(*)` for targeting all
-   * children of an array. For example:
-   *
-   * {
-   *   'profile.username.required': 'Username is required',
-   *   'scores.*.number': 'Define scores as valid numbers'
-   * }
-   *
-   */
   public messages: CustomMessages = {}
 }

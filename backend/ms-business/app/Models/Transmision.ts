@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-import Camara from './Camara'
 import Executionservice from './Executionservice'
+import Camara from './Camara'
 
 export default class Transmision extends BaseModel {
   @column({ isPrimary: true })
@@ -19,15 +19,15 @@ export default class Transmision extends BaseModel {
   @column()
   public executionservice_id: number
 
-  @belongsTo(() => Camara,{
-    foreignKey: 'camara_id'
-  })
-  public camara: BelongsTo<typeof Camara>
-
-  @belongsTo(() => Executionservice,{
+  @belongsTo(() => Executionservice, {
     foreignKey: 'executionservice_id'
   })
   public executionservice: BelongsTo<typeof Executionservice>
+
+  @belongsTo(() => Camara, {
+    foreignKey: 'camara_id'
+  })
+  public camara: BelongsTo<typeof Camara>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

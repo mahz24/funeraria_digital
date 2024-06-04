@@ -8,7 +8,8 @@ import { Room } from '../model/room';
   providedIn: 'root'
 })
 export class RoomService {
-  constructor(private http: HttpClient) { }
+
+  constructor(private http:HttpClient) { }
 
   list(): Observable<Room[]> {
     return this.http.get<Room[]>(`${environment.url_ms_business}/rooms`);

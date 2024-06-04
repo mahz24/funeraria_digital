@@ -1,9 +1,11 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Department from 'App/Models/Department';
+import Ws from 'App/Services/Ws';
 import DepartmentValidator from 'App/Validators/DepartmentValidator';
 
 export default class DepartmentsController {
     public async find({ request, params }: HttpContextContract) {
+        Ws.io.emit('news',{message:"Listaron desde otro lugar a teatros"})
         if (params.id) {
             return await Department.findOrFail(params.id);
         } else {

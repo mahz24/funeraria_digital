@@ -29,15 +29,15 @@ export class ListComponent implements OnInit {
   }
 
   view(id: number) {
-    this.router.navigate(["burials/view/" + id])
+    this.router.navigate(["relocations/view/" + id])
   }
 
   create() {
-    this.router.navigate(["burials/create"])
+    this.router.navigate(["relocations/create"])
   }
 
   update(id: string) {
-    this.router.navigate(["burials/update/" + id])
+    this.router.navigate(["relocations/update/" + id])
   }
 
   delete(id: number): void {

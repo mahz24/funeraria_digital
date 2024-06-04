@@ -1,1 +1,62 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 *ngIf="mode==1">Visualizar</h3>
+                    <h3 *ngIf="mode==2">Crear</h3>
+                    <h3 *ngIf="mode==3">Actualizar</h3>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <form [formGroup]="theFormGroup">
+                            <div class="row">
+                                <div class="col-4">
+                                    Id PlanServicio:
+                                </div>
+                                <div class="col-8">
+                                    <input type="number" class="form-control" [(ngModel)]="thePlan.id" disabled>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Servicio ID:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="idRoom" [(ngModel)]="thePlan.service.id">
+                                        <option *ngFor="let option of services" [value]="option.id">Id: {{option.id}} -
+                                            Descripcion: {{option.description}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Plan ID:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="thePlan.plan_id"
+                                        [disabled]="mode==1" formControlName="plan_id">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+
+                                </div>
+                                <div class="col-8">
+                                    <button *ngIf="mode==2" (click)="create()" type="button"
+                                        class="btn btn-primary btn-block">Crear</button>
+                                    <button *ngIf="mode==3" (click)="update()" type="button"
+                                        class="btn btn-primary btn-block">Actualizar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

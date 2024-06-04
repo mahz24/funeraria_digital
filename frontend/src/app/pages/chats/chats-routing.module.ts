@@ -16,6 +16,10 @@ const routes: Routes = [
     path: "update/:id",
     component: ManageComponent
   },
+  {
+    path: "view/:id",
+    component: ManageComponent
+  }
 
 ];
 

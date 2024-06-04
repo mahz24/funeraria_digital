@@ -2,7 +2,7 @@
 </div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
-  <!-- Table -->
+    <!-- Table -->
     <div class="row">
         <div class="col">
             <div class="card shadow">
@@ -13,92 +13,104 @@
                 </div>
                 <div class="card-body">
                     <form class="form" [formGroup]="theFormGroup">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-4">
-                                Id:
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    Id:
+                                </div>
+                                <div class="col-8">
+                                    {{ burial.id }}
+                                </div>
                             </div>
-                            <div class="col-8">
-                                {{ burial.id }}
+                            <div class="row">
+                                <div class="col-4">
+                                    Lugar:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="burial.location"
+                                        [disabled]="mode == 1" formControlName="location">
+                                    <div
+                                        *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.location.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.location.errors.minlength || getTheFormGroup.location.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                Lugar:
+                            <div class="row">
+                                <div class="col-4">
+                                    Tipo:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="burial.burial_type"
+                                        [disabled]="mode==1" formControlName="burial_type">
+                                    <div
+                                        *ngIf="getTheFormGroup.burial_type.errors && (getTheFormGroup.burial_type.dirty || getTheFormGroup.burial_type.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.burial_type.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.burial_type.errors.minlength || getTheFormGroup.burial_type.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <input type="text" 
-                                class="form-control" 
-                                [(ngModel)]="burial.location" 
-                                [disabled]="mode == 1" 
-                                formControlName="location">
-                                <div *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
-                                    <strong *ngIf="getTheFormGroup.location.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.location.errors.minlength || getTheFormGroup.location.errors.maxlength" class="msnError">Inválido</strong>
+                            <div class="row">
+                                <div class="col-4">
+                                    Fecha:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="burial.burial_date"
+                                        [disabled]="mode==1" formControlName="burial_date">
+                                    <div
+                                        *ngIf="getTheFormGroup.burial_date.errors && (getTheFormGroup.burial_date.dirty || getTheFormGroup.burial_date.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.burial_date.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.burial_date.errors.minlength || getTheFormGroup.burial_date.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Servicio:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="idService"
+                                        [(ngModel)]="burial.service.id">
+                                        <option *ngFor="let option of services" [value]="option.id">Descripción:
+                                            {{option.description}} - Precio: {{option.price}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Habitación:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="idRoom" [(ngModel)]="burial.room.num">
+                                        <option *ngFor="let option of rooms" [value]="option.num">Id: {{option.num}} -
+                                            Nombre: {{option.name}} - Capacidad: {{option.capacity}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-8">
+                                    <button *ngIf="mode==2" (click)="create()" type="button"
+                                        class="btn btn-primary btn-block">Crear</button>
+                                    <button *ngIf="mode==3" (click)="update()" type="button"
+                                        class="btn btn-primary btn-block">Actualizar</button>
+                                    <button *ngIf="mode==1" (click)="btnService()" type="button"
+                                        class="btn btn-danger">Ver Servicio</button>
+                                    <button *ngIf="mode==1" type="button" class="btn btn-warning">Ver
+                                        Habitación</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-4">
-                                Tipo:
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="burial.burial_type"
-                                [disabled]="mode==1" formControlName="burial_type">
-                                 <div *ngIf="getTheFormGroup.burial_type.errors && (getTheFormGroup.burial_type.dirty || getTheFormGroup.burial_type.touched || trySend)">
-                                    <strong *ngIf="getTheFormGroup.burial_type.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.burial_type.errors.minlength || getTheFormGroup.burial_type.errors.maxlength" class="msnError">Inválido</strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                               Fecha:
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" [(ngModel)]="burial.burial_date" 
-                                [disabled]="mode==1" formControlName="burial_date">
-                                <div *ngIf="getTheFormGroup.burial_date.errors && (getTheFormGroup.burial_date.dirty || getTheFormGroup.burial_date.touched || trySend)">
-                                    <strong *ngIf="getTheFormGroup.burial_date.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.burial_date.errors.minlength || getTheFormGroup.burial_date.errors.maxlength" class="msnError">Inválido</strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                Servicio:
-                            </div>
-                            <div class="col-8">
-                                <select class="form-control" formControlName="idService" [(ngModel)]="burial.service.id">
-                                    <option *ngFor="let option of services" [value]="option.id">Descripción: {{option.description}} - Precio: {{option.price}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                Habitación:
-                            </div>
-                            <div class="col-8">
-                                <select class="form-control" formControlName="idRoom" [(ngModel)]="burial.room.num">
-                                    <option *ngFor="let option of rooms" [value]="option.num">Id: {{option.num}} - Nombre: {{option.name}} - Capacidad: {{option.capacity}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                            </div>
-                            <div class="col-8">
-                                <button *ngIf="mode==2" (click)="create()" type="button" 
-                                class="btn btn-primary btn-block">Crear</button>
-                                <button *ngIf="mode==3" (click)="update()" type="button" 
-                                class="btn btn-primary btn-block">Actualizar</button>
-                                <button *ngIf="mode==1" (click)="btnService()" type="button" 
-                                class="btn btn-danger">Ver Servicio</button>
-                                <button *ngIf="mode==1" type="button" 
-                                class="btn btn-warning">Ver Habitación</button>
-                            </div>
-                        </div>
-                    </div>
                     </form>
                 </div>
             </div>

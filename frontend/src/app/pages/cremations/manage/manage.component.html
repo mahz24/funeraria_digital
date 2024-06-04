@@ -1,1 +1,105 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 *ngIf="mode==1">Visualizar</h3>
+                    <h3 *ngIf="mode==2">Crear</h3>
+                    <h3 *ngIf="mode==3">Actualizar</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="theFormGroup">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    Cremacion ID:
+                                </div>
+                                <div class="col-8">
+                                    <input type="number" class="form-control" [(ngModel)]="cremation.id" disabled
+                                        formControlName="id">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Servicio ID:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="cremation.service_id"
+                                        [disabled]="mode==1" formControlName="service_id">
+                                    <div
+                                        *ngIf="getTheFormGroup.service_id.errors && (getTheFormGroup.service_id.dirty || getTheFormGroup.service_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.service_id.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.service_id.errors.minlength || getTheFormGroup.service_id.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Sala ID:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="cremation.room_id"
+                                        [disabled]="mode==1" formControlName="room_id">
+                                    <div
+                                        *ngIf="getTheFormGroup.room_id.errors && (getTheFormGroup.room_id.dirty || getTheFormGroup.room_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.room_id.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.room_id.errors.minlength || getTheFormGroup.room_id.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Estado:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="status" [(ngModel)]="cremation.status">
+                                        <option *ngFor="let option of estados" [value]="option">
+                                            {{option}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Fecha:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="cremation.cremation_date"
+                                    [disabled]="mode==1" formControlName="cremation_date">
+                                <div
+                                    *ngIf="getTheFormGroup.cremation_date.errors && (getTheFormGroup.cremation_date.dirty || getTheFormGroup.cremation_date.touched || trySend)">
+                                    <strong *ngIf="getTheFormGroup.cremation_date.errors.required"
+                                        class="msnError">Requerido</strong>
+                                    <strong
+                                        *ngIf="getTheFormGroup.cremation_date.errors.minlength || getTheFormGroup.cremation_date.errors.maxlength"
+                                        class="msnError">Inválido</strong>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+
+                                </div>
+                                <div class="col-8">
+                                    <button *ngIf="mode==2" (click)="create()" type="button"
+                                        class="btn btn-primary btn-block">Crear</button>
+                                    <button *ngIf="mode==3" (click)="update()" type="button"
+                                        class="btn btn-primary btn-block">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

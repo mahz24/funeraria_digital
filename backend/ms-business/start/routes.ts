@@ -30,6 +30,5 @@ import './routes/planservices'
 import './routes/subscriptions'
 
 import './routes/drivers'
-
 import './routes/camaras'
-import './routes/transmisions' // se agregó la ruta
+import './routes/transmisions'

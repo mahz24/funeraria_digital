@@ -1,22 +1,27 @@
 package microservises.mssegurity.Models;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Data;
+
 @Data
-@Document
+@Document()
 public class Fidelidad {
+    
     @Id
     private String _id;
     private int puntos;
     @DBRef
-    @Indexed(unique = true)
-    private User theUser;
+    private User user;
 
-    public Fidelidad(){
+    public Fidelidad() {
+
+    }
+
+    public Fidelidad(User user){
+        this.user = user;
         this.puntos = 20;
     }
 
@@ -24,19 +29,23 @@ public class Fidelidad {
         return _id;
     }
 
-    public int getPuntos(){
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public int getPuntos() {
         return puntos;
     }
 
-    public void setPuntos(int puntos){
+    public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 
-    public User getTheUser() {
-        return theUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setTheUser(User theUser) {
-        this.theUser = theUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

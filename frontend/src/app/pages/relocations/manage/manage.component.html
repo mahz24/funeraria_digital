@@ -1,1 +1,121 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 *ngIf="mode==1">Visualizar</h3>
+                    <h3 *ngIf="mode==2">Crear</h3>
+                    <h3 *ngIf="mode==3">Actualizar</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="theFormGroup">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    Reubicacion ID:
+                                </div>
+                                <div class="col-8">
+                                    <input type="number" class="form-control" [(ngModel)]="relocation.id" disabled
+                                        formControlName="id">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Servicio ID:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="relocation.service_id"
+                                        [disabled]="mode==1" formControlName="service_id">
+                                    <div
+                                        *ngIf="getTheFormGroup.service_id.errors && (getTheFormGroup.service_id.dirty || getTheFormGroup.service_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.service_id.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.service_id.errors.min || getTheFormGroup.service_id.errors.max"
+                                            class="msnError">Inválido, rango(1-50)</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Ubicacion:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="relocation.location"
+                                        [disabled]="mode==1" formControlName="location">
+                                    <div
+                                        *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.location.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.location.errors.minlength || getTheFormGroup.location.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Estado:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="status" [(ngModel)]="relocation.status">
+                                        <option *ngFor="let option of estados" [value]="option">
+                                            {{option}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Fecha salida:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="relocation.departure_time"
+                                        [disabled]="mode==1" formControlName="departure_time">
+                                    <div
+                                        *ngIf="getTheFormGroup.departure_time.errors && (getTheFormGroup.departure_time.dirty || getTheFormGroup.departure_time.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.departure_time.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.departure_time.errors.minlength || getTheFormGroup.departure_time.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Fecha llegada:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="relocation.arrival_time"
+                                        [disabled]="mode==1" formControlName="arrival_time">
+                                    <div
+                                        *ngIf="getTheFormGroup.arrival_time.errors && (getTheFormGroup.arrival_time.dirty || getTheFormGroup.arrival_time.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.arrival_time.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.arrival_time.errors.minlength || getTheFormGroup.arrival_time.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-8">
+                                    <button *ngIf="mode==2" (click)="create()" type="button"
+                                        class="btn btn-primary btn-block">Crear</button>
+                                    <button *ngIf="mode==3" (click)="update()" type="button"
+                                        class="btn btn-primary btn-block">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

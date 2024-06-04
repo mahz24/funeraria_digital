@@ -1,15 +1,21 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Transmision from './Transmision'
 
 export default class Camara extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public ancho:number
+  public alto: number
 
   @column()
-  public alto:number
+  public ancho: number
+
+  @hasMany(() => Transmision,{
+    foreignKey: 'camara_id'
+  })
+  public subscriptions: HasMany<typeof Transmision>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -52,9 +52,9 @@ export class ManageComponent implements OnInit {
     }
     this.configFormGroup()
   }
+  
   getBurial(id:number){
       this.burialService.view(id).subscribe(data =>{
-        
         this.burial = data
         console.log(this.burial);
       })

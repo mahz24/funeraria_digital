@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user.model';
+import { Session } from '../model/session.model';
+import { UserService } from './user.service';
+import { Profile } from '../model/profile.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SecurityService {
   theUser=new BehaviorSubject<User>(new User);
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private service: UserService) { }
   /**
     * Permite obtener la información de usuario
     * que tiene la función activa y servirá
@@ -43,18 +45,33 @@ export class SecurityService {
   * @returns Respuesta HTTP la cual indica si el usuario tiene permiso de acceso
   */
   login(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.url_ms_security}/api/public/login`, user);
+    return this.http.post<User>(`${environment.url_ms_security}/api/public/security/login`, user);
   }
   /*
   OJO FALTA VALIDACIÓN
   */
+  
+  authentication2fa(id: String, session:Session): Observable<Session>{
+    return this.http.post<Session>(`${environment.url_ms_security}/api/public/security/2FA-login/${id}`, session);
+  }
+
+  /*
+  OJO FALTA VALIDACIÓN
+  */
   saveSession(dataSesion: any) {
+    let profile: Profile
+    this.service.getProfile(dataSesion["User"]["_id"]).subscribe(data=>{
+      profile = data
+    })
     let actualSession = localStorage.getItem('sesion');
+
     let data: User = {
-      _id: dataSesion["_id"],
-      name: dataSesion["name"],
+      _id: dataSesion["User"]["_id"],
       password:"",
-      email: dataSesion["email"],
+      email: dataSesion["User"]["email"],
+      name: profile.name,
+      role: dataSesion["User"]["role"],
+      token: dataSesion["token"]
     };
     localStorage.setItem('sesion', JSON.stringify(data));
     this.setUser(data);

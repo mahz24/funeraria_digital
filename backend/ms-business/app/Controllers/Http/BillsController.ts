@@ -26,7 +26,11 @@ export default class BillsController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(BillValidator);
-        const theBill: Bill = await Bill.create(body);
+        let bill: Bill = new Bill()
+        bill.amount = body.amount
+        bill.date = body.date
+        bill.subscription_id = body.subscription.id
+        const theBill: Bill = await Bill.create(bill);
         return theBill;
     }
 

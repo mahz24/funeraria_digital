@@ -5,10 +5,10 @@ export class Client {
     gender?: string
     is_alive?: boolean
     user?: {
-        "Full_name": "", 
-        "Birthday": "", 
-        "Number_phone": "", 
-        "Email": ""
+        "Full_name"?: "", 
+        "Birthday"?: "", 
+        "Number_phone"?: "", 
+        "Email"?: ""
     }
     holder?: any
     benefactor?:any

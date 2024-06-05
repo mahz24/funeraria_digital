@@ -86,7 +86,7 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["cities/list"])
+        this.router.navigate(["bills/list"])
       })
     }
   }
@@ -100,8 +100,12 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha sctualizado correctamente', 'success'
         )
-        this.router.navigate(["cities/list"])
+        this.router.navigate(["bills/list"])
       })
     }
+  }
+
+  btnSubs(){
+    this.router.navigate(["subscriptions/view/"+this.bill.subscription.id])
   }
 }

@@ -5,12 +5,11 @@ export default class BillValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    subscription_id: schema.number(
-      [rules.exists({ 
-        table: 'subscriptions', column: 'id' 
-      })]),
     amount: schema.number([rules.range(1,1000000)]),
-    date: schema.date()
+    date: schema.date(),
+    subscription:schema.object().members({
+      id:schema.number([rules.exists({ table: 'subscriptions', column: 'id' })])
+    })
   })
 
   /**

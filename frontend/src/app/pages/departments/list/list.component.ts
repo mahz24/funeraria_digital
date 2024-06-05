@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { log } from 'console';
 import { Department } from 'src/app/model/department';
 import { DepartmentService } from 'src/app/services/department.service';
 import Swal from 'sweetalert2';
@@ -11,7 +10,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
   departments: Department[];
   constructor(private service: DepartmentService, private router: Router) {
     this.departments = []
@@ -24,22 +22,18 @@ export class ListComponent implements OnInit {
   list() {
     this.service.list().subscribe(data => {
       this.departments = data
-      console.log(JSON.stringify(this.departments));
     })
   }
 
   view(id: number) {
-    console.log("ver a " + id);
     this.router.navigate(["departments/view/" + id])
   }
 
   create() {
-    console.log("crear ");
     this.router.navigate(["departments/create"])
   }
 
   update(id: string) {
-    console.log("editar a " + id);
     this.router.navigate(["departments/update/" + id])
   }
 
@@ -58,7 +52,7 @@ export class ListComponent implements OnInit {
         this.service.delete(id).subscribe(data => {
           Swal.fire(
             'Eliminado!',
-            'El departamento ha sido eliminado correctamente',
+            'La ciudad ha sido eliminada correctamente',
             'success'
           )
           this.ngOnInit();
@@ -66,5 +60,4 @@ export class ListComponent implements OnInit {
       }
     })
   }
-
 }

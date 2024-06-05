@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { log } from 'console';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/model/user.model';
 import { SecurityService } from 'src/app/services/security.service';
-import { WebSocketService } from 'src/app/services/web-socket.service';
 
 declare interface RouteInfo {
   path: string;
@@ -35,8 +33,7 @@ export class SidebarComponent implements OnInit {
   public isCollapsed = true;
 
   constructor(private router: Router,
-    private theSecutityService: SecurityService,
-    private theWebSocket: WebSocketService) { }
+    private theSecutityService: SecurityService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -46,15 +43,6 @@ export class SidebarComponent implements OnInit {
     this.subscription = this.theSecutityService.getUser().subscribe(data => {
       this.theUser = data
     })
-    this.theWebSocket.setNameEvent('news')
-    this.theWebSocket.callback.subscribe(data => {
-      console.log("Llegando desde el backend" + JSON.stringify(data));
-      //hacer el resto de logica
-
-    })
+    }
   }
 
-  getTheSecurityService() {
-    return this.getTheSecurityService
-  }
-}

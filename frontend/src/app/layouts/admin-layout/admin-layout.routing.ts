@@ -15,7 +15,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps', component: MapsComponent },
     {
         path: 'clients',
-        // canActivate:[AuthGuard],
         loadChildren: () => import('src/app/pages/clients/clients.module').then(m => m.ClientsModule)
     }
     ,

@@ -35,8 +35,8 @@
                                         <strong *ngIf="getTheFormGroup.service_id.errors.required"
                                             class="msnError">Requerido</strong>
                                         <strong
-                                            *ngIf="getTheFormGroup.service_id.errors.minlength || getTheFormGroup.service_id.errors.maxlength"
-                                            class="msnError">Inválido</strong>
+                                            *ngIf="getTheFormGroup.service_id.errors.min || getTheFormGroup.service_id.errors.max"
+                                            class="msnError">Inválido, rango(1-50)</strong>
                                     </div>
                                 </div>
                             </div>
@@ -52,8 +52,8 @@
                                         <strong *ngIf="getTheFormGroup.room_id.errors.required"
                                             class="msnError">Requerido</strong>
                                         <strong
-                                            *ngIf="getTheFormGroup.room_id.errors.minlength || getTheFormGroup.room_id.errors.maxlength"
-                                            class="msnError">Inválido</strong>
+                                            *ngIf="getTheFormGroup.room_id.errors.min || getTheFormGroup.room_id.errors.max"
+                                            class="msnError">Inválido, rango(1-50)</strong>
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../model/user.model';
 import { environment } from 'src/environments/environment';
+import { Profile } from '../model/profile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class UserService {
     return this.http.get<User>(`${environment.url_ms_security}/users/${id}`);
   }
 
-  getProfile(id: number): Observable<User> {
-    return this.http.get<User>(`${environment.url_ms_security}/users/${id}`);
+  getProfile(id: string): Observable<Profile> {
+    return this.http.get<Profile>(`${environment.url_ms_security}/profiles/${id}`);
   } 
 
   create(theUser: User): Observable<User> {

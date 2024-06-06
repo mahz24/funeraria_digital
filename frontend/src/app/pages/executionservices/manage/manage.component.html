@@ -44,7 +44,7 @@
                                     <select class="form-control" formControlName="client_id"
                                         [(ngModel)]="executionservice.client.id">
                                         <option *ngFor="let option of clients" [value]="option.id">
-                                            Nombre:{{option.user.full_name}}</option>
+                                            Nombre:{{option.user_id}}  -  Genero:{{option.gender}} </option>
                                     </select>
                                 </div>
                             </div>

@@ -13,9 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AuthGuard } from './guards/auth.guard';
-import { ProfileComponent } from './model/profile/profile.component';
-import { Profile=model } from './model/profile/profile.=model';
-import { ProfileModel } from './model/profile/profile.model';
+
 // import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
@@ -32,11 +30,9 @@ import { ProfileModel } from './model/profile/profile.model';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
     AuthLayoutComponent,
-    ProfileComponent,
-    Profile=model,
-    ProfileModel,
+    AdminLayoutComponent
+
   ],
   providers: [
   //   AuthGuard,{

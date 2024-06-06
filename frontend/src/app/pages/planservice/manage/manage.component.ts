@@ -74,8 +74,9 @@ import Swal from 'sweetalert2';
 
   configFromGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      service_id: [0, [Validators.required, Validators.min(1), Validators.max(10000)]],
-      plan_id: [0, [Validators.required, Validators.min(1), Validators.max(10000)]]
+      id: [0, [Validators.required]],
+      service_id: [0, [Validators.required]],
+      plan_id: [0, [Validators.required]]
     })
   }
 

@@ -15,20 +15,22 @@ export default class HoldersController {
                 const perPage = request.input("per_page", 20);
                 return await Holder.query().paginate(page, perPage)
             } else {
-                return await Holder.query()
+                return await Holder.query().preload("client")
             }
         }
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(HolderValidator);
-        const theHolder: Holder = await Holder.create(body);
+        let holder: Holder = new Holder()
+        holder.client_id = body.client.id
+        const theHolder: Holder = await Holder.create(holder);
         return theHolder;
     }
 
     public async update({ params, request }: HttpContextContract) {
         const body = await request.validate(HolderValidator);
         const theHolder: Holder = await Holder.findOrFail(params.id);
-        theHolder.client_id = body.client_id;
+        theHolder.client_id = body.client.id;
         return await theHolder.save();
     }
 

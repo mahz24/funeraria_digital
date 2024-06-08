@@ -40,10 +40,7 @@ export class ManageComponent implements OnInit {
         gender: "",
         is_alive: null,
         user:{
-          Full_name: "",
-          Birthday: "",
-          Number_phone: "",
-          Email: "",
+          email: "",
         }
       },
       plan:{

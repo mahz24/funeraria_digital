@@ -60,7 +60,6 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.comment.id = this.activateRoute.snapshot.params.id
-      this.mode=1
       this.getComment(this.comment.id)
     }
   }

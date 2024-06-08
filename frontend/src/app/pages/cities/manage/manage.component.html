@@ -59,15 +59,12 @@
                                 Estado:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
-                                class="form-control" 
-                                [(ngModel)]="city.status" 
-                                [disabled]="mode == 1" 
+                                <select class="form-control" 
+                                [(ngModel)]="city.status"
                                 formControlName="status">
-                                <div *ngIf="getTheFormGroup.status.errors && (getTheFormGroup.status.dirty || getTheFormGroup.status.touched || trySend)">
-                                    <strong *ngIf="getTheFormGroup.status.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.status.errors.minlength || getTheFormGroup.status.errors.maxlength" class="msnError">Inválido</strong>
-                                </div>
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">

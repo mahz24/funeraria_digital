@@ -5,14 +5,9 @@ export class Client {
     gender?: string
     is_alive?: boolean
     user?: {
-        "Full_name"?: "", 
-        "Birthday"?: "", 
-        "Number_phone"?: "", 
-        "Email"?: ""
+        "email"?: ""
     }
     holder?: any
     benefactor?:any
-    //executionservices?=ExecutionServices[]
-    //subscriptions?:Subscription[]
 
 }

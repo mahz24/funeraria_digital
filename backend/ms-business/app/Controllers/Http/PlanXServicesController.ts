@@ -22,16 +22,18 @@ export default class PlanXServicesController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(PlanServiceValidator);
-        const thePlanXService: PlanXService = await PlanXService.create(body);
+        let planse: PlanXService = new PlanXService()
+        planse.service_id = body.service.id
+        planse.plan_id = body.plan.id
+        const thePlanXService: PlanXService = await PlanXService.create(planse);
         return thePlanXService;
     }
 
     public async update({ params, request }: HttpContextContract) {
         const body = await request.validate(PlanServiceValidator);
         const thePlanXService: PlanXService = await PlanXService.findOrFail(params.id);
-        thePlanXService.started_at = body.started_at;
-        thePlanXService.service_id = body.service_id;
-        thePlanXService.plan_id = body.plan_id;
+        thePlanXService.service_id = body.service.id;
+        thePlanXService.plan_id = body.plan.id;
         return await thePlanXService.save();
     }
 

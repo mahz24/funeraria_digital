@@ -136,4 +136,8 @@ export class ManageComponent implements OnInit {
   btnService(){
     this.router.navigate(["/services/view/"+ this.burial.service.id])
   }
+
+  btnRoom(){
+    this.router.navigate(["/rooms/view/"+ this.burial.room.num])
+  }
 }

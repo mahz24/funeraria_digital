@@ -82,5 +82,13 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'bills',
         loadChildren: () => import('src/app/pages/bills/bills.module').then(m=> m.BillsModule)
+    },
+    {
+        path: 'admins',
+        loadChildren: () => import('src/app/pages/admins/admins.module').then(m=> m.AdminsModule)
+    },
+    {
+        path: 'holders',
+        loadChildren: () => import('src/app/pages/holder/holder.module').then(m=> m.HolderModule)
     }
 ];

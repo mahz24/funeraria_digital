@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { log } from 'console';
 import { Message } from 'src/app/model/message';
+import { User } from 'src/app/model/user.model';
 import { MessageService } from 'src/app/services/message.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,10 +18,12 @@ export class ManageComponent implements OnInit {
   message: Message
   trySend:boolean
   theFormGroup:FormGroup
+  users: User[]
   constructor(private activateRoute: ActivatedRoute,
     private theMessageService: MessageService,
     private router: Router,
-    private theFormBuilder:FormBuilder
+    private theFormBuilder:FormBuilder,
+    private userService: UserService
   ) {
     this.mode = 1;
     this.trySend=false
@@ -48,6 +52,14 @@ export class ManageComponent implements OnInit {
     return this.theFormGroup.controls
   }
 
+  listUsers(){
+    this.userService.list().subscribe(data=>{
+      this.users = data
+      console.log(this.users);
+      
+    })
+  }
+
   ngOnInit(): void {
     const currentUrl = this.activateRoute.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
@@ -61,6 +73,7 @@ export class ManageComponent implements OnInit {
       this.message.id = this.activateRoute.snapshot.params.id
       this.getMessage(this.message.id)
     }
+    this.listUsers()
   }
   getMessage(id: number) {
     this.theMessageService.view(id).subscribe(data => {

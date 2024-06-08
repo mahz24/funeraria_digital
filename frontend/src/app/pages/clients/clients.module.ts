@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './user/user.component';
 
 
@@ -17,7 +17,8 @@ import { UserComponent } from './user/user.component';
   imports: [
     CommonModule,
     ClientsRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ClientsModule { }

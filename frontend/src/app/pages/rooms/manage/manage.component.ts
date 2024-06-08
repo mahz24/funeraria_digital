@@ -37,7 +37,6 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      num: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
       description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       capacity: [0, [Validators.required, Validators.min(2), Validators.max(50)]],
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
@@ -77,11 +76,10 @@ export class ManageComponent implements OnInit {
 
   create() {
     this.trySend = true
+    console.log(this.room);
     if (this.theFormGroup.invalid) {
       Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
     } else {
-      console.log(this.room);
-
       this.theRoomService.create(this.room).subscribe(data => {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
@@ -108,4 +106,3 @@ export class ManageComponent implements OnInit {
 
 
 }
-

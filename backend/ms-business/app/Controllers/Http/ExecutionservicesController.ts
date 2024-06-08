@@ -22,7 +22,11 @@ export default class ExecutionservicesController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(ExecutionserviceValidator);
-        const theExecutionservice: Executionservice = await Executionservice.create(body);
+        let execution: Executionservice = new Executionservice()
+        execution.end_date = body.end_date
+        execution.service_id = body.service.id
+        execution.client_id = body.client.id
+        const theExecutionservice: Executionservice = await Executionservice.create(execution);
         return theExecutionservice;
     }
 
@@ -30,8 +34,8 @@ export default class ExecutionservicesController {
         const body = await request.validate(ExecutionserviceValidator);
         const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id);
         theExecutionservice.end_date = body.end_date;
-        theExecutionservice.client_id = body.client_id;
-        theExecutionservice.service_id = body.service_id;
+        theExecutionservice.client_id = body.client.id;
+        theExecutionservice.service_id = body.service.id;
         return await theExecutionservice.save();
     }
 

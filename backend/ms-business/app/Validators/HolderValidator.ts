@@ -5,10 +5,9 @@ export default class HolderValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    client_id: schema.number(
-      [rules.exists({ 
-        table: 'clients', column: 'id' 
-      })])
+    client:schema.object().members({
+      id:schema.number([rules.exists({ table: 'clients', column: 'id' })])
+    })
   })
 
   /**

@@ -9,7 +9,9 @@ export default class RelocationValidator {
     location: schema.string([rules.minLength(2), rules.maxLength(50)]),
     status: schema.string([rules.minLength(2), rules.maxLength(30), rules.regex(/^(REALIZADO|CANCELADO|PENDIENTE)$/)
     ]),
-    service_id: schema.number([rules.exists({ table: 'services', column: 'id' })]),
+    service: schema.object().members({
+      id:schema.number([rules.exists({ table: 'services', column: 'id' })])
+    }),
     departure_time: schema.date(),
     arrival_time: schema.date(rules.after['departure_time'])
 

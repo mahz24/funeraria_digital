@@ -42,9 +42,6 @@ export class ManageComponent implements OnInit {
         user_id:"",
         gender:"",
         is_alive:true,
-        user:{
-          Full_name:"",
-        }
       },
       service:{
         description:"",

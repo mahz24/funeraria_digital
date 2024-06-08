@@ -28,15 +28,13 @@
                                     Servicio ID:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="relocation.service_id"
-                                        [disabled]="mode==1" formControlName="service_id">
+                                    <input type="text" class="form-control" [(ngModel)]="relocation.service.id"
+                                        [disabled]="mode==1" formControlName="idService">
                                     <div
-                                        *ngIf="getTheFormGroup.service_id.errors && (getTheFormGroup.service_id.dirty || getTheFormGroup.service_id.touched || trySend)">
-                                        <strong *ngIf="getTheFormGroup.service_id.errors.required"
+                                        *ngIf="getTheFormGroup.idService.errors && (getTheFormGroup.idService.dirty || getTheFormGroup.idService.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.idService.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.service_id.errors.min || getTheFormGroup.service_id.errors.max"
-                                            class="msnError">Inválido, rango(1-50)</strong>
+                                        
                                     </div>
                                 </div>
                             </div>

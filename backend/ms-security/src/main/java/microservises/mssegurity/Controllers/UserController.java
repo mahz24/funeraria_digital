@@ -2,6 +2,7 @@ package microservises.mssegurity.Controllers;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -147,19 +148,15 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody User newUser) {
+    public User create(@RequestBody User newUser, final HttpServletResponse response) {
         try {
             newUser.setPassword(thEncryptionService.convertSHA256(newUser.getPassword()));
+            response.setStatus(200);
             User user = this.userRepository.save(newUser);
-            this.jsonResponsesService.setData(user);
-            this.jsonResponsesService.setMessage("Usuario añadido satisfactoriamente");
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.jsonResponsesService.getFinalJSON());
+            return  user;
         } catch (Exception e) {
-            this.jsonResponsesService.setData(null);
-            this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al crear al usuario");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            response.setStatus(500);
+            return null;
         }
     }
 

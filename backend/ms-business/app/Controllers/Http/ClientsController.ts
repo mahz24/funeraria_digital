@@ -47,7 +47,7 @@ export default class ClientsController {
                 "Full_name": profileResponse.name + " " + profileResponse.last_name,
                 "Birthday": profileResponse.birthday,
                 "Number_phone": profileResponse.number_phone,
-                "Email": userResponse.email
+                "email": userResponse.email
             }
             theClient.user = profile;
             return response.status(200).json(theClient);
@@ -55,6 +55,34 @@ export default class ClientsController {
             return response.status(400).json({ mensaje: "Registro del cliente no fue encontrado", data: theClient });
         }
         
+    }
+
+    public async findWithoutHolderAndBenefactor({ response }: HttpContextContract){
+        try {
+            let nonClients: Client[] = []
+            let clients: Client[] = await Client.query()
+            .preload("benefactor")
+            .preload("holder")
+            if (clients && clients.length > 0){
+                await Promise.all(
+                    clients.map(async (client) => {
+                        let userResponse = await axios.get(`${Env.get("MS_SECURITY_URL")}/users/${client.user_id}`);
+                        client.user = userResponse.data;
+                    })
+                );
+            }
+            clients.forEach(actual => {
+                if(actual.benefactor || actual.holder){
+
+                }else{
+                    nonClients.push(actual)
+                }
+            });
+            return nonClients;
+        } catch (error) {
+            response.status(400)
+            return null
+        }
     }
 
     public async create({ request, response }: HttpContextContract) {

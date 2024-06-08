@@ -23,10 +23,22 @@ export class UserService {
 
   getProfile(id:String): Observable<Profile> {
     return this.http.get<Profile>(`${environment.url_ms_security}/profiles/${id}`);
-  } 
+  }
+  
+  createProfile(id:String, theProfile: Profile): Observable<Profile> {
+    return this.http.post<Profile>(`${environment.url_ms_security}/profiles/user/${id}`, theProfile);
+  }
+
+  updateProfile(id:String, theProfile: Profile): Observable<Profile> {
+    return this.http.put<Profile>(`${environment.url_ms_security}/profiles/user/${id}`, theProfile);
+  }
+  
+  deleteProfile(id: String) {
+    return this.http.delete<Profile>(`${environment.url_ms_security}/profiles/${id}`);
+  }
 
   create(theUser: User): Observable<User> {
-    return this.http.post<User>(`${environment.url_ms_security}/users/`, theUser);
+    return this.http.post<User>(`${environment.url_ms_security}/users`, theUser);
   }
   update(theUser: User): Observable<User> {
     return this.http.put<User>(`${environment.url_ms_security}/users/${theUser._id}`, theUser);

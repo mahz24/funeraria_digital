@@ -70,7 +70,7 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({ 
       name:['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       last_name:['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
-      birthday:['',[Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
+      birthday:['',[Validators.required]],
       number_phone:['',[Validators.required, Validators.minLength(7), Validators.maxLength(15)]],
       direction:['',[Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       idHeadquarter:[null, Validators.required]

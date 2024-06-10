@@ -13,9 +13,9 @@ export default class RoomsController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Room.query().paginate(page, perPage)
+                return await Room.query().preload('headquarter').paginate(page, perPage)
             } else {
-                return await Room.query()
+                return await Room.query().preload('headquarter')
             }
 
         }

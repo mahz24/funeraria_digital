@@ -26,7 +26,7 @@ export class ManageComponent implements OnInit {
               private router: Router,
               private theFormBuilder: FormBuilder,
               private clientService: ClientService,
-              private planService: PlanService
+              private planService: PlanService,
   ){
     this.mode=1
     this.trySend=false
@@ -41,6 +41,7 @@ export class ManageComponent implements OnInit {
         is_alive: null,
         user:{
           email: "",
+          password: ""
         }
       },
       plan:{
@@ -53,15 +54,20 @@ export class ManageComponent implements OnInit {
     }
     this.configFormGroup()
   }
-  getCity(id:number){
+  getSub(id:number){
       this.subService.view(id).subscribe(data =>{
         this.sub = data
+        this.theFormGroup.patchValue({
+          activation_date: this.sub.activation_date,
+          idClient: this.sub.client.id,
+          idPlan: this.sub.plan.id
+        })
       })
     }
   
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({ 
-      activation_date:['',[Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
+      activation_date:['',Validators.required],
       idClient:[null, Validators.required],
       idPlan:[null, Validators.required]
     })
@@ -94,7 +100,7 @@ export class ManageComponent implements OnInit {
     }
     if(this.activateRoute.snapshot.params.id){
       this.sub.id=this.activateRoute.snapshot.params.id
-      this.getCity(this.sub.id)
+      this.getSub(this.sub.id)
     }
     this.clientList()
     this.planList()

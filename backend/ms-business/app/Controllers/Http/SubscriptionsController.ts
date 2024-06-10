@@ -1,7 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Subscription from 'App/Models/Subscription'
 import SubscriptionValidator from 'App/Validators/SubscriptionValidator'
-
 export default class SubscriptionsController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
@@ -22,6 +21,17 @@ export default class SubscriptionsController {
                 return await Subscription.query().preload('client').preload('plan')
             }
         }
+    }
+
+    public async findPlans({ params }: HttpContextContract){
+        const theSubscription: Subscription[] = await Subscription.query().preload('client').preload('plan')
+        let realSubscriptions: Subscription[] = []
+        theSubscription.forEach(actual =>{
+            if(actual.client.id == params.id){
+                realSubscriptions.push(actual)
+            }
+        })
+        return realSubscriptions
     }
 
 

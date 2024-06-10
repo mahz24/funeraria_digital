@@ -40,13 +40,18 @@ export class ManageComponent implements OnInit {
   getBill(id:number){
       this.billService.view(id).subscribe(data =>{
         this.bill = data
+        this.theFormGroup.patchValue({
+          amout:this.bill.amount,
+          date: this.bill.date,
+          idSub: this.bill.subscription.id
+        })
       })
     }
   
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({ 
       amount:[0, [Validators.required, Validators.min(0)]],
-      date:['',[Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      date:['',[Validators.required]],
       idSub:[null, Validators.required]
     })
   }

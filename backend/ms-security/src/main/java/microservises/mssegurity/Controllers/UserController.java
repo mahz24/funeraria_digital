@@ -42,25 +42,18 @@ public class UserController {
 
     @SuppressWarnings("unused")
     @GetMapping("")
-    public ResponseEntity<?> index() {
+    public List<User> index(final HttpServletResponse response) {
         try {
             List<User> users = this.userRepository.findAll();
             if (users != null && users.size() > 0) {
-                this.jsonResponsesService.setData(users);
-                this.jsonResponsesService.setMessage("Lista de Usuarios encontrada correctamente");
-                return ResponseEntity.status(HttpStatus.OK)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                return users;
             } else {
-                this.jsonResponsesService.setMessage("No hay usuarios registrados");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                response.setStatus(400);
+                return users;
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setData(null);
-            this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar usuarios");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            response.setStatus(400);
+            return null;
         }
     }
 

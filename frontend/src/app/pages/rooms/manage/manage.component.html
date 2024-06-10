@@ -19,7 +19,7 @@
                                     Id:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="room.num" disabled  formControlName="num">
+                                    {{room.num}}
                                 </div>
                             </div>
                             <div class="row">
@@ -86,19 +86,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    Sucursal ID:
+                                    Estado:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="room.headquarter_id"
-                                        [disabled]="mode==1" formControlName="headquarter_id">
-                                    <div
-                                        *ngIf="getTheFormGroup.headquarter_id.errors && (getTheFormGroup.headquarter_id.dirty || getTheFormGroup.headquarter_id.touched || trySend)">
-                                        <strong *ngIf="getTheFormGroup.headquarter_id.errors.required"
-                                            class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.headquarter_id.errors.min || getTheFormGroup.headquarter_id.errors.max"
-                                            class="msnError">Inválido, rango(1-50)</strong>
-                                    </div>
+                                    <select class="form-control" [(ngModel)]="room.headquarter_id" formControlName="headquarter_id">
+                                        <option *ngFor="let option of headquarters" [value]="option.id">
+                                            {{option.name}} </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">

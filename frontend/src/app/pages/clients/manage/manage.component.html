@@ -59,14 +59,13 @@
                                 Fecha de nacimiento:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
+                                <input type="date" 
                                 class="form-control" 
                                 [(ngModel)]="profile.birthday" 
                                 [disabled]="mode == 1" 
                                 formControlName="birthday">
                                 <div *ngIf="getTheFormGroup.birthday.errors && (getTheFormGroup.birthday.dirty || getTheFormGroup.birthday.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.birthday.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.birthday.errors.minlength || getTheFormGroup.birthday.errors.maxlength" class="msnError">Inválido</strong>
                                 </div>
                             </div>
                         </div>

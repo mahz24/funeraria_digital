@@ -9,7 +9,7 @@
                 <div class="card-header bg-transparent">
                     <div class="row">
                         <div class="col-3">
-                            <h3 class="mb-0">Clientes</h3>
+                            <h3 class="mb-0">Administradores</h3>
                         </div>
                         <div class="col-6"></div>
                         <div class="col-3">
@@ -21,7 +21,7 @@
                     <thead>
                         <tr>
                             <th class="col-1">ID</th>
-                            <th class="col-3">User_id</th>
+                            <th class="col-3">Correo</th>
                             <th class="col-5">Direction</th>
                             <th class="col-5">Headquarter</th>
 
@@ -30,7 +30,7 @@
                     <tbody>
                         <tr *ngFor="let actual of admins">
                             <td>{{actual.id}}</td>
-                            <td>{{actual.user_id}}</td>
+                            <td>{{actual.user.email}}</td>
                             <td>{{actual.direction}}</td>
                             <td>{{actual.headquarter.name}}</td>
                             <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
@@ -41,12 +41,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="card-header bg-transparent">
-                    <h3 class="mb-0">Icons</h3>
-                </div>
-                <div class="card-body">
-
-                </div>
             </div>
         </div>
            

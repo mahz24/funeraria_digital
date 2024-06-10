@@ -42,7 +42,6 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       status: ['', [Validators.required]],
       location: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
       departure_time: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
@@ -73,8 +72,13 @@ export class ManageComponent implements OnInit {
   getPS(id: number) {
     this.service.view(id).subscribe(data => {
       this.relocation = data
-      console.log(JSON.stringify(this.relocation));
-      
+      this.theFormGroup.patchValue({
+        status: this.relocation.status,
+        location: this.relocation.location,
+        departure_time: this.relocation.departure_time,
+        arrival_time: this.relocation.arrival_time,
+        idService: this.relocation.service.id
+      })
     })
   }
 

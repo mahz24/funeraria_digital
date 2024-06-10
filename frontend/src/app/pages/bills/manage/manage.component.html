@@ -43,14 +43,13 @@
                                 Fecha:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
+                                <input type="date" 
                                 class="form-control" 
-                                [(ngModel)]="bill.date" 
-                                [disabled]="mode == 1" 
+                                [(ngModel)]="bill.date"
+                                [value]="bill.date | date:'yyyy-MM-dd'"
                                 formControlName="date">
                                 <div *ngIf="getTheFormGroup.date.errors && (getTheFormGroup.date.dirty || getTheFormGroup.date.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.date.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.date.errors.minlength || getTheFormGroup.date.errors.maxlength" class="msnError">Inválido</strong>
                                 </div>
                             </div>
                         </div>

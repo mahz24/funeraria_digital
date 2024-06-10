@@ -5,6 +5,7 @@ import { Client } from 'src/app/model/client';
 import { Holder } from 'src/app/model/holder.model';
 import { ClientService } from 'src/app/services/client.service';
 import { HolderService } from 'src/app/services/holder.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -22,7 +23,8 @@ export class ManageComponent implements OnInit {
               private holderService: HolderService,
               private router: Router,
               private theFormBuilder: FormBuilder,
-              private clientService: ClientService
+              private clientService: ClientService,
+              private userService: UserService
   ){
     this.mode=1
     this.trySend=false
@@ -31,7 +33,8 @@ export class ManageComponent implements OnInit {
       client:{
         id: null,
         user:{
-          email:""
+          email:"",
+          password: ""
         }
       }
     }
@@ -40,6 +43,11 @@ export class ManageComponent implements OnInit {
   getHolder(id:number){
       this.holderService.view(id).subscribe(data =>{
         this.holder = data
+        this.userService.view(this.holder.client.user_id).subscribe(data =>{
+          this.holder.client.user = data
+        })
+        console.log(this.holder);
+        
       })
     }
   
@@ -56,8 +64,6 @@ export class ManageComponent implements OnInit {
   clientsList(){
     this.clientService.listNon().subscribe(data=>{
       this.clients = data
-      console.log(JSON.stringify(this.clients));
-      
     })
   }
 

@@ -39,7 +39,6 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       chat_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
       content_message: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       date_send: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(40)]],
@@ -57,6 +56,9 @@ export class ManageComponent implements OnInit {
       this.users = data
       console.log(this.users);
       
+      this.users.forEach(actual =>{
+        actual.password = ""
+      })
     })
   }
 
@@ -78,7 +80,12 @@ export class ManageComponent implements OnInit {
   getMessage(id: number) {
     this.theMessageService.view(id).subscribe(data => {
       this.message = data
-      console.log(data);
+      this.theFormGroup.patchValue({
+        chat_id: this.message.chat_id,
+        content_message: this.message.content_message,
+        date_send: this.message.date_send,
+        user_id: this.message.user_id
+      })
     })
   }
 
@@ -88,7 +95,7 @@ export class ManageComponent implements OnInit {
     if (this.theFormGroup.invalid) {
       Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
     } else {
-      console.log(this.message);
+      console.log(JSON.stringify(this.message));
 
       this.theMessageService.create(this.message).subscribe(data => {
         Swal.fire(

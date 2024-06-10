@@ -23,6 +23,11 @@ export class ListComponent implements OnInit {
   list() {
     this.service.list().subscribe(data => {
       this.admins = data
+      this.admins.forEach(actual =>{
+        this.userService.view(actual.user_id).subscribe(data =>{
+          actual.user = data
+        })
+      })
     })
   }
 

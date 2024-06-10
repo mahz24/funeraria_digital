@@ -7,6 +7,7 @@ import { Service } from 'src/app/model/service.model';
 import { ClientService } from 'src/app/services/client.service';
 import { ExecutionserviceService } from 'src/app/services/executionservice.service';
 import { ServiceService } from 'src/app/services/service.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,7 +28,7 @@ export class ManageComponent implements OnInit {
     private theFormBuilder:FormBuilder,
     private serviceSer:ServiceService,
     private clientservice:ClientService,
-
+    private userService: UserService
   ) {
     this.mode = 1;
     this.trySend=false
@@ -55,7 +56,6 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       client_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
       end_date: ['', [Validators.required,Validators.minLength(4), Validators.maxLength(50)]],
       service_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
@@ -73,7 +73,11 @@ export class ManageComponent implements OnInit {
   clientsList(){
     this.clientservice.list().subscribe(data=>{
       this.clients = data
-      console.log(this.clients);
+      this.clients.forEach(actual =>{
+        this.userService.view(actual.user_id).subscribe(data =>{
+          actual.user = data
+        })
+      })
       
     })
   }
@@ -99,6 +103,12 @@ export class ManageComponent implements OnInit {
   getChat(id: number) {
     this.theExe.view(id).subscribe(data => {
       this.executionservice = data
+
+      this.theFormGroup.patchValue({
+        client_id: this.executionservice.client_id,
+        service_id: this.executionservice.service_id,
+        end_date: this.executionservice.end_date
+      })
     })
   }
 

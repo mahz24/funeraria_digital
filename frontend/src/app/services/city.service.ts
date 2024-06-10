@@ -15,6 +15,10 @@ export class CityService {
     return this.http.get<City[]>(`${environment.url_ms_business}/cities`);
   }
 
+  listCities(id: number): Observable<City[]> {
+    return this.http.get<City[]>(`${environment.url_ms_business}/cities/department/${id}`);
+  }
+
   view(id: number): Observable<City> {
     return this.http.get<City>(`${environment.url_ms_business}/cities/${id},
     `);

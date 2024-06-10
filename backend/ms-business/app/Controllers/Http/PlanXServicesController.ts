@@ -14,9 +14,9 @@ export default class PlanXServicesController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await PlanXService.query().paginate(page, perPage)
+                return await PlanXService.query().preload('plan').preload('service').paginate(page, perPage)
             } else {
-                return await PlanXService.query()
+                return await PlanXService.query().preload('plan').preload('service')
             }
         }
     }

@@ -14,9 +14,9 @@ export default class BurialsController {
             if("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Burial.query().paginate(page, perPage)
+                return await Burial.query().preload('room').preload('service').paginate(page, perPage)
             } else {
-                return await Burial.query()
+                return await Burial.query().preload('room').preload('service')
             }
         }
     }

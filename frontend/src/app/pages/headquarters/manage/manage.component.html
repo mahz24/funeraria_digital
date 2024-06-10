@@ -87,6 +87,16 @@
                         </div>
                         <div class="row">
                             <div class="col-4">
+                                Departamento:
+                            </div>
+                            <div class="col-8">
+                                <select class="form-control" id="deptoId">
+                                    <option *ngFor="let option of deptos" [value]="option.id">{{ option.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
                                 Ciudad:
                             </div>
                             <div class="col-8">

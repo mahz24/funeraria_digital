@@ -27,7 +27,7 @@
                     <tbody>
                         <tr *ngFor="let actual of holders">
                             <td>{{actual.id}}</td>
-                            <td>{{actual.client.user_id}}</td>
+                            <td>{{actual.client.user.email}}</td>
 
                             <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                 <button type="button" class="btn btn-danger" (click)="update(actual.id)">Editar</button>

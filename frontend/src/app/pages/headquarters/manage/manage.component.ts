@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { City } from 'src/app/model/city';
+import { Department } from 'src/app/model/department';
 import { Headquarter } from 'src/app/model/headquarter';
 import { CityService } from 'src/app/services/city.service';
+import { DepartmentService } from 'src/app/services/department.service';
 import { HeadquarterService } from 'src/app/services/headquarter.service';
 import Swal from 'sweetalert2';
 
@@ -18,11 +20,13 @@ export class ManageComponent implements OnInit {
   theFormGroup: FormGroup;
   trySend: boolean
   cities: City[]
+  deptos: Department[]
   constructor(private activateRoute: ActivatedRoute,
               private headquarterService: HeadquarterService,
               private router: Router,
               private theFormBuilder: FormBuilder,
-              private cityService: CityService
+              private cityService: CityService,
+              private departmentService: DepartmentService
   ){
     this.mode=1
     this.trySend=false
@@ -62,8 +66,21 @@ export class ManageComponent implements OnInit {
   }
 
   citiesList(){
+    let select = document.querySelector('#deptoId')
+    select.addEventListener('change', () =>{
+      let deptoId = select //mira acá
+      console.log(deptoId);
+      
+    })
+    
     this.cityService.list().subscribe(data=>{
       this.cities = data
+   })
+  }
+
+  deptosList(){
+    this.departmentService.list().subscribe(data=>{
+      this.deptos = data
     })
   }
 
@@ -80,6 +97,7 @@ export class ManageComponent implements OnInit {
       this.headquarter.id=this.activateRoute.snapshot.params.id
       this.getHeadquarter(this.headquarter.id)
     }
+    this.deptosList()
     this.citiesList()
   }
 

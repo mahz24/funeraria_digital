@@ -56,7 +56,14 @@ export class ManageComponent implements OnInit {
   getBurial(id:number){
       this.burialService.view(id).subscribe(data =>{
         this.burial = data
-        console.log(this.burial);
+
+        this.theFormGroup.patchValue({
+          location: this.burial.location,
+          burial_type: this.burial.burial_type,
+          burial_date: this.burial.burial_date,
+          idService: this.burial.service.id,
+          idRoom: this.burial.room.num
+        })
       })
     }
 

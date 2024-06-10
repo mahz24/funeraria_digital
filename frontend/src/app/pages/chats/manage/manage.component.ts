@@ -42,7 +42,6 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       status: ['', [Validators.required]],
       executionservice_id: [0, [Validators.required, Validators.min(0),Validators.max(10000)]],

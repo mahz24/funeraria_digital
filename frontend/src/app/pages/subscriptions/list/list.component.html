@@ -29,7 +29,7 @@
                     <tbody>
                         <tr *ngFor="let actual of subs">
                             <td>{{actual.id}}</td>
-                            <td>{{actual.client.id}}</td>
+                            <td>{{actual.client.user.email}}</td>
                             <td>{{actual.plan.name}}</td>
                             <td>{{actual.activation_date}}</td>
                             <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>

@@ -27,14 +27,13 @@
                                 Fecha de Activación:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
+                                <input type="date" 
                                 class="form-control" 
                                 [(ngModel)]="sub.activation_date" 
-                                [disabled]="mode == 1" 
+                                [value]="sub.activation_date  | date:'yyyy-MM-dd'"
                                 formControlName="activation_date">
                                 <div *ngIf="getTheFormGroup.activation_date.errors && (getTheFormGroup.activation_date.dirty || getTheFormGroup.activation_date.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.activation_date.errors.required" class="msnError">Requerido</strong>
-                                    <strong *ngIf="getTheFormGroup.activation_date.errors.minlength || getTheFormGroup.activation_date.errors.maxlength" class="msnError">Inválido</strong>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +43,7 @@
                             </div>
                             <div class="col-8">
                                 <select class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id">
-                                    <option *ngFor="let option of clients" [value]="option.id">{{ option.id }}</option>
+                                    <option *ngFor="let option of clients" [value]="option.id">{{ option.user.email }}</option>
                                 </select>
                             </div>
                         </div>

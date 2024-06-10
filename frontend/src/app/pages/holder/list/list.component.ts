@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Holder } from 'src/app/model/holder.model';
 import { HolderService } from 'src/app/services/holder.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   holders: Holder[]
-  constructor(private service: HolderService, private router: Router) {
+  constructor(private service: HolderService, private router: Router, private userService: UserService) {
     this.holders = []
   }
 
@@ -22,6 +23,11 @@ export class ListComponent implements OnInit {
   list() {
     this.service.list().subscribe(data => {
       this.holders = data
+      this.holders.forEach(actual =>{
+        this.userService.view(actual.client.user_id).subscribe(data =>{
+          actual.client.user = data
+        })
+      })
       console.log(JSON.stringify(this.holders));
     })
   }

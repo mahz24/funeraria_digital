@@ -25,7 +25,7 @@
                             <th class="col-3">Descripcion</th>
                             <th class="col-5">Capacidad</th>
                             <th class="col-5">Estado</th>
-                            <th class="col-5">Sede ID</th>
+                            <th class="col-5">Sucursal</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,7 +35,7 @@
                             <td>{{actual.description}}</td>
                             <td>{{actual.capacity}}</td>
                             <td>{{actual.status}}</td>
-                            <td>{{actual.headquarter_id}}</td>
+                            <td>{{actual.headquarter.name}}</td>
 
                             <td><button type="button" class="btn btn-primary" (click)="view(actual.num)">Ver</button>
                                 <button type="button" class="btn btn-danger" (click)="update(actual.num)">Editar</button>
@@ -45,12 +45,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="card-header bg-transparent">
-                    <h3 class="mb-0">Icons</h3>
-                </div>
-                <div class="card-body">
-
-                </div>
             </div>
         </div>
            

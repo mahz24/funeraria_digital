@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Headquarter } from 'src/app/model/headquarter';
 import { Room } from 'src/app/model/room';
+import { HeadquarterService } from 'src/app/services/headquarter.service';
 import { RoomService } from 'src/app/services/room.service';
 import Swal from 'sweetalert2';
 
@@ -16,10 +18,12 @@ export class ManageComponent implements OnInit {
   trySend: boolean
   theFormGroup: FormGroup
   estados: String[]
+  headquarters: Headquarter[]
   constructor(private activateRoute: ActivatedRoute,
     private theRoomService: RoomService,
     private router: Router,
-    private theFormBuilder: FormBuilder
+    private theFormBuilder: FormBuilder,
+    private headquarterService: HeadquarterService
   ) {
     this.mode = 1;
     this.estados = ["ACTIVO", "INACTIVO"]
@@ -64,12 +68,17 @@ export class ManageComponent implements OnInit {
       this.room.num = this.activateRoute.snapshot.params.id
       this.getRoom(this.room.num)
     }
+    this.headquartersList()
   }
   getRoom(num: number) {
     this.theRoomService.view(num).subscribe(data => {
       this.room = data
-      console.log(this.room);
-      
+    })
+  }
+
+  headquartersList(){
+    this.headquarterService.list().subscribe(data =>{
+      this.headquarters = data
     })
   }
 

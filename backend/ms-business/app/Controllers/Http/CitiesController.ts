@@ -19,6 +19,22 @@ export default class CitiesController {
         }
     }
 
+    public async findCities({ params }: HttpContextContract){
+        try {
+            let cities: City[] = await City.query()
+            .preload('department')
+            let actualCities: City[] = []
+            cities.forEach(city =>{
+                if(city.department.id == params.id){
+                    actualCities.push(city)
+                }
+            })
+            return actualCities
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(CityValidator);

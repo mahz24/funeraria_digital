@@ -44,16 +44,13 @@
                                     Tipo:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="burial.burial_type"
-                                        [disabled]="mode==1" formControlName="burial_type">
-                                    <div
-                                        *ngIf="getTheFormGroup.burial_type.errors && (getTheFormGroup.burial_type.dirty || getTheFormGroup.burial_type.touched || trySend)">
-                                        <strong *ngIf="getTheFormGroup.burial_type.errors.required"
-                                            class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.burial_type.errors.minlength || getTheFormGroup.burial_type.errors.maxlength"
-                                            class="msnError">Inválido</strong>
-                                    </div>
+                                    <select class="form-control" 
+                                    [(ngModel)]="burial.burial_type" 
+                                    formControlName="burial_type">
+                                        <option value="OSARIO">OSARIO</option>
+                                        <option value="ENTIERRO">ENTIERRO</option>
+                                        <option value="CAMPO">CAMPO</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -61,15 +58,13 @@
                                     Fecha:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="burial.burial_date"
+                                    <input type="date" class="form-control" [(ngModel)]="burial.burial_date"
+                                        [value]="burial.burial_date  | date:'yyyy-MM-dd'"
                                         [disabled]="mode==1" formControlName="burial_date">
                                     <div
                                         *ngIf="getTheFormGroup.burial_date.errors && (getTheFormGroup.burial_date.dirty || getTheFormGroup.burial_date.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.burial_date.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.burial_date.errors.minlength || getTheFormGroup.burial_date.errors.maxlength"
-                                            class="msnError">Inválido</strong>
                                     </div>
                                 </div>
                             </div>
@@ -105,9 +100,9 @@
                                     <button *ngIf="mode==3" (click)="update()" type="button"
                                         class="btn btn-primary btn-block">Actualizar</button>
                                     <button *ngIf="mode==1" (click)="btnService()" type="button"
-                                        class="btn btn-danger">Ver Servicio</button>
+                                        class="btn btn-secondary">Ver Servicio</button>
                                     <button *ngIf="mode==1" type="button" (click)="btnRoom()"
-                                    class="btn btn-warning">Ver Habitación</button>
+                                    class="btn btn-secondary">Ver Habitación</button>
                                 </div>
                             </div>
                         </div>

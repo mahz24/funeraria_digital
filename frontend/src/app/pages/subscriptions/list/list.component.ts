@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'src/app/model/subscription.model';
 import { SubscriptionService } from 'src/app/services/subscription.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
 export class ListComponent implements OnInit {
 
   subs: Subscription[];
-  constructor(private service: SubscriptionService, private router: Router) {
+  constructor(private service: SubscriptionService, private router: Router, private userService: UserService) {
     this.subs = []
   }
 
@@ -23,8 +24,11 @@ export class ListComponent implements OnInit {
   list() {
     this.service.list().subscribe(data => {
       this.subs = data
-      console.log(data);
-      
+      this.subs.forEach(actual =>{
+        this.userService.view(actual.client.user_id).subscribe(data =>{
+          actual.client.user = data
+        })
+      })
     })
   }
 

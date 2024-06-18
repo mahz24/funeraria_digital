@@ -4,6 +4,9 @@ import Chat from 'App/Models/Chat'
 import Executionservice from 'App/Models/Executionservice'
 import Ws from 'App/Services/Ws'
 import ExecutionserviceValidator from 'App/Validators/ExecutionserviceValidator'
+import axios from 'axios'
+import Env from "@ioc:Adonis/Core/Env";
+
 
 export default class ExecutionservicesController {
     public async find({ request, params }: HttpContextContract) {
@@ -53,12 +56,26 @@ export default class ExecutionservicesController {
         execution.service_id = body.service.id
         execution.client_id = body.client.id
         const theExecutionservice: Executionservice = await Executionservice.create(execution);
+        const theExecutionserviceL: Executionservice = await Executionservice.findOrFail(theExecutionservice.id)
+             await theExecutionserviceL.load('client')
+             await theExecutionserviceL.load('service')
+             let userResponse = (await axios.get(`${Env.get("MS_SECURITY_URL")}/users/${theExecutionserviceL.client.user_id}`)).data;
+             console.log(userResponse);
+             let profileResponse = (await axios.get(`${Env.get("MS_SECURITY_URL")}/profiles/${userResponse._id}`)).data
+             const profile = {
+                 "Full_name": profileResponse.name + " " + profileResponse.last_name,
+                 "Birthday": profileResponse.birthday,
+                 "Number_phone": profileResponse.number_phone,
+                 "email": userResponse.email
+             }
+             console.log(profile);
+             
         let chat:Chat = new Chat()
         chat.executionservice_id = execution.id 
-        chat.name= "Servicio del cliente "+execution.client_id
+        chat.name= `${theExecutionserviceL.service.description}   de: ${profile.Full_name}`
         chat.status = "ACTIVO"
         await Chat.create(chat)
-        Ws.io.emit('news',{message:'Se creo un chat para este servicio'})
+        Ws.io.emit('news',{message:'Se creo un chat para este servicio',titulo:`Servicio: ${theExecutionserviceL.service.description}   de: ${theExecutionserviceL.client_id}`,chat:chat.id})
         return theExecutionservice;
     }
 

@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { Fa2Component } from './pages/fa2/fa2.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // import { AuthInterceptor } from './interceptors/auth.interceptor';
 
@@ -36,7 +37,12 @@ import { AuthGuard } from './guards/auth.guard';
     Fa2Component
 
   ],
-  providers: [],
+  providers: [AuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

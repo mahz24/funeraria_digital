@@ -5,12 +5,14 @@ import { ChatsRoutingModule } from './chats-routing.module';
 import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
   declarations: [
     ListComponent,
-    ManageComponent
+    ManageComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,

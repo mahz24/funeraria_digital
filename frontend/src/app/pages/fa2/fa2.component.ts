@@ -4,6 +4,7 @@ import { Session } from 'src/app/model/session.model';
 import { User } from 'src/app/model/user.model';
 import { SecurityService } from 'src/app/services/security.service';
 import { UserService } from 'src/app/services/user.service';
+import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +16,8 @@ export class Fa2Component implements OnInit {
   user: User;
   session: Session;
   constructor(private service: SecurityService, private activateRoute: ActivatedRoute,
-              private userService: UserService, private router: Router
+              private userService: UserService, private router: Router,
+              private formModule:FormsModule
   ) {
     this.user={
       _id: "",
@@ -35,8 +37,7 @@ export class Fa2Component implements OnInit {
   }
 
   authentication2f() {
-    console.log(this.session);
-    
+    console.log("cojo el 2fa"+this.session.token2FA+" usuario "+this.user._id );
     this.service.authentication2fa(this.user._id, this.session).subscribe({
       next:(data)=>{
         this.service.saveSession(data)

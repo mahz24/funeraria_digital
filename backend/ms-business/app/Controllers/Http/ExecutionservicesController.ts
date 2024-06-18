@@ -1,5 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Chat from 'App/Models/Chat'
+// import Chat from 'App/Models/Chat'
 import Executionservice from 'App/Models/Executionservice'
+import Ws from 'App/Services/Ws'
 import ExecutionserviceValidator from 'App/Validators/ExecutionserviceValidator'
 
 export default class ExecutionservicesController {
@@ -50,6 +53,12 @@ export default class ExecutionservicesController {
         execution.service_id = body.service.id
         execution.client_id = body.client.id
         const theExecutionservice: Executionservice = await Executionservice.create(execution);
+        let chat:Chat = new Chat()
+        chat.executionservice_id = execution.id 
+        chat.name= "Servicio del cliente "+execution.client_id
+        chat.status = "ACTIVO"
+        await Chat.create(chat)
+        Ws.io.emit('news',{message:'Se creo un chat para este servicio'})
         return theExecutionservice;
     }
 

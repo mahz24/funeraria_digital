@@ -1,0 +1,42 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<div class="chat_window">
+    <div class="top_menu">
+        <div class="buttons">
+            <div class="button close"></div>
+            <div class="button minimize"></div>
+            <div class="button maximize"></div>
+        </div>
+        <div class="title" ngModel="chat.name">
+            {{chat.name}}
+        </div>
+    </div>
+    <ul class="messages">
+        <li class="message left" *ngFor="let actual of messages">
+            <div class="avatar"> </div>
+            <div class="text_wrapper">
+                <div class="text"> {{actual.content_message}}</div>
+                <div class="date">{{actual.date_send}}</div>
+            </div>
+        </li>
+        <li class="message right" *ngFor="let actual of socketMessages">
+            <div class="avatar">{{actual.perfil}}</div>
+            <div class="text_wrapper">
+                <div class="text"> {{actual.content_message}}</div>
+            </div>
+        </li>
+    </ul>
+    <div class="bottom_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input class="message_input" placeholder="Message..." [(ngModel)]="message.content_message" />
+        </div>
+        <div class="send_message">
+            <button type="button" class="btn btn-success" [(ngModel)]="message.content_message"
+                (click)="create()">Enviar</button>
+        </div>
+    </div>
+</div>

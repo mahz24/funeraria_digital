@@ -1,0 +1,82 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 *ngIf="mode==1">Visualizar</h3>
+                    <h3 *ngIf="mode==2">Crear</h3>
+                    <h3 *ngIf="mode==3">Actualizar</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="theFormGroup">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    Id:
+                                </div>
+                                <div class="col-8">
+                                    {{ difunto.id }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Nombre:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="difunto.nombre"
+                                        [disabled]="mode == 1" formControlName="nombre">
+                                    <div
+                                        *ngIf="getTheFormGroup.nombre.errors && (getTheFormGroup.nombre.dirty || getTheFormGroup.nombre.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.nombre.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong
+                                            *ngIf="getTheFormGroup.nombre.errors.minlength || getTheFormGroup.nombre.errors.maxlength"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Fecha de fallecimiento:
+                                </div>
+                                <div class="col-8">
+                                    <input type="date" class="form-control" [(ngModel)]="difunto.fecha"
+                                        [value]="difunto.fecha  | date:'yyyy-MM-dd'" formControlName="fecha">
+                                    <div
+                                        *ngIf="getTheFormGroup.fecha.errors && (getTheFormGroup.fecha.dirty || getTheFormGroup.fecha.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.fecha.errors.required"
+                                            class="msnError">Requerido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Causa de fallecimiento:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="causa"
+                                        [(ngModel)]="difunto.causa.id">
+                                        <option *ngFor="let option of causas" [value]="option.id">{{ option.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-8">
+                                    <button *ngIf="mode==2" (click)="create()" type="button"
+                                        class="btn btn-primary btn-block">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

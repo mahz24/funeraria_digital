@@ -19,23 +19,23 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.list()
+    // this.list()
   }
 
-  list() {
-    this.service.list().subscribe(data => {
-      this.messages = data
-      this.messages.forEach(actual =>{
-        this.userService.view(actual.user_id).subscribe(data =>{
-          actual.user = data
-          actual.user.password = ""
+  // list() {
+  //   this.service.list().subscribe(data => {
+  //     this.messages = data
+  //     this.messages.forEach(actual =>{
+  //       this.userService.view(actual.user_id).subscribe(data =>{
+  //         actual.user = data
+  //         actual.user.password = ""
           
-        })
-      })
-      console.log(this.messages);
+  //       })
+  //     })
+  //     console.log(this.messages);
       
-    })
-  }
+  //   })
+  // }
 
   view(id: number) {
     this.router.navigate(["messages/view/" + id])

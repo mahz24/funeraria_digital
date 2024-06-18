@@ -13,6 +13,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { Fa2Component } from './pages/fa2/fa2.component';
+import { AuthGuard } from './guards/auth.guard';
+
+// import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 
@@ -28,9 +31,10 @@ import { Fa2Component } from './pages/fa2/fa2.component';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
     AuthLayoutComponent,
-    Fa2Component,
+    AdminLayoutComponent,
+    Fa2Component
+
   ],
   providers: [],
   bootstrap: [AppComponent]

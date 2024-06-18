@@ -12,8 +12,10 @@ import { Profile } from '../model/profile.model';
   providedIn: 'root'
 })
 export class SecurityService {
-  theUser=new BehaviorSubject<User>(new User);
-  constructor(private http: HttpClient, private service: UserService) { }
+  theUser = new BehaviorSubject<User>(new User);
+  constructor(private http: HttpClient, private service: UserService) {
+    this.verifyActualSession()
+   }
   /**
     * Permite obtener la información de usuario
     * que tiene la función activa y servirá
@@ -50,31 +52,39 @@ export class SecurityService {
   /*
   OJO FALTA VALIDACIÓN
   */
-  
-  authentication2fa(id: String, session:Session): Observable<Session>{
+
+  authentication2fa(id: String, session: Session): Observable<Session> {
     return this.http.post<Session>(`${environment.url_ms_security}/api/public/security/2FA-login/${id}`, session);
   }
 
+  resetPassword(email: string): Observable<Session> {
+    return this.http.patch<Session>(`${environment.url_ms_security}/api/public/security/reset-password`, { "email": email });
+  }
   /*
   OJO FALTA VALIDACIÓN
   */
   saveSession(dataSesion: any) {
-    let profile: Profile
-    this.service.getProfile(dataSesion["User"]["_id"]).subscribe(data=>{
-      profile = data
-    })
-    let actualSession = localStorage.getItem('sesion');
-
-    let data: User = {
+    
+    let profile: String
+    let dataa: User
+    this.service.getProfile(dataSesion["User"]["_id"]).subscribe(data => {
+    console.log(data);
+      
+      
+     dataa = {
       _id: dataSesion["User"]["_id"],
-      password:"",
+      password: "",
+      name:data.name,
       email: dataSesion["User"]["email"],
-      name: profile.name,
       role: dataSesion["User"]["role"],
       token: dataSesion["token"]
-    };
-    localStorage.setItem('sesion', JSON.stringify(data));
-    this.setUser(data);
+    }
+    localStorage.setItem('sesion', JSON.stringify(dataa));
+    this.setUser(dataa);
+    let actualSession = localStorage.getItem('sesion');
+    });
+    
+   
   }
   /**
   * Permite cerrar la sesión del usuario

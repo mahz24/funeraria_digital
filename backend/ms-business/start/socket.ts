@@ -9,9 +9,7 @@ Ws.io.on('connection', (socket) => {
     let id = socket.id
     const { body } = socket.handshake.query;
     console.log("se conecto" + id);
-
-
-    socket.emit('news', { hello: 'world' })
+    // socket.emit('news', { hello: 'world' })
     
     /**
  * Topicos es como una cartelera a los que se conectan que seria en este caso es news

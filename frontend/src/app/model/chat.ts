@@ -5,8 +5,8 @@ import { Message } from "./message"
 export class Chat {
     id?: number
     name: string
-    status: string
-    executionservice_id: number
+    status?: string
+    executionservice_id?: number
     executionservice?:Executionservice
     messages?: Message[]
 }

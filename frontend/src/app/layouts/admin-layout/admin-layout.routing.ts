@@ -90,5 +90,14 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'holders',
         loadChildren: () => import('src/app/pages/holder/holder.module').then(m=> m.HolderModule)
-    }
+    },
+    {
+        path: 'difuntos',
+        loadChildren: () => import('src/app/pages/difuntos/difuntos.module').then(m=> m.DifuntosModule)
+    },
+    {
+        path: 'causa',
+        loadChildren: () => import('src/app/pages/causa/causa.module').then(m=> m.CausaModule)
+    },
+
 ];

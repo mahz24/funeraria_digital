@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/model/client';
 import { Executionservice } from 'src/app/model/executionservice';
+import { Profile } from 'src/app/model/profile.model';
 import { Service } from 'src/app/model/service.model';
 import { ClientService } from 'src/app/services/client.service';
 import { ExecutionserviceService } from 'src/app/services/executionservice.service';
@@ -20,9 +21,10 @@ export class ManageComponent implements OnInit {
   type: number
   trySend:boolean
   executionservice: Executionservice
-  theFormGroup:FormGroup
-  services:Service[]
-  clients:Client[]
+  theFormGroup: FormGroup
+  services: Service[]
+  clients: Client[]
+  profile: Profile[]
   constructor(private activateRoute: ActivatedRoute,
     private theExe: ExecutionserviceService,
     private router: Router,
@@ -34,11 +36,12 @@ export class ManageComponent implements OnInit {
     this.mode = 1;
     this.type = 0
     this.trySend=false
-    this.clients=[]
-    this.services=[]
+    this.profile = []
+    this.clients = []
+    this.services = []
     this.executionservice = {
       id: 0,
-      client_id:0,
+      client_id: 0,
       service_id: 0,
       end_date:null,
       client:{
@@ -46,9 +49,9 @@ export class ManageComponent implements OnInit {
         gender:"",
         is_alive:true,
       },
-      service:{
-        description:"",
-        price:0
+      service: {
+        description: "",
+        price: 0
       }
     }
     this.configFormGroup()
@@ -59,21 +62,31 @@ export class ManageComponent implements OnInit {
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
       client_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
-      end_date: ['', [Validators.required,Validators.minLength(4), Validators.maxLength(50)]],
+      end_date: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       service_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
     })
   }
 
 
-  servicesList(){
-    this.serviceSer.list().subscribe(data=>{
+  servicesList() {
+    this.serviceSer.list().subscribe(data => {
       this.services = data
     })
   }
 
-  
-  clientsList(){
-    this.clientservice.list().subscribe(data=>{
+
+  clientsList() {
+    this.clientservice.list().subscribe(data => {
+      this.clients = data
+      this.clients.forEach(client => {
+        console.log(this.userService.getProfile(client.user_id));
+      });
+
+    })
+  }
+
+  p() {
+    this.clientservice.list().subscribe(data => {
       this.clients = data
       this.clients.forEach(actual =>{
         this.userService.view(actual.user_id).subscribe(data =>{
@@ -84,6 +97,7 @@ export class ManageComponent implements OnInit {
       
     })
   }
+
 
   get getTheFormGroup() {
     return this.theFormGroup.controls

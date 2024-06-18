@@ -16,6 +16,10 @@ export class MessageService {
     return this.http.get<Message[]>(`${environment.url_ms_business}/messages`);
   }
 
+  listByChat(id:number): Observable<Message[]> {
+    return this.http.get<Message[]>(`${environment.url_ms_business}/messages/bychat/${id}`);
+  }
+
   view(id: number): Observable<Message> {
     return this.http.get<Message>(`${environment.url_ms_business}/messages/${id},
     `);

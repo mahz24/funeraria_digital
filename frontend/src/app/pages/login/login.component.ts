@@ -33,7 +33,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         Swal.fire("Autenticación Invalida", "Usuario o contraseña inválida", "error")
       }
     })
+  }
 
+  reset(){
+    console.log(this.theUser.email);
+    this.theSecurityService.resetPassword(this.theUser.email).subscribe({
+     next:(data)=>
+       Swal.fire("Revise su nueva contraseña", "Mire su correo", "success")
+    })
   }
 
 }

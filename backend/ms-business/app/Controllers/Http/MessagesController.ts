@@ -3,6 +3,7 @@ import Message from 'App/Models/Message';
 import MessageValidator from 'App/Validators/MessageValidator';
 import Env from "@ioc:Adonis/Core/Env";
 import axios from 'axios';
+import Ws from 'App/Services/Ws';
 
 export default class MessagesController {
     public async find({ request, params }: HttpContextContract) {
@@ -28,15 +29,30 @@ export default class MessagesController {
         const body = await request.validate(MessageValidator);
         let api_response = await axios.get(`${Env.get('MS_SECURITY_URL')}/users/${body.user_id}`)
         let user = await api_response.data;
-        if(user =! null){
+        if (user != null) {
             const theMessage: Message = await Message.create(body);
+            let perfil = await axios.get(`${Env.get('MS_SECURITY_URL')}/profiles/${body.user_id}`)
+            console.log(perfil);
+            Ws.io.emit('news', { message: 'Mensaje nuevo' })
+            Ws.io.emit(`chat${theMessage.chat_id}`, {content_message:`${theMessage.content_message}`,perfil:`${perfil.data.name}`})
             return theMessage;
-        }else{
+        } else {
             return response.status(400).json({
                 "mensaje": "El usuario del mensaje no fue encontrado.",
                 "data": body
             })
-        }   
+        }
+    }
+
+    public async findByChat({ params }: HttpContextContract) {
+        const theMessage: Message[] = await Message.query().preload('chat')
+        let realMessages: Message[] = []
+        theMessage.forEach(actual => {
+            if (actual.chat.id == params.id) {
+                realMessages.push(actual)
+            }
+        })
+        return realMessages
     }
 
     public async update({ params, request }: HttpContextContract) {

@@ -1,0 +1,105 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <h3 *ngIf="mode==1">Visualizar</h3>
+                    <h3 *ngIf="mode==2">Crear</h3>
+                    <h3 *ngIf="mode==3">Actualizar</h3>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="theFormGroup">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    Id:
+                                </div>
+                                <div class="col-8">
+                                    {{ bill.id }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Monto:
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" [(ngModel)]="bill.amount"
+                                        [disabled]="mode == 1" formControlName="amount">
+                                    <div
+                                        *ngIf="getTheFormGroup.amount.errors && (getTheFormGroup.amount.dirty || getTheFormGroup.amount.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.amount.errors.required"
+                                            class="msnError">Requerido</strong>
+                                        <strong *ngIf="getTheFormGroup.amount.errors.min"
+                                            class="msnError">Inválido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Fecha:
+                                </div>
+                                <div class="col-8">
+                                    <input type="date" class="form-control" [(ngModel)]="bill.date"
+                                        [value]="bill.date | date:'yyyy-MM-dd'" formControlName="date">
+                                    <div
+                                        *ngIf="getTheFormGroup.date.errors && (getTheFormGroup.date.dirty || getTheFormGroup.date.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.date.errors.required"
+                                            class="msnError">Requerido</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    Suscripción:
+                                </div>
+                                <div class="col-8">
+                                    <select class="form-control" formControlName="idSub"
+                                        [(ngModel)]="bill.subscription.id">
+                                        <option *ngFor="let option of subs" [value]="option.id">Plan: {{
+                                            option.plan.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-8">
+                                    <button *ngIf="mode==2" (click)="create()" type="button"
+                                        class="btn btn-primary btn-block">Crear</button>
+                                    <button *ngIf="mode==3" (click)="update()" type="button"
+                                        class="btn btn-primary btn-block">Actualizar</button>
+                                    <button *ngIf="mode==1" (click)="btnSubs()" type="button"
+                                        class="btn btn-secondary">Ver Suscripción</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div>
+                        <form> HOLA
+                            <script src="https://checkout.epayco.co/checkout.js" 
+                                class="epayco-button"
+                                data-epayco-key="bea1c34ca4b7d71dba867321c53c1657"
+                                data-epayco-private-key="4d1123191b96762ab0299a4972ce8e0b"
+                                data-epayco-invoice="123"
+                                data-epayco-amount="5000"
+                                data-epayco-name="ish"
+                                data-epayco-description="Vestido Mujer Primavera" 
+                                data-epayco-currency="cop"
+                                data-epayco-country="co" 
+                                data-epayco-test="true"
+                                data-epayco-external="false"
+                                data-epayco-response="https://ejemplo.com/respuesta.html"
+                                data-epayco-confirmation="https://ejemplo.com/confirmacion">
+                                </script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

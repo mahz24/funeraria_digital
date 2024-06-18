@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { log } from 'console';
 import { Message } from 'src/app/model/message';
+import { User } from 'src/app/model/user.model';
 import { MessageService } from 'src/app/services/message.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,10 +18,12 @@ export class ManageComponent implements OnInit {
   message: Message
   trySend:boolean
   theFormGroup:FormGroup
+  users: User[]
   constructor(private activateRoute: ActivatedRoute,
     private theMessageService: MessageService,
     private router: Router,
-    private theFormBuilder:FormBuilder
+    private theFormBuilder:FormBuilder,
+    private userService: UserService
   ) {
     this.mode = 1;
     this.trySend=false
@@ -35,7 +39,6 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       chat_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
       content_message: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       date_send: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(40)]],
@@ -46,6 +49,17 @@ export class ManageComponent implements OnInit {
 
   get getTheFormGroup() {
     return this.theFormGroup.controls
+  }
+
+  listUsers(){
+    this.userService.list().subscribe(data=>{
+      this.users = data
+      console.log(this.users);
+      
+      this.users.forEach(actual =>{
+        actual.password = ""
+      })
+    })
   }
 
   ngOnInit(): void {
@@ -61,11 +75,17 @@ export class ManageComponent implements OnInit {
       this.message.id = this.activateRoute.snapshot.params.id
       this.getMessage(this.message.id)
     }
+    this.listUsers()
   }
   getMessage(id: number) {
     this.theMessageService.view(id).subscribe(data => {
       this.message = data
-      console.log(data);
+      this.theFormGroup.patchValue({
+        chat_id: this.message.chat_id,
+        content_message: this.message.content_message,
+        date_send: this.message.date_send,
+        user_id: this.message.user_id
+      })
     })
   }
 
@@ -75,7 +95,7 @@ export class ManageComponent implements OnInit {
     if (this.theFormGroup.invalid) {
       Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
     } else {
-      console.log(this.message);
+      console.log(JSON.stringify(this.message));
 
       this.theMessageService.create(this.message).subscribe(data => {
         Swal.fire(

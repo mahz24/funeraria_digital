@@ -7,7 +7,7 @@ export default class RelocationsController {
         if (params.id) {
             const theRelocation: Relocation = await Relocation.findOrFail(params.id)
             await theRelocation.load('service')
-            return await Relocation.findOrFail(params.id);
+            return await theRelocation;
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {
@@ -21,7 +21,13 @@ export default class RelocationsController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(RelocationValidator);
-        const theRelocation: Relocation = await Relocation.create(body);
+        let relocation: Relocation = new Relocation()
+        relocation.location = body.location
+        relocation.status = body.status
+        relocation.arrival_time = body.arrival_time
+        relocation.departure_time = body.departure_time
+        relocation.service_id = body.service.id
+        const theRelocation: Relocation = await Relocation.create(relocation);
         return theRelocation;
     }
 
@@ -32,7 +38,7 @@ export default class RelocationsController {
         theRelocation.status = body.status;
         theRelocation.departure_time = body.departure_time;
         theRelocation.arrival_time = body.arrival_time;
-        theRelocation.service_id = body.service_id
+        theRelocation.service_id = body.service.id
         return await theRelocation.save();
     }
 

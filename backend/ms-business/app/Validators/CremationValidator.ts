@@ -10,7 +10,9 @@ export default class CremationValidator {
     status: schema.string([rules.minLength(2), rules.maxLength(30), rules.regex(/^(REALIZADO|CANCELADO|PENDIENTE)$/)
     ]),
     service_id: schema.number([rules.exists({ table: 'services', column: 'id' })]),
-    room_id: schema.number([rules.exists({ table: 'rooms', column: 'num' })]),
+    room: schema.object().members({
+      num:schema.number([rules.exists({ table: 'rooms', column: 'num' })])
+    }),
 
   })
   public messages: CustomMessages = {}

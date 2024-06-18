@@ -19,7 +19,7 @@
                                     Id:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="message.id" disabled formControlName="id">
+                                    {{message.id}}
                                 </div>
                             </div>
                             <div class="row">
@@ -58,19 +58,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    Usuario ID:
+                                    Usuario:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="message.user_id"
-                                    [disabled]="mode==1" formControlName="user_id">
-                                <div
-                                    *ngIf="getTheFormGroup.user_id.errors && (getTheFormGroup.user_id.dirty || getTheFormGroup.user_id.touched || trySend)">
-                                    <strong *ngIf="getTheFormGroup.user_id.errors.required"
-                                        class="msnError">Requerido</strong>
-                                    <strong
-                                        *ngIf="getTheFormGroup.user_id.errors.minlength || getTheFormGroup.user_id.errors.maxlength"
-                                        class="msnError">Inválido</strong>
-                                </div>
+                                    <select class="form-control" [(ngModel)]="message.user_id" formControlName="user_id">
+                                        <option *ngFor="let option of users" [value]="option._id">{{ option.email }}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -78,15 +71,12 @@
                                     Fecha:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="message.date_send"
-                                        [disabled]="mode==1" formControlName="date_send">
+                                    <input type="date" class="form-control" [(ngModel)]="message.date_send"
+                                        [value]="message.date_send | date:'yyyy-MM-dd'" formControlName="date_send">
                                     <div
                                         *ngIf="getTheFormGroup.date_send.errors && (getTheFormGroup.date_send.dirty || getTheFormGroup.date_send.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.date_send.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.date_send.errors.minlength || getTheFormGroup.date_send.errors.maxlength"
-                                            class="msnError">Inválido</strong>
                                     </div>
                                 </div>
                             </div>

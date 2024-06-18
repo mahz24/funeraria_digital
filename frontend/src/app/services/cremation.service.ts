@@ -20,7 +20,7 @@ export class CremationService {
     `);
   }
   create(theCremation: Cremation): Observable<Cremation> {
-    return this.http.post<Cremation>(`${environment.url_ms_business}/cremations/`, theCremation
+    return this.http.post<Cremation>(`${environment.url_ms_business}/cremations`, theCremation
     );
   }
   update(theCremation: Cremation): Observable<Cremation> {

@@ -2,7 +2,6 @@ import { Service } from "./service.model"
 
 export class Relocation {
     id?: number
-    service_id: number
     service?: Service
     location: string
     status: string

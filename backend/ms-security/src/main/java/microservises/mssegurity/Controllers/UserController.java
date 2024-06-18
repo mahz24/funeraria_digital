@@ -2,6 +2,7 @@ package microservises.mssegurity.Controllers;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -41,25 +42,18 @@ public class UserController {
 
     @SuppressWarnings("unused")
     @GetMapping("")
-    public ResponseEntity<?> index() {
+    public List<User> index(final HttpServletResponse response) {
         try {
             List<User> users = this.userRepository.findAll();
             if (users != null && users.size() > 0) {
-                this.jsonResponsesService.setData(users);
-                this.jsonResponsesService.setMessage("Lista de Usuarios encontrada correctamente");
-                return ResponseEntity.status(HttpStatus.OK)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                return users;
             } else {
-                this.jsonResponsesService.setMessage("No hay usuarios registrados");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                response.setStatus(400);
+                return users;
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setData(null);
-            this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar usuarios");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            response.setStatus(400);
+            return null;
         }
     }
 
@@ -147,19 +141,15 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody User newUser) {
+    public User create(@RequestBody User newUser, final HttpServletResponse response) {
         try {
             newUser.setPassword(thEncryptionService.convertSHA256(newUser.getPassword()));
+            response.setStatus(200);
             User user = this.userRepository.save(newUser);
-            this.jsonResponsesService.setData(user);
-            this.jsonResponsesService.setMessage("Usuario añadido satisfactoriamente");
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.jsonResponsesService.getFinalJSON());
+            return  user;
         } catch (Exception e) {
-            this.jsonResponsesService.setData(null);
-            this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al crear al usuario");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            response.setStatus(500);
+            return null;
         }
     }
 

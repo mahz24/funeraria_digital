@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/model/client';
+import { Profile } from 'src/app/model/profile.model';
 import { ClientService } from 'src/app/services/client.service';
+import { UserService } from 'src/app/services/user.service';
 
 import  Swal from "sweetalert2";
 
@@ -14,33 +16,26 @@ import  Swal from "sweetalert2";
 export class ManageComponent implements OnInit {
   mode: number; //1-> view, 2-> Create, 3-> Update
   client: Client;
+  profile: Profile
   theFormGroup: FormGroup;
   trySend: boolean
   constructor(private activateRoute: ActivatedRoute,
-              private serviceClient:ClientService
+              private serviceClient:ClientService,
+              private theFormBuilder: FormBuilder,
+              private userService: UserService,
+              private router: Router
   ){
     this.mode=1
-    this.client = {
-      id: 0, 
-      gender: "", 
-      direction: "", 
-      user_id:"", 
-      is_alive:false, 
-      user:{
-        "Full_name": "", 
-        "Birthday": "", 
-        "Number_phone": "", 
-        "Email": ""
-      },
-      holder:{},
-      benefactor:{}
-    }
+    this.client = {id: 0, direction:"", gender:"", is_alive: true}
+    this.profile = {name: "", last_name: "", birthday: "", number_phone:""}
+    this.configFormGroup()
   }
   getClient(id:number){
       this.serviceClient.view(id).subscribe(data =>{
-        
         this.client = data
-        console.log(this.client);
+        this.userService.getProfile(this.client.user_id).subscribe(data => {
+          this.profile = data
+        })
       })
     }
 
@@ -53,96 +48,60 @@ export class ManageComponent implements OnInit {
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if(this.activateRoute.snapshot.params.id){
+    if(this.activateRoute.snapshot.params.id && this.mode != 2){
       this.client.id=this.activateRoute.snapshot.params.id
       this.getClient(this.client.id)
+    }else if(this.activateRoute.snapshot.params.id && this.mode == 2){
+      this.client.user_id = this.activateRoute.snapshot.params.id
     }
   }
-  
-  // constructor(private activateRoute: ActivatedRoute,
-  //   private theFormBuilder: FormBuilder,
-  //   private service: ClientService,
-  //   private router: Router) {
-  //   this.trySend = false
-  //   this.mode = 1;
-  //   this.client = {
-  //     id: 0, 
-  //     gender: "", 
-  //     direction: "", 
-  //     user_id:"", 
-  //     is_alive:false, 
-  //     user:{
-  //       "Full_name": "", 
-  //       "Birthday": "", 
-  //       "number_phone": "", 
-  //       "email": ""
-  //     }
-  //   }
-  //   this.configFormGroup()
-  // }
 
-  // configFormGroup() {
-  //   this.theFormGroup = this.theFormBuilder.group({ 
-  //     gender: [0, [Validators.required]],
-  //     location: ['', [Validators.required, Validators.minLength(2)]]
-  //   })
-  // }
+  configFormGroup() {
+    this.theFormGroup = this.theFormBuilder.group({ 
+      name:['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      last_name:['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      birthday:['',[Validators.required]],
+      number_phone:['',[Validators.required, Validators.minLength(7), Validators.maxLength(15)]],
+      direction:['',[Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      gender:['',[Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      is_alive:[null,[Validators.required]]
+    })
+  }
 
-  // get getTheFormGroup() {
-  //   return this.theFormGroup.controls
-  // }
+  get getTheFormGroup(){
+    return this.theFormGroup.controls
+  }
 
-  // //getTheaterData(){
-  // //  this.theater.capacity = this.getTheFormGroup.capacity.value;
-  // //  this.theater.location = this.getTheFormGroup.location.value;
-  // //}
+  create(){
+    this.trySend=true
+    if(this.theFormGroup.invalid){
+      Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
+    }else{
+      this.serviceClient.create(this.client).subscribe(data=>{
+        this.userService.createProfile(this.client.user_id, this.profile).subscribe(data =>{
+          Swal.fire(
+            "Completado", 'Se ha creado correctamente', 'success'
+          )
+          this.router.navigate(["clients/list"])
+        })
+      })
+    }
+  }
 
-  // ngOnInit(): void {
-  //   const currentUrl = this.activateRoute.snapshot.url.join('/');
-
-  //   if (currentUrl.includes('view')) {
-  //     this.mode = 1;
-  //   } else if (currentUrl.includes('create')) {
-  //     this.mode = 2;
-  //   } else if (currentUrl.includes('update')) {
-  //     this.mode = 3;
-  //   }
-
-  //   if (this.activateRoute.snapshot.params.id) {
-  //     this.client.id = this.activateRoute.snapshot.params.id;
-  //     this.getClient(this.client.id);
-  //   }
-  // }
-
-
-  // getClient(id: number) {
-  //   this.service.view(id).subscribe(data => {
-  //     this.client = data
-  //     console.log("cliente" + JSON.stringify(this.client));
-  //   })
-  // }
-
-  // create() {
-  //   if (this.theFormGroup.invalid) {
-  //     this.trySend = true
-  //     Swal.fire("Formulario Incompleto", "Ingrese correctamente los datos solicitados", "error")
-  //     return
-  //   }
-  //   //this.service.create(this.client).subscribe(data => {
-  //   //  Swal.fire("Creación Exitosa", "Se ha creado un nuevo registro", "success")
-  //   //  this.router.navigate(["clients/list"])
-  //   //})
-  // }
-  // update() {
-  //   if (this.theFormGroup.invalid) {
-  //     this.trySend = true
-  //     Swal.fire("Formulario Incompleto", "Ingrese correctamente los datos solicitados", "error")
-  //     return
-  //   }
-  //   //this.service.update(this.client).subscribe(data => {
-  //   //  Swal.fire("Actualización Exitosa", "Se ha actualizado el registro", "success")
-  //   //  this.router.navigate(["clients/list"])
-  //   //})
-  // }
+  update(){
+    this.trySend=true
+    if(this.theFormGroup.invalid){
+      Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
+    }else{
+      this.serviceClient.update(this.client).subscribe(data=>{
+        this.userService.updateProfile(this.client.user_id, this.profile).subscribe(data =>{
+          Swal.fire(
+            "Completado", 'Se ha actualizado correctamente', 'success'
+          )
+          this.router.navigate(["clients/list"])
+        })
+      })
+    }
+  }
 
 }

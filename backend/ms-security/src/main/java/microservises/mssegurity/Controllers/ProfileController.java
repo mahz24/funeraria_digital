@@ -56,7 +56,7 @@ public class ProfileController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable String id){
         try{
-            Profile theProfile = theProfileRepository.findById(id).orElse(null);
+            Profile theProfile = theProfileRepository.getProfilebyUserId(id);
             if(theProfile != null){
                 this.theProfileRepository.delete(theProfile);
                 this.theJsonResponse.setMessage("El perfil se ha eliminado.");
@@ -73,9 +73,9 @@ public class ProfileController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/user/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody Profile theNewProfile){
-        Profile theActualProfile = this.theProfileRepository.findById(id).orElse(null);
+        Profile theActualProfile = this.theProfileRepository.getProfilebyUserId(id);
         try{
             if(theActualProfile != null){
                 theActualProfile.setName(theNewProfile.getName());
@@ -102,15 +102,9 @@ public class ProfileController {
     public Profile findByUser(@PathVariable String id){
         try{
             Profile theProfile = this.theProfileRepository.getProfilebyUserId(id);
-            System.out.println(theProfile);
             if(theProfile != null){
-                theJsonResponse.setData(theProfile);
-                theJsonResponse.setMessage("Se ha encontrado el perfil.");
-                //return ResponseEntity.status(HttpStatus.OK).body(this.theJsonResponse.getFinalJSON());
                 return theProfile;
             }else{
-                this.theJsonResponse.setMessage("No se encontró perfil.");
-                //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.theJsonResponse.getFinalJSON());
                 return theProfile;
             }
         }catch (Exception e){

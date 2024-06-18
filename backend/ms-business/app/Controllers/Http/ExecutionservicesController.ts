@@ -1,5 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Chat from 'App/Models/Chat'
+// import Chat from 'App/Models/Chat'
 import Executionservice from 'App/Models/Executionservice'
+import Ws from 'App/Services/Ws'
 import ExecutionserviceValidator from 'App/Validators/ExecutionserviceValidator'
 
 export default class ExecutionservicesController {
@@ -22,7 +25,17 @@ export default class ExecutionservicesController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(ExecutionserviceValidator);
-        const theExecutionservice: Executionservice = await Executionservice.create(body);
+        let execution: Executionservice = new Executionservice()
+        execution.end_date = body.end_date
+        execution.service_id = body.service.id
+        execution.client_id = body.client.id
+        const theExecutionservice: Executionservice = await Executionservice.create(execution);
+        let chat:Chat = new Chat()
+        chat.executionservice_id = execution.id 
+        chat.name= "Servicio del cliente "+execution.client_id
+        chat.status = "ACTIVO"
+        await Chat.create(chat)
+        Ws.io.emit('news',{message:'Se creo un chat para este servicio'})
         return theExecutionservice;
     }
 
@@ -30,8 +43,8 @@ export default class ExecutionservicesController {
         const body = await request.validate(ExecutionserviceValidator);
         const theExecutionservice: Executionservice = await Executionservice.findOrFail(params.id);
         theExecutionservice.end_date = body.end_date;
-        theExecutionservice.client_id = body.client_id;
-        theExecutionservice.service_id = body.service_id;
+        theExecutionservice.client_id = body.client.id;
+        theExecutionservice.service_id = body.service.id;
         return await theExecutionservice.save();
     }
 

@@ -19,8 +19,7 @@
                                     Reubicacion ID:
                                 </div>
                                 <div class="col-8">
-                                    <input type="number" class="form-control" [(ngModel)]="relocation.id" disabled
-                                        formControlName="id">
+                                    {{relocation.id}}
                                 </div>
                             </div>
                             <div class="row">
@@ -28,15 +27,13 @@
                                     Servicio ID:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="relocation.service_id"
-                                        [disabled]="mode==1" formControlName="service_id">
+                                    <input type="text" class="form-control" [(ngModel)]="relocation.service.id"
+                                        [disabled]="mode==1" formControlName="idService">
                                     <div
-                                        *ngIf="getTheFormGroup.service_id.errors && (getTheFormGroup.service_id.dirty || getTheFormGroup.service_id.touched || trySend)">
-                                        <strong *ngIf="getTheFormGroup.service_id.errors.required"
+                                        *ngIf="getTheFormGroup.idService.errors && (getTheFormGroup.idService.dirty || getTheFormGroup.idService.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.idService.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.service_id.errors.min || getTheFormGroup.service_id.errors.max"
-                                            class="msnError">Inválido, rango(1-50)</strong>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -73,15 +70,12 @@
                                     Fecha salida:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="relocation.departure_time"
-                                        [disabled]="mode==1" formControlName="departure_time">
+                                    <input type="date" class="form-control" [(ngModel)]="relocation.departure_time"
+                                        [value]="relocation.departure_time | date:'yyyy-MM-dd'" formControlName="departure_time">
                                     <div
                                         *ngIf="getTheFormGroup.departure_time.errors && (getTheFormGroup.departure_time.dirty || getTheFormGroup.departure_time.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.departure_time.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.departure_time.errors.minlength || getTheFormGroup.departure_time.errors.maxlength"
-                                            class="msnError">Inválido</strong>
                                     </div>
                                 </div>
                             </div>
@@ -90,15 +84,12 @@
                                     Fecha llegada:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="relocation.arrival_time"
-                                        [disabled]="mode==1" formControlName="arrival_time">
+                                    <input type="date" class="form-control" [(ngModel)]="relocation.arrival_time"
+                                    [value]="relocation.arrival_time | date:'yyyy-MM-dd'" formControlName="arrival_time">
                                     <div
                                         *ngIf="getTheFormGroup.arrival_time.errors && (getTheFormGroup.arrival_time.dirty || getTheFormGroup.arrival_time.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.arrival_time.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.arrival_time.errors.minlength || getTheFormGroup.arrival_time.errors.maxlength"
-                                            class="msnError">Inválido</strong>
                                     </div>
                                 </div>
                             </div>

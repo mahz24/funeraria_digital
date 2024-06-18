@@ -22,7 +22,12 @@ export default class CremationsController {
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(CremationValidator);
-        const theCremation: Cremation = await Cremation.create(body);
+        let cremation: Cremation = new Cremation()
+        cremation.cremation_date = body.cremation_date;
+        cremation.status = body.status;
+        cremation.room_id = body.room.num
+        cremation.service_id = body.service_id;
+        const theCremation: Cremation = await Cremation.create(cremation);
         return theCremation;
     }
 
@@ -31,10 +36,8 @@ export default class CremationsController {
         const theCremation: Cremation = await Cremation.findOrFail(params.id);
         theCremation.cremation_date = body.cremation_date;
         theCremation.status = body.status;
-        theCremation.room_id = body.room_id
+        theCremation.room_id = body.room.num
         theCremation.service_id = body.service_id;
-        ;
-
         return await theCremation.save();
     }
 

@@ -8,11 +8,10 @@ export default class HeadquarterValidator {
     name: schema.string([rules.minLength(2), rules.maxLength(50)]),
     direction: schema.string([rules.minLength(2), rules.maxLength(100)]),
     description: schema.string([rules.minLength(2), rules.maxLength(100)]),
-    status: schema.string([rules.regex(/^(ACTIVO|INACTIVO)$/)]),
-    city_id: schema.number(
-      [rules.exists({
-        table: 'cities', column: 'id'
-      })])
+    status: schema.number([rules.range(1,4)]),
+    city:schema.object().members({
+      id:schema.number([rules.exists({ table: 'cities', column: 'id' })])
+    })
   })
 
   /**

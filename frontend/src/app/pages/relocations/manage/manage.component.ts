@@ -30,7 +30,11 @@ export class ManageComponent implements OnInit {
       status: "",
       departure_time: null,
       arrival_time: null,
-      service_id: 0,
+      service:{
+        id:null,
+        description:"",
+        price:0
+      }
     }
     this.configFormGroup()
   }
@@ -38,12 +42,11 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       status: ['', [Validators.required]],
       location: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
       departure_time: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
       arrival_time: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      service_id: [0, [Validators.required, Validators.min(1), Validators.max(50)]],
+      idService:[null, Validators.required],
     })
   }
 
@@ -69,6 +72,13 @@ export class ManageComponent implements OnInit {
   getPS(id: number) {
     this.service.view(id).subscribe(data => {
       this.relocation = data
+      this.theFormGroup.patchValue({
+        status: this.relocation.status,
+        location: this.relocation.location,
+        departure_time: this.relocation.departure_time,
+        arrival_time: this.relocation.arrival_time,
+        idService: this.relocation.service.id
+      })
     })
   }
 

@@ -19,7 +19,7 @@
                                     Id:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="comment.id" disabled formControlName="id">
+                                    {{comment.id}}
                                 </div>
                             </div>
                             <div class="row">
@@ -44,15 +44,13 @@
                                     Fecha:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="comment.date_comment"
+                                    <input type="date" class="form-control" [(ngModel)]="comment.date_comment"
+                                    [value]="comment.date_comment | date:'yyyy-MM-dd'"
                                         [disabled]="mode==1" formControlName="date_comment">
                                     <div
                                         *ngIf="getTheFormGroup.date_comment.errors && (getTheFormGroup.date_comment.dirty || getTheFormGroup.date_comment.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.date_comment.errors.required"
                                             class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.date_comment.errors.min || getTheFormGroup.date_comment.errors.max"
-                                            class="msnError">Inválido, debe ser mayor a 1</strong>
                                     </div>
                                 </div>
                             </div>

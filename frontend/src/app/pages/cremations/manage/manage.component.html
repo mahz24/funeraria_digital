@@ -19,8 +19,7 @@
                                     Cremacion ID:
                                 </div>
                                 <div class="col-8">
-                                    <input type="number" class="form-control" [(ngModel)]="cremation.id" disabled
-                                        formControlName="id">
+                                    {{cremation.id}}
                                 </div>
                             </div>
                             <div class="row">
@@ -42,19 +41,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    Sala ID:
+                                    Habitación:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="cremation.room_id"
-                                        [disabled]="mode==1" formControlName="room_id">
-                                    <div
-                                        *ngIf="getTheFormGroup.room_id.errors && (getTheFormGroup.room_id.dirty || getTheFormGroup.room_id.touched || trySend)">
-                                        <strong *ngIf="getTheFormGroup.room_id.errors.required"
-                                            class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.room_id.errors.min || getTheFormGroup.room_id.errors.max"
-                                            class="msnError">Inválido, rango(1-50)</strong>
-                                    </div>
+                                    <select class="form-control" [(ngModel)]="cremation.room.num"
+                                    formControlName="room_id">
+                                        <option *ngFor="let option of rooms" [value]="option.num">Cuarto: {{ option.name }}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -73,15 +66,12 @@
                                     Fecha:
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" [(ngModel)]="cremation.cremation_date"
-                                    [disabled]="mode==1" formControlName="cremation_date">
+                                    <input type="date" class="form-control" [(ngModel)]="cremation.cremation_date"
+                                    [value]="cremation.cremation_date | date:'yyyy-MM-dd'" formControlName="cremation_date">
                                 <div
                                     *ngIf="getTheFormGroup.cremation_date.errors && (getTheFormGroup.cremation_date.dirty || getTheFormGroup.cremation_date.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.cremation_date.errors.required"
                                         class="msnError">Requerido</strong>
-                                    <strong
-                                        *ngIf="getTheFormGroup.cremation_date.errors.minlength || getTheFormGroup.cremation_date.errors.maxlength"
-                                        class="msnError">Inválido</strong>
                                 </div>
                                 </div>
                             </div>

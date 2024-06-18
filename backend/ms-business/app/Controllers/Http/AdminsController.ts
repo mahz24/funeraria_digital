@@ -6,13 +6,10 @@ import Env from "@ioc:Adonis/Core/Env";
 import AdminValidator from 'App/Validators/AdminValidator';
 
 export default class AdminsController {
-    public async find({ request, response }: HttpContextContract) {
+    public async find({  response }: HttpContextContract) {
         try{
-            const page = request.input("page", 1);
-            const perPage = request.input("per_page", 20);
             let admins: Admin[] = await Admin.query()
             .preload("headquarter")
-            .paginate(page, perPage);
             if (admins && admins.length > 0){
                 await Promise.all(
                     admins.map(async (admin) => {
@@ -20,15 +17,9 @@ export default class AdminsController {
                         admin.user = userResponse.data;
                     })
                 );
-                return response.status(200).json({
-                    mensaje: "Registro completo de clientes",
-                    data: admins
-                })
+                return admins
             }else{
-                return response.status(404).json({
-                    mensaje: "No se encontraron registros de clientes",
-                    data: admins,
-                  })
+                return admins
             }
         }catch(e){
             return response
@@ -50,9 +41,10 @@ export default class AdminsController {
                 "Email": userResponse.email
             }
             theAdmin.user = profile;
-            return response.status(200).json({ mensaje: "Registro del cliente fue encontrado", data: theAdmin });
+            return theAdmin
         }else{
-            return response.status(400).json({ mensaje: "Registro del cliente no fue encontrado", data: theAdmin });
+            response.status(400)
+            return theAdmin
         }
         
     }
@@ -71,7 +63,12 @@ export default class AdminsController {
             maybeAdmin = null
         }            
         if(user != null && maybeAdmin == null){
-            const theAdmin: Admin = await Admin.create(body);
+            let admin: Admin = new Admin()
+            admin.user_id = body.user_id
+            admin.direction = body.direction
+            admin.headquarter_id = body.headquarter.id
+            const theAdmin: Admin = await Admin.create(admin);
+
             return response.status(200).json({
                 mensaje: "Se creó correctamente el registro",
                 data: theAdmin,
@@ -110,12 +107,12 @@ export default class AdminsController {
         if(user != null && maybeAdmin != null && maybeAdmin.id == params.id){
             theAdmin.user_id = body.user_id;
             theAdmin.direction = body.direction;
-            theAdmin.headquarter_id = body.headquarter_id;
+            theAdmin.headquarter_id = body.headquarter.id;
             return await theAdmin.save();
         }else if(user != null && maybeAdmin == null){
             theAdmin.user_id = body.user_id;
             theAdmin.direction = body.direction;
-            theAdmin.headquarter_id = body.headquarter_id;
+            theAdmin.headquarter_id = body.headquarter.id;
             return await theAdmin.save();
         }else if(user == null && maybeAdmin == null){
             return response.status(400).json({

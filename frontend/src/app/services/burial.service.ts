@@ -16,7 +16,7 @@ export class BurialService {
   }
 
   view(id: number): Observable<Burial> {
-    return this.http.get<Burial>(`${environment.url_ms_business}/burials/${id},
+    return this.http.get<Burial>(`${environment.url_ms_business}/burials/${id}
     `);
   }
   create(theBurial: Burial): Observable<Burial> {

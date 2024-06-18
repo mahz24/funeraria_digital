@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { log } from 'console';
 import { Client } from 'src/app/model/client';
 import { ClientService } from 'src/app/services/client.service';
 import Swal from 'sweetalert2';
@@ -19,7 +18,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.list()
-    console.log("holii")
   }
 
   list() {

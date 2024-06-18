@@ -36,9 +36,8 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      id: [0, [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      date_comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      date_comment: ['', [Validators.required]],
       rating: [0, [Validators.required, Validators.min(0),Validators.max(5)]],
       executionservice_id: [0, [Validators.required, Validators.min(0),Validators.max(100)]],
     })
@@ -67,8 +66,12 @@ export class ManageComponent implements OnInit {
   getComment(id: number) {
     this.theCommentService.view(id).subscribe(data => {
       this.comment = data
-      console.log(this.comment);
-      
+      this.theFormGroup.patchValue({
+        description: this.comment.description,
+        date_comment: this.comment.date_comment,
+        rating: this.comment.rating,
+        executionservice_id: this.comment.executionservice_id
+      })      
     })
   }
 

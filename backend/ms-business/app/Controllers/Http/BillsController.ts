@@ -18,23 +18,37 @@ export default class BillsController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Bill.query().paginate(page, perPage)
+                return await Bill.query().preload('subscription', actualSuscription => {
+                    actualSuscription.preload('client', actualClient =>{
+                        actualClient.preload('holder')
+                    })
+                    actualSuscription.preload('plan')})
+                .paginate(page, perPage)
             } else {
-                return await Bill.query()
+                return await Bill.query().preload('subscription', actualSuscription => {
+                    actualSuscription.preload('client', actualClient =>{
+                        actualClient.preload('holder')
+                    })
+                    actualSuscription.preload('plan')})
             }
         }
     }
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(BillValidator);
-        const theBill: Bill = await Bill.create(body);
+        let bill: Bill = new Bill()
+        bill.amount = body.amount
+        bill.date = body.date
+        bill.subscription_id = body.subscription.id
+        const theBill: Bill = await Bill.create(bill);
         return theBill;
     }
 
     public async update({ params, request }: HttpContextContract) {
         const theBill: Bill = await Bill.findOrFail(params.id);
-        const body = request.body();
+        const body = await request.validate(BillValidator)
         theBill.amount = body.amount;
         theBill.date = body.date;
+        theBill.subscription_id = body.subscription.id
         return await theBill.save();
     }
 

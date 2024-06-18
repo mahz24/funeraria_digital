@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Random;
 
 @CrossOrigin
@@ -41,15 +42,11 @@ public class SecurityController {
     private String baseUrlNotifications;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User theUser, final HttpServletResponse response) throws IOException {
+    public User login(@RequestBody User theUser, final HttpServletResponse response) throws IOException {
         try {
-            // String token = null;
             User actualUser = this.theUserRepository.getUserByEmail(theUser.getEmail());
             if (actualUser != null &&
                     actualUser.getPassword().equals(this.theEncryptionService.convertSHA256(theUser.getPassword()))) {
-                // token = this.theJwtService.generateToken(actualUser);
-
-                // 2fa
                 Random random = new Random();
                 int token2FA = random.nextInt(9000) + 1000;
                 Session newSession = new Session(token2FA, actualUser);
@@ -66,61 +63,43 @@ public class SecurityController {
                 HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
                 ResponseEntity<String> res = restTemplate.postForEntity(urlPost, requestEntity, String.class);
                 System.out.println(res.getBody());
-
-                // this.jsonResponsesService.setData(token);
-                this.jsonResponsesService.setMessage("Correo y Contraseña correctas, por favor ingresa al 2FA-login");
-                return ResponseEntity.status(HttpStatus.ACCEPTED)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                return actualUser;
             } else if (actualUser != null) {
-                this.jsonResponsesService.setMessage("Contraseña incorrectas");
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                response.setStatus(400);
+                return null;
             } else {
-                this.jsonResponsesService.setMessage("Acceso denegado, correo inexistente");
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                response.setStatus(400);
+                return null;
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setData(null);
-            this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar usuarios");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            return null;
         }
     }
 
     @PostMapping("/2FA-login/{userId}")
-    public ResponseEntity<?> factorAuthetication(@RequestBody Session theSession, @PathVariable String userId) {
+    public HashMap<String, Object> factorAuthetication(@RequestBody Session theSession, @PathVariable String userId) {
+        HashMap<String, Object> theResponse = new HashMap<>();
         try {
-            System.out.println("hola1");
             int secondFactor_token = theSession.getToken2FA();
             User theUser = theUserRepository.getUserById(userId);
-            System.out.println("2FA"+secondFactor_token+"---User "+ theUser );
             Session thePrincipalSession = theSessionRepository.getSessionbyUserId(userId, secondFactor_token);
 
             if (thePrincipalSession != null) {
                 String token = this.theJwtService.generateToken(theUser);
                 thePrincipalSession.setToken(token);
                 this.theSessionRepository.save(thePrincipalSession);
-                this.jsonResponsesService.setData(token);
-                this.jsonResponsesService.setMessage("Se ha ingresado exitosamente, el token es:");
-                return ResponseEntity.status(HttpStatus.ACCEPTED)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                theUser.setPassword("");
+                System.out.println(thePrincipalSession);
+                theResponse.put("token", token);
+                theResponse.put("User", theUser);
+                return theResponse;
             } else if (theUser != null) {
-                this.jsonResponsesService.setMessage("Código de autenticación incorrecto.");
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                return theResponse;
             } else {
-                this.jsonResponsesService.setMessage("Correo inexistente.");
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                        .body(this.jsonResponsesService.getFinalJSON());
+                return theResponse;
             }
         } catch (Exception e) {
-            this.jsonResponsesService.setData(null);
-            this.jsonResponsesService.setError(e.toString());
-            this.jsonResponsesService.setMessage("Error al buscar usuarios");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(this.jsonResponsesService.getFinalJSON());
+            return theResponse;
         }
     }
 

@@ -15,7 +15,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps', component: MapsComponent },
     {
         path: 'clients',
-        // canActivate:[AuthGuard],
         loadChildren: () => import('src/app/pages/clients/clients.module').then(m => m.ClientsModule)
     }
     ,
@@ -75,5 +74,30 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'services',
         loadChildren: () => import('src/app/pages/services/services.module').then(m => m.ServicesModule)
-    }
+    },
+    {
+        path: 'subscriptions',
+        loadChildren: () => import('src/app/pages/subscriptions/subscriptions.module').then(m=> m.SubscriptionsModule)
+    },
+    {
+        path: 'bills',
+        loadChildren: () => import('src/app/pages/bills/bills.module').then(m=> m.BillsModule)
+    },
+    {
+        path: 'admins',
+        loadChildren: () => import('src/app/pages/admins/admins.module').then(m=> m.AdminsModule)
+    },
+    {
+        path: 'holders',
+        loadChildren: () => import('src/app/pages/holder/holder.module').then(m=> m.HolderModule)
+    },
+    {
+        path: 'difuntos',
+        loadChildren: () => import('src/app/pages/difuntos/difuntos.module').then(m=> m.DifuntosModule)
+    },
+    {
+        path: 'causa',
+        loadChildren: () => import('src/app/pages/causa/causa.module').then(m=> m.CausaModule)
+    },
+
 ];

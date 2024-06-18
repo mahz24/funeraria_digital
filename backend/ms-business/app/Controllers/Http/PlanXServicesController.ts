@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import PlanXService from 'App/Models/PlanXService'
+import Service from 'App/Models/Service'
 import PlanServiceValidator from 'App/Validators/PlanServiceValidator'
 
 export default class PlanXServicesController {
@@ -14,24 +15,51 @@ export default class PlanXServicesController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await PlanXService.query().paginate(page, perPage)
+                return await PlanXService.query().preload('plan').preload('service').paginate(page, perPage)
             } else {
-                return await PlanXService.query()
+                return await PlanXService.query().preload('plan').preload('service')
             }
         }
     }
+
+    // ver los servicios de un plan, al hacer un view del plan
+    public async findServicesDisponibles({ params }: HttpContextContract) {
+        const thePlanService: PlanXService[] = await PlanXService.query().preload('plan').preload('service')
+        let serviciosDisponibles: Service[] = []
+        thePlanService.forEach(actual => {
+            if (actual.plan.id != params.id) {
+                serviciosDisponibles.push(actual.service)
+            }
+        })
+        return serviciosDisponibles
+    }
+
+    //Para añadir
+    public async findServicesNoDisponibles({ params }: HttpContextContract) {
+        const thePlanService: PlanXService[] = await PlanXService.query().preload('plan').preload('service')
+        let serviciosNoDisponibles: Service[] = []
+        thePlanService.forEach(actual => {
+            if (actual.plan.id == params.id) {
+                serviciosNoDisponibles.push(actual.service)
+            }
+        })
+        return serviciosNoDisponibles
+    }
+    
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(PlanServiceValidator);
-        const thePlanXService: PlanXService = await PlanXService.create(body);
+        let planse: PlanXService = new PlanXService()
+        planse.service_id = body.service.id
+        planse.plan_id = body.plan.id
+        const thePlanXService: PlanXService = await PlanXService.create(planse);
         return thePlanXService;
     }
 
     public async update({ params, request }: HttpContextContract) {
         const body = await request.validate(PlanServiceValidator);
         const thePlanXService: PlanXService = await PlanXService.findOrFail(params.id);
-        thePlanXService.started_at = body.started_at;
-        thePlanXService.service_id = body.service_id;
-        thePlanXService.plan_id = body.plan_id;
+        thePlanXService.service_id = body.service.id;
+        thePlanXService.plan_id = body.plan.id;
         return await thePlanXService.save();
     }
 

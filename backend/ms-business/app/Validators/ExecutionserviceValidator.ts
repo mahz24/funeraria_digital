@@ -5,8 +5,12 @@ export default class ExecutionserviceValidator {
   constructor(protected ctx: HttpContextContract) { }
 
   public schema = schema.create({
-    client_id: schema.number([rules.exists({ table: 'clients', column: 'id' })]),
-    service_id: schema.number([rules.exists({ table: 'services', column: 'id' })]),
+    client: schema.object().members({
+      id:schema.number([rules.exists({ table: 'clients', column: 'id' })])
+    }),
+    service: schema.object().members({
+      id:schema.number([rules.exists({ table: 'services', column: 'id' })])
+    }),
     end_date: schema.date()
   })
 

@@ -19,6 +19,22 @@ const routes: Routes = [
   {
     path:"view/:id",
     component:ManageComponent
+  },
+  {
+    path: "list/client/:id",
+    component: ListComponent
+  },
+  {
+    path: "list/service/:id",
+    component: ListComponent
+  },
+  {
+    path: "create/client/:id",
+    component: ManageComponent
+  },
+  {
+    path: "create/service/:id",
+    component: ManageComponent
   }
 ];
 

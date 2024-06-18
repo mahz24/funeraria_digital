@@ -2,7 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import PlanXService from 'App/Models/PlanXService'
 import PlanServiceValidator from 'App/Validators/PlanServiceValidator'
 
-export default class PlanXServicesController {
+export default class PlanXPServiceController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
             const thePlanXService: PlanXService = await PlanXService.findOrFail(params.id)
@@ -20,6 +20,18 @@ export default class PlanXServicesController {
             }
         }
     }
+
+    public async findService({ params }: HttpContextContract){
+        const thePService: PlanXService[] = await PlanXService.query().preload('plan').preload('service')
+        let realPService: PlanXService[] = []
+        thePService.forEach(actual =>{
+            if(actual.plan.id == params.id){
+                realPService.push(actual)
+            }
+        })
+        return realPService
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(PlanServiceValidator);
         let planse: PlanXService = new PlanXService()

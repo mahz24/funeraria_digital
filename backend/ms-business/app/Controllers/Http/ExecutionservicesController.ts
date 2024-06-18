@@ -14,12 +14,35 @@ export default class ExecutionservicesController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Executionservice.query().paginate(page, perPage)
+                return await Executionservice.query().preload('client').preload('service').paginate(page, perPage)
             } else {
-                return await Executionservice.query()
+                return await Executionservice.query().preload('service').preload('client')
             }
         }
     }
+
+    public async findServices({ params }: HttpContextContract){
+        const theExecution: Executionservice[] = await Executionservice.query().preload('service').preload('client')
+        let realExecutions: Executionservice[] = []
+        theExecution.forEach(actual =>{
+            if(actual.client.id == params.id){
+                realExecutions.push(actual)
+            }
+        })
+        return realExecutions
+    }
+
+    public async findClients({ params }: HttpContextContract){
+        const theExecution: Executionservice[] = await Executionservice.query().preload('service').preload('client')
+        let realExecutions: Executionservice[] = []
+        theExecution.forEach(actual =>{
+            if(actual.service.id == params.id){
+                realExecutions.push(actual)
+            }
+        })
+        return realExecutions
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(ExecutionserviceValidator);
         let execution: Executionservice = new Executionservice()

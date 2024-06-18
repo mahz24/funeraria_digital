@@ -14,14 +14,26 @@ export default class CommentsController {
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Comment.query().paginate(page, perPage)
+                return await Comment.query().preload('executionservice').paginate(page, perPage)
             } else {
-                return await Comment.query()
+                return await Comment.query().preload('executionservice')
             }
 
         }
 
     }
+
+    public async findComments({ params }: HttpContextContract){
+        const theComments: Comment[] = await Comment.query().preload('executionservice')
+        let realComments: Comment[] = []
+        theComments.forEach(actual =>{
+            if(actual.executionservice.id == params.id){
+                realComments.push(actual)
+            }
+        })
+        return realComments
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(CommentValidator);
         const theTheater: Comment = await Comment.create(body);

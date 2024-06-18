@@ -25,26 +25,34 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    Servicio ID:
+                                    Servicio:
                                 </div>
                                 <div class="col-8">
                                     <select class="form-control" formControlName="service_id"
-                                        [(ngModel)]="executionservice.service.id">
+                                        [(ngModel)]="executionservice.service.id" *ngIf="type != 2">
                                         <option *ngFor="let option of services" [value]="option.id">
                                             Descripcion:{{option.description}}  -  Precio: ${{option.price}} </option>
                                     </select>
+                                    <input class="form-control" formControlName="service_id" [(ngModel)]="executionservice.service.id" *ngIf="type == 2" disabled>
+                                    <div *ngIf="getTheFormGroup.service_id.errors && (getTheFormGroup.service_id.dirty || getTheFormGroup.service_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.service_id.errors.required" class="msnError">Requerido</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    Cliente ID:
+                                    Cliente:
                                 </div>
                                 <div class="col-8">
                                     <select class="form-control" formControlName="client_id"
-                                        [(ngModel)]="executionservice.client.id">
+                                        [(ngModel)]="executionservice.client.id" *ngIf="type != 1">
                                         <option *ngFor="let option of clients" [value]="option.id">
                                             Correo: {{option.user.email}}</option>
                                     </select>
+                                    <input class="form-control" formControlName="client_id" [(ngModel)]="executionservice.client.id" *ngIf="type == 1" disabled>
+                                    <div *ngIf="getTheFormGroup.client_id.errors && (getTheFormGroup.client_id.dirty || getTheFormGroup.client_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.client_id.errors.required" class="msnError">Requerido</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

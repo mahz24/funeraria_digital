@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { privateDecrypt } from 'crypto';
 import { Comment } from 'src/app/model/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import Swal from 'sweetalert2';
@@ -11,19 +12,38 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   comments: Comment[];
-  constructor(private service: CommentService, private router: Router) {
+  mode: number
+  id:number
+  constructor(
+    private service: CommentService, 
+    private router: Router,
+    private activateRoute: ActivatedRoute
+  ) {
     this.comments = []
+    this.mode = 1
+    this.id = 0
   }
 
   ngOnInit(): void {
-    this.list()
-    console.log("holii")
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/execution')) {
+      this.mode = 2
+      this.id = this.activateRoute.snapshot.params.id
+      this.listComments(this.id)
+    }else{
+      this.list()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
       this.comments = data
-      console.log(JSON.stringify(this.comments));
+    })
+  }
+
+  listComments(id:number){
+    this.service.listComments(id).subscribe(data => {
+      this.comments = data
     })
   }
 
@@ -32,7 +52,10 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(["comments/create"])
+    if(this.mode == 1){
+      this.router.navigate(["comments/create"])
+    }else if(this.mode == 2)
+    this.router.navigate(["comments/create/execution/"+ this.id])
   }
 
   update(id: string) {

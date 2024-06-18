@@ -30,4 +30,7 @@ export class SubscriptionService {
     return this.http.delete<Subscription>(`${environment.url_ms_business}/subscriptions/${id}`,
     );
   }
+  listPlans(id:number): Observable<Subscription[]> {
+    return this.http.get<Subscription[]>(`${environment.url_ms_business}/subscriptions/client/${id}`);
+  }
 }

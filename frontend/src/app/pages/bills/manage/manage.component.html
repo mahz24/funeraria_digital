@@ -58,9 +58,13 @@
                                 Suscripción:
                             </div>
                             <div class="col-8">
-                                <select class="form-control" formControlName="idSub" [(ngModel)]="bill.subscription.id">
+                                <select class="form-control" formControlName="idSub" [(ngModel)]="bill.subscription.id" *ngIf="type != 1">
                                     <option *ngFor="let option of subs" [value]="option.id">Plan: {{ option.plan.name }}</option>
                                 </select>
+                                <input class="form-control" formControlName="idSub" [(ngModel)]="bill.subscription.id" *ngIf="type == 1" disabled>
+                                <div *ngIf="getTheFormGroup.idSub.errors && (getTheFormGroup.idSub.dirty || getTheFormGroup.idSub.touched || trySend)">
+                                    <strong *ngIf="getTheFormGroup.idSub.errors.required" class="msnError">Requerido</strong>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

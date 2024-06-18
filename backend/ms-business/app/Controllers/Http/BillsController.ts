@@ -33,6 +33,18 @@ export default class BillsController {
             }
         }
     }
+
+    public async findBills({ params }: HttpContextContract){
+        const theBills: Bill[] = await Bill.query().preload('subscription')
+        let realBills: Bill[] = []
+        theBills.forEach(actual =>{
+            if(actual.subscription.id == params.id){
+                realBills.push(actual)
+            }
+        })
+        return realBills
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(BillValidator);
         let bill: Bill = new Bill()

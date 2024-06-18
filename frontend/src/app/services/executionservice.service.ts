@@ -17,6 +17,14 @@ export class ExecutionserviceService {
     return this.http.get<Executionservice[]>(`${environment.url_ms_business}/executionservice`);
   }
 
+  listServices(id: number): Observable<Executionservice[]> {
+    return this.http.get<Executionservice[]>(`${environment.url_ms_business}/executionservice/client/${id}`);
+  }
+
+  listClients(id: number): Observable<Executionservice[]> {
+    return this.http.get<Executionservice[]>(`${environment.url_ms_business}/executionservice/service/${id}`);
+  }
+
   view(id: number): Observable<Executionservice> {
     return this.http.get<Executionservice>(`${environment.url_ms_business}/executionservice/${id},
     `);

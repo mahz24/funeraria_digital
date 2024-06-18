@@ -16,6 +16,10 @@ export class CommentService {
     return this.http.get<Comment[]>(`${environment.url_ms_business}/comments`);
   }
 
+  listComments(id:number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${environment.url_ms_business}/comments/execution/${id}`);
+  }
+
   view(id: number): Observable<Comment> {
     return this.http.get<Comment>(`${environment.url_ms_business}/comments/${id},
     `);

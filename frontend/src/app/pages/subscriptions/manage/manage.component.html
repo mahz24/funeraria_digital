@@ -42,9 +42,12 @@
                                 Cliente:
                             </div>
                             <div class="col-8">
-                                <select class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id">
+                                <select class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id" *ngIf="type != 1">
                                     <option *ngFor="let option of clients" [value]="option.id">{{ option.user.email }}</option>
                                 </select>
+                                <label class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id" *ngIf="type == 1">
+                                    {{sub.client.user.email}}
+                                </label>
                             </div>
                         </div>
                         <div class="row">

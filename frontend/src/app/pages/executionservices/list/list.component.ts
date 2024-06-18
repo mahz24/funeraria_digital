@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Executionservice } from 'src/app/model/executionservice';
+import { ClientService } from 'src/app/services/client.service';
 import { ExecutionserviceService } from 'src/app/services/executionservice.service';
 import Swal from 'sweetalert2';
 
@@ -10,21 +11,62 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
+  id: number
+  mode: number
   executionsservices: Executionservice[];
-  constructor(private service: ExecutionserviceService, private router: Router) {
+  constructor(
+    private service: ExecutionserviceService, 
+    private router: Router,
+    private activateRoute: ActivatedRoute,
+    private clientService: ClientService
+  ) {
     this.executionsservices = []
+    this.id = 0
+    this.mode = 1
   }
 
   ngOnInit(): void {
-    this.list()
-    console.log("holii")
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/client')) {
+      this.mode = 2
+      this.id = this.activateRoute.snapshot.params.id
+      this.listServices()
+    }else if(currentUrl.includes('list/service')){
+      this.mode = 3
+      this.id = this.activateRoute.snapshot.params.id
+      this.listClient()
+    }else{
+      this.list()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
       this.executionsservices = data
-      console.log(JSON.stringify(this.executionsservices));
+      this.executionsservices.forEach( actual =>{
+        this.clientService.view(actual.client.id).subscribe(data =>{
+          actual.client = data
+          actual.client.user.password = ""
+        })
+      })
+    })
+  }
+
+  listServices() {
+    this.service.listServices(this.id).subscribe(data => {
+      this.executionsservices = data
+    })
+  }
+
+  listClient() {
+    this.service.listClients(this.id).subscribe(data => {
+      this.executionsservices = data
+      this.executionsservices.forEach(actual =>{
+        this.clientService.view(actual.client.id).subscribe(data =>{
+          actual.client = data
+          actual.client.user.password = ""
+        })
+      })
     })
   }
 
@@ -33,11 +75,21 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(["executionservices/create"])
+    if(this.mode == 1){
+      this.router.navigate(["executionservices/create"])
+    }else if(this.mode == 2){
+      this.router.navigate(["executionservices/create/client/"+ this.id])
+    }else if(this.mode == 3){
+      this.router.navigate(["executionservices/create/service/"+ this.id])
+    }
   }
 
   update(id: string) {
     this.router.navigate(["executionservices/update/" + id])
+  }
+
+  comments(id: number) {
+    this.router.navigate(["comments/list/execution/" + id])
   }
 
   delete(id: number): void {

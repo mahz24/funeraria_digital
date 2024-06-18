@@ -60,14 +60,13 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" class="form-control" [(ngModel)]="comment.executionservice_id"
-                                        [disabled]="mode==1" formControlName="executionservice_id">
-                                    <div
-                                        *ngIf="getTheFormGroup.executionservice_id.errors && (getTheFormGroup.executionservice_id.dirty || getTheFormGroup.executionservice_id.touched || trySend)">
-                                        <strong *ngIf="getTheFormGroup.executionservice_id.errors.required"
-                                            class="msnError">Requerido</strong>
-                                        <strong
-                                            *ngIf="getTheFormGroup.executionservice_id.errors.min || getTheFormGroup.executionservice_id.errors.max"
-                                            class="msnError">Inválido, debe ser mayor a 1</strong>
+                                        formControlName="executionservice_id" *ngIf="type == 1" disabled>
+                                    <select class="form-control" [(ngModel)]="comment.executionservice_id"
+                                        formControlName="executionservice_id" *ngIf="type != 1">
+                                    <option *ngFor="let option of executions" [value]="option.id">{{option.id}}</option>
+                                    </select>
+                                    <div *ngIf="getTheFormGroup.executionservice_id.errors && (getTheFormGroup.executionservice_id.dirty || getTheFormGroup.executionservice_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.executionservice_id.errors.required" class="msnError">Requerido</strong>
                                     </div>
                                 </div>
                             </div>

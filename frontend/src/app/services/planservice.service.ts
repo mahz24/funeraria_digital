@@ -17,6 +17,10 @@ export class PlanserviceService {
     return this.http.get<Planservice[]>(`${environment.url_ms_business}/planservices`);
   }
 
+  listServices(id: number): Observable<Planservice[]> {
+    return this.http.get<Planservice[]>(`${environment.url_ms_business}/planservices/plan/${id}`);
+  }
+
   view(id: number): Observable<Planservice> {
     return this.http.get<Planservice>(`${environment.url_ms_business}/planservices/${id},
     `);

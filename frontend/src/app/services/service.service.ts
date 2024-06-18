@@ -15,6 +15,10 @@ export class ServiceService {
     return this.http.get<Service[]>(`${environment.url_ms_business}/services`);
   }
 
+  listServices(id:number): Observable<Service[]> {
+    return this.http.get<Service[]>(`${environment.url_ms_business}/services/plan/${id}`);
+  }
+
   view(id: number): Observable<Service> {
     return this.http.get<Service>(`${environment.url_ms_business}/services/${id},
     `);

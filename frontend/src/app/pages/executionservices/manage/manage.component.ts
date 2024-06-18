@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 })
 export class ManageComponent implements OnInit {
   mode: number
+  type: number
   trySend:boolean
   executionservice: Executionservice
   theFormGroup:FormGroup
@@ -31,6 +32,7 @@ export class ManageComponent implements OnInit {
     private userService: UserService
   ) {
     this.mode = 1;
+    this.type = 0
     this.trySend=false
     this.clients=[]
     this.services=[]
@@ -76,6 +78,7 @@ export class ManageComponent implements OnInit {
       this.clients.forEach(actual =>{
         this.userService.view(actual.user_id).subscribe(data =>{
           actual.user = data
+          actual.user.password = ""
         })
       })
       
@@ -92,15 +95,26 @@ export class ManageComponent implements OnInit {
       this.mode = 1;
     } else if (currentUrl.includes('create')) {
       this.mode = 2;
+      if(currentUrl.includes('create/client')){
+        this.type = 1
+      }else if(currentUrl.includes('create/service')){
+        this.type = 2
+      }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if (this.activateRoute.snapshot.params.id) {
+    if (this.activateRoute.snapshot.params.id && this.mode != 2) {
       this.executionservice.id = this.activateRoute.snapshot.params.id
-      this.getChat(this.executionservice.id)
+      this.getExecution(this.executionservice.id)
+    }
+    if(this.activateRoute.snapshot.params.id && this.mode == 2 && this.type == 1){
+      this.executionservice.client.id = this.activateRoute.snapshot.params.id
+    }
+    if(this.activateRoute.snapshot.params.id && this.mode == 2 && this.type == 2){
+      this.executionservice.service.id = this.activateRoute.snapshot.params.id
     }
   }
-  getChat(id: number) {
+  getExecution(id: number) {
     this.theExe.view(id).subscribe(data => {
       this.executionservice = data
 
@@ -123,7 +137,13 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["executionservices/list"])
+        if(this.type == 0){
+          this.router.navigate(["executionservices/list"])
+        }else if(this.type == 1){
+          this.router.navigate(["executionservices/list/client/"+ this.executionservice.client.id])
+        }else if(this.type == 2){
+          this.router.navigate(["executionservices/list/service/"+ this.executionservice.service.id])
+        }
       })
     }
   }

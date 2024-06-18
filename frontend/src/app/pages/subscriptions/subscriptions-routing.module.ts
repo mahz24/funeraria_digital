@@ -18,6 +18,12 @@ const routes: Routes = [
   },{
     path: "view/:id",
     component: ManageComponent
+  },{
+    path: "list/client/:id",
+    component: ListComponent
+  },{
+    path: 'create/client/:id',
+    component: ManageComponent
   }
 ];
 

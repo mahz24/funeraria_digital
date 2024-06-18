@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'src/app/model/subscription.model';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,16 +13,44 @@ import Swal from 'sweetalert2';
 export class ListComponent implements OnInit {
 
   subs: Subscription[];
-  constructor(private service: SubscriptionService, private router: Router, private userService: UserService) {
+  mode: number
+  id: number
+  constructor(private service: SubscriptionService, 
+    private router: Router, 
+    private userService: UserService,
+    private activateRoute: ActivatedRoute
+  ) {
     this.subs = []
+    this.mode = 1
+    this.id = 0
   }
 
   ngOnInit(): void {
-    this.list()
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/client')) {
+      this.mode = 2;
+    }
+    if(this.mode == 1){
+      this.list()
+    }else if(this.mode == 2){
+      this.id = this.activateRoute.snapshot.params.id
+      this.listPlans()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
+      this.subs = data
+      this.subs.forEach(actual =>{
+        this.userService.view(actual.client.user_id).subscribe(data =>{
+          actual.client.user = data
+        })
+      })
+    })
+  }
+
+  listPlans() {
+    this.service.listPlans(this.activateRoute.snapshot.params.id).subscribe(data => {
       this.subs = data
       this.subs.forEach(actual =>{
         this.userService.view(actual.client.user_id).subscribe(data =>{
@@ -37,11 +65,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(["subscriptions/create"])
+    if(this.mode == 1){
+      this.router.navigate(["subscriptions/create"])
+    }else if(this.mode == 2)
+    this.router.navigate(["subscriptions/create/client/"+ this.id])
   }
 
   update(id: string) {
-    this.router.navigate(["subscriptions/update/" + id])
+      this.router.navigate(["subscriptions/update/" + id])
   }
 
   delete(id: number): void {
@@ -66,5 +97,9 @@ export class ListComponent implements OnInit {
         });
       }
     })
+  }
+
+  bills(id: number){
+    this.router.navigate(["bills/list/subscription/" + id])
   }
 }

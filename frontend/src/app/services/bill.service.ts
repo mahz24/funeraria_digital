@@ -14,6 +14,9 @@ export class BillService {
   list(): Observable<Bill[]> {
     return this.http.get<Bill[]>(`${environment.url_ms_business}/bills`);
   }
+  listBills(id: number): Observable<Bill[]> {
+    return this.http.get<Bill[]>(`${environment.url_ms_business}/bills/subscription/${id}`);
+  }
 
   view(id: number): Observable<Bill> {
     return this.http.get<Bill>(`${environment.url_ms_business}/bills/${id}

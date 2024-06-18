@@ -9,7 +9,9 @@
                 <div class="card-header bg-transparent">
                     <div class="row">
                         <div class="col-3">
-                            <h3 class="mb-0">Historial de servicios</h3>
+                            <h3 class="mb-0" *ngIf="mode == 1">Historial de servicios</h3>
+                            <h3 class="mb-0" *ngIf="mode == 2">Servicios del cliente {{id}}</h3>
+                            <h3 class="mb-0" *ngIf="mode == 3">Clientes del servicio {{id}}</h3>
                         </div>
                         <div class="col-6"></div>
                         <div class="col-3">
@@ -17,29 +19,32 @@
                         </div>
                     </div>
                 </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="col-1">ID</th>
-                            <th class="col-3">Cliente ID</th>
-                            <th class="col-3">Servicio ID</th>
-                            <th class="col-5">Fecha fin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let actual of executionsservices">
-                            <td>{{actual.id}}</td>
-                            <td>{{actual.client_id}}</td>
-                            <td>{{actual.service_id}}</td>
-                            <td>{{actual.end_date}}</td>
-                            <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
-                                <button type="button" class="btn btn-danger" (click)="update(actual.id)">Editar</button>
-                                <button type="button" class="btn btn-warning"
-                                    (click)="delete(actual.id)">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-1">ID</th>
+                                <th class="col-3" *ngIf="mode != 2">Cliente</th>
+                                <th class="col-3" *ngIf="mode != 3">Servicio</th>
+                                <th class="col-5">Fecha fin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let actual of executionsservices">
+                                <td>{{actual.id}}</td>
+                                <td *ngIf="mode != 2">{{actual.client.user.email}}</td>
+                                <td *ngIf="mode != 3">{{actual.service.description}}</td>
+                                <td>{{actual.end_date}}</td>
+                                <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
+                                    <button type="button" class="btn btn-danger" (click)="update(actual.id)">Editar</button>
+                                    <button type="button" class="btn btn-warning"
+                                        (click)="delete(actual.id)">Eliminar</button>
+                                    <button type="button" class="btn btn-info" (click)="comments(actual.id)">Comentarios</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
            

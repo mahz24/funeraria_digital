@@ -20,6 +20,14 @@ const routes: Routes = [
     path: 'update/:id',
     component: ManageComponent
   },
+  {
+    path:'list/subscription/:id',
+    component: ListComponent
+  },
+  {
+    path:'create/subscription/:id',
+    component: ManageComponent
+  }
 ];
 
 @NgModule({

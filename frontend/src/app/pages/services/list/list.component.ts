@@ -39,6 +39,10 @@ export class ListComponent implements OnInit {
     this.router.navigate(["services/update/" + id])
   }
 
+  clients(id:number){
+    this.router.navigate(["executionservices/list/service/" + id])
+  }
+
   delete(id: number): void {
     Swal.fire({
       title: 'Eliminar',

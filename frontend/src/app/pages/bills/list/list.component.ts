@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Bill } from 'src/app/model/bill.model';
 import { BillService } from 'src/app/services/bill.service';
 import Swal from 'sweetalert2';
@@ -11,16 +11,35 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   bills: Bill[];
-  constructor(private service: BillService, private router: Router) {
+  mode: number
+  id: number
+  constructor(private service: BillService, private router: Router, private activateRoute: ActivatedRoute) {
     this.bills = []
+    this.mode = 1
+    this.id = 0
   }
 
   ngOnInit(): void {
-    this.list()
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/subscription')) {
+      this.mode = 2;
+    }
+    if(this.mode == 1){
+      this.list()
+    }else if(this.mode == 2){
+      this.id = this.activateRoute.snapshot.params.id
+      this.listBills()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
+      this.bills = data
+    })
+  }
+
+  listBills() {
+    this.service.listBills(this.activateRoute.snapshot.params.id).subscribe(data => {
       this.bills = data
     })
   }
@@ -30,7 +49,11 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(["bills/create"])
+    if(this.mode == 1){
+      this.router.navigate(["bills/create"])
+    }else if(this.mode == 2){
+    this.router.navigate(["bills/create/subscription/"+ this.id])
+    }
   }
 
   update(id: string) {

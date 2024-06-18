@@ -18,7 +18,17 @@ const routes: Routes = [ {
 {
   path: "view/:id",
   component: ManageComponent
-}];
+},
+{
+  path: "list/execution/:id",
+  component: ListComponent
+},
+{
+  path: "create/execution/:id",
+  component: ManageComponent
+}
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

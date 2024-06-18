@@ -7,6 +7,7 @@ import { Subscription } from 'src/app/model/subscription.model';
 import { ClientService } from 'src/app/services/client.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,6 +17,7 @@ import Swal from 'sweetalert2';
 })
 export class ManageComponent implements OnInit {
   mode: number; //1-> view, 2-> Create, 3-> Update
+  type: number
   sub: Subscription
   theFormGroup: FormGroup;
   trySend: boolean
@@ -29,6 +31,7 @@ export class ManageComponent implements OnInit {
               private planService: PlanService,
   ){
     this.mode=1
+    this.type=0
     this.trySend=false
     this.sub={
       id: 0,
@@ -68,7 +71,8 @@ export class ManageComponent implements OnInit {
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({ 
       activation_date:['',Validators.required],
-      idClient:[null, Validators.required],
+      idClient:[
+        { value: this.sub.client.id, disabled: this.type == 1 }, [Validators.required]],
       idPlan:[null, Validators.required]
     })
   }
@@ -95,15 +99,28 @@ export class ManageComponent implements OnInit {
       this.mode = 1;
     } else if (currentUrl.includes('create')) {
       this.mode = 2;
+      if(currentUrl.includes('client')){
+        this.type = 1
+      }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if(this.activateRoute.snapshot.params.id){
+    if(this.activateRoute.snapshot.params.id && this.mode != 2){
       this.sub.id=this.activateRoute.snapshot.params.id
-      this.getSub(this.sub.id)
+      this.getSub(this.sub.id) 
+    }else if(this.activateRoute.snapshot.params.id && this.mode == 2){
+      this.sub.client.id = this.activateRoute.snapshot.params.id
+      this.getEmail()
     }
     this.clientList()
     this.planList()
+  }
+
+  getEmail(){
+    this.clientService.view(this.sub.client.id).subscribe(data =>{
+      this.sub.client = data
+      this.sub.client.user.password = ""
+    })
   }
 
   create(){
@@ -115,7 +132,11 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["subscriptions/list"])
+        if(this.type == 1){
+          this.router.navigate(["subscriptions/list/client/"+ this.sub.client.id])
+        }else if(this.type == 0){
+          this.router.navigate(["subscriptions/list"])
+        }
       })
     }
   }

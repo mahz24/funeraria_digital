@@ -7,11 +7,37 @@
         <div class="col">
             <div class="card shadow">
                 <div class="card-header bg-transparent">
-                    <h3 *ngIf="mode==1">Visualizar</h3>
-                    <h3 *ngIf="mode==2">Crear</h3>
-                    <h3 *ngIf="mode==3">Actualizar</h3>
+                    <div class="row">
+                        <div class="col-3">
+                            <h3>Añadir Servicios</h3>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-1">ID</th>
+                            <th class="col-3">Servicio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let actual of services">
+                            <td>{{actual.id}}</td>
+                            <td>{{actual.description}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="viewService(actual.id)">Ver Servicio</button>
+                                <button type="button" class="btn btn-warning"
+                                    (click)="create(actual)">Añadir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+           
+    </div>
+</div>
+                <!-- <div class="card-body">
                     <div class="container">
                         <form [formGroup]="theFormGroup">
                             <div class="row">
@@ -60,8 +86,4 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                </div> -->

@@ -1,9 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import PlanXService from 'App/Models/PlanXService'
-import Service from 'App/Models/Service'
 import PlanServiceValidator from 'App/Validators/PlanServiceValidator'
 
-export default class PlanXServicesController {
+export default class PlanXPServiceController {
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
             const thePlanXService: PlanXService = await PlanXService.findOrFail(params.id)
@@ -22,30 +21,17 @@ export default class PlanXServicesController {
         }
     }
 
-    // ver los servicios de un plan, al hacer un view del plan
-    public async findServicesDisponibles({ params }: HttpContextContract) {
-        const thePlanService: PlanXService[] = await PlanXService.query().preload('plan').preload('service')
-        let serviciosDisponibles: Service[] = []
-        thePlanService.forEach(actual => {
-            if (actual.plan.id != params.id) {
-                serviciosDisponibles.push(actual.service)
+    public async findService({ params }: HttpContextContract){
+        const thePService: PlanXService[] = await PlanXService.query().preload('plan').preload('service')
+        let realPService: PlanXService[] = []
+        thePService.forEach(actual =>{
+            if(actual.plan.id == params.id){
+                realPService.push(actual)
             }
         })
-        return serviciosDisponibles
+        return realPService
     }
 
-    //Para añadir
-    public async findServicesNoDisponibles({ params }: HttpContextContract) {
-        const thePlanService: PlanXService[] = await PlanXService.query().preload('plan').preload('service')
-        let serviciosNoDisponibles: Service[] = []
-        thePlanService.forEach(actual => {
-            if (actual.plan.id == params.id) {
-                serviciosNoDisponibles.push(actual.service)
-            }
-        })
-        return serviciosNoDisponibles
-    }
-    
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(PlanServiceValidator);
         let planse: PlanXService = new PlanXService()

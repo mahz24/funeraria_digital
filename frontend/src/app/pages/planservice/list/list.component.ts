@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Planservice } from 'src/app/model/planservice';
 import { PlanserviceService } from 'src/app/services/planservice.service';
 import Swal from 'sweetalert2';
@@ -12,31 +12,48 @@ import Swal from 'sweetalert2';
 export class ListComponent implements OnInit {
 
   planservice: Planservice[];
-  constructor(private service: PlanserviceService, private router: Router) {
+  mode: number
+  id: number
+  constructor(private service: PlanserviceService, private router: Router, private activateRoute: ActivatedRoute) {
     this.planservice = []
+    this.mode = 1
+    this.id = 0
   }
 
   ngOnInit(): void {
-    this.list()
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/plan')) {
+      this.mode = 2;
+    }
+    if(this.mode == 1){
+      this.list()
+    }else if(this.mode == 2){
+      this.id = this.activateRoute.snapshot.params.id
+      this.listServices()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
       this.planservice = data
-      console.log(JSON.stringify(this.planservice));
     })
   }
 
-  view(id: number) {
-    this.router.navigate(["planservices/view/" + id])
+  listServices() {
+    this.service.listServices(this.id).subscribe(data => {
+      this.planservice = data
+    })
+  }
+
+  viewService(id: number) {
+    this.router.navigate(["services/view/" + id])
+  }
+  viewPlan(id: number) {
+    this.router.navigate(["plans/view/" + id])
   }
 
   create() {
-    this.router.navigate(["planservices/create"])
-  }
-
-  update(id: string) {
-    this.router.navigate(["planservices/update/" + id])
+    this.router.navigate(["planservices/create/plan/"+ this.id])
   }
 
   delete(id: number): void {

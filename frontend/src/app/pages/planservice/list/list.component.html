@@ -9,11 +9,12 @@
                 <div class="card-header bg-transparent">
                     <div class="row">
                         <div class="col-3">
-                            <h3 class="mb-0">Plan X Servicios</h3>
+                            <h3 class="mb-0" *ngIf="mode != 2">Plan X Servicios</h3>
+                            <h3 class="mb-0" *ngIf="mode == 2">Servicios del Plan {{id}}</h3>
                         </div>
                         <div class="col-6"></div>
                         <div class="col-3">
-                            <button type="button" class="btn btn-success" (click)="create()">Crear</button>
+                            <button type="button" class="btn btn-success" (click)="create()" *ngIf="mode == 2">Añadir</button>
                         </div>
                     </div>
                 </div>
@@ -21,17 +22,17 @@
                     <thead>
                         <tr>
                             <th class="col-1">ID</th>
-                            <th class="col-3">Plan</th>
+                            <th class="col-3" *ngIf="mode != 2">Plan</th>
                             <th class="col-3">Servicio</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let actual of planservice">
                             <td>{{actual.id}}</td>
-                            <td>{{actual.plan.name}}</td>
+                            <td *ngIf="mode != 2">{{actual.plan.name}}</td>
                             <td>{{actual.service.description}}</td>
-                            <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
-                                <button type="button" class="btn btn-danger" (click)="update(actual.id)">Editar</button>
+                            <td><button type="button" class="btn btn-danger" (click)="viewPlan(actual.plan.id)" *ngIf="mode != 2">Ver Plan</button>
+                                <button type="button" class="btn btn-primary" (click)="viewService(actual.service.id)">Ver Servicio</button>
                                 <button type="button" class="btn btn-warning"
                                     (click)="delete(actual.id)">Eliminar</button>
                             </td>

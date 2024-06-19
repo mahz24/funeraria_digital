@@ -83,7 +83,7 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({ 
       location: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       burial_type: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
-      burial_date:[null, [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      burial_date:[null, [Validators.required]],
       idService:[null, [Validators.required]],
       idRoom:[null, [Validators.required]]
     })

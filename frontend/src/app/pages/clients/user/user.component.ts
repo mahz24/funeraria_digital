@@ -14,44 +14,46 @@ export class UserComponent implements OnInit {
   user: User;
   theFormGroup: FormGroup;
   trySend: boolean
+  newUser: any
 
   constructor(private userService: UserService,
-              private router: Router, 
-              private theFormBuilder: FormBuilder) 
-  {
-    this.user= {
+    private router: Router,
+    private theFormBuilder: FormBuilder) {
+    this.user = {
       email: "",
-      password:""
+      password: ""
     }
     this.configFormGroup()
   }
 
   configFormGroup() {
     const StrongPasswordRegx: RegExp = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
-    this.theFormGroup = this.theFormBuilder.group({ 
-      email:['', [Validators.required, Validators.email]],
-      password:['',[Validators.required, Validators.pattern(StrongPasswordRegx)]],
+    this.theFormGroup = this.theFormBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern(StrongPasswordRegx)]],
     })
   }
 
-  get getTheFormGroup(){
+  get getTheFormGroup() {
     return this.theFormGroup.controls
   }
 
   ngOnInit(): void {
   }
 
-  create(){
-    this.trySend=true
-    if(this.theFormGroup.invalid){
+  create() {
+    this.trySend = true
+    if (this.theFormGroup.invalid) {
       Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
-    }else{
-      this.userService.create(this.user).subscribe(data=>{
-        const newUser: User = data
+    } else {
+      this.userService.create(this.user).subscribe(data => {
+        this.newUser = data._id
+        this.userService.matchRole(this.newUser).subscribe()
+        console.log("newUser" + this.newUser);
         Swal.fire(
           "Usuario creado", 'Ahora introduce tus datos.', 'success'
         )
-        this.router.navigate(["clients/create/"+ newUser._id])
+        this.router.navigate(["clients/create/" + this.newUser])
       })
     }
   }

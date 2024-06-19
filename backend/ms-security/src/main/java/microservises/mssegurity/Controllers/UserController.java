@@ -26,7 +26,7 @@ import microservises.mssegurity.Services.EncryptionService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -40,7 +40,6 @@ public class UserController {
     @Value("${ms-notifications.base-url}")
     private String baseUrlNotifications;
 
-    @SuppressWarnings("unused")
     @GetMapping("")
     public List<User> index(final HttpServletResponse response) {
         try {

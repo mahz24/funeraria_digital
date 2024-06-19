@@ -30,10 +30,12 @@ public class ValidatorsService {
         User theUser = this.getUser(request);
         if (theUser != null) {
             Role theRole = theUser.getRole();
+            System.out.println("El rol "+theRole);
             System.out.println("Antes URL " + url + " metodo " + method);
             url = url.replaceAll("[0-9a-fA-F]{24}|\\d+", "?");
             System.out.println("URL " + url + " metodo " + method);
             Permission thePermission = this.thePermissionRepository.getPermission(url, method);
+            System.out.println("El permiso "+thePermission);
             if (theRole != null && thePermission != null) {
                 System.out.println("Rol " + theRole.getName() + " Permission " + thePermission.getUrl());
                 RolePermission theRolePermission = this.theRolePermissionRepository.getRolePermission(theRole.get_id(),

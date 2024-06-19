@@ -29,10 +29,12 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   theUser: User;
   subscription: Subscription
+  chat: number
 
   public menuItems: any[];
   public isCollapsed = true;
   public notification: boolean
+
 
   constructor(private router: Router,
     private theSecutityService: SecurityService,
@@ -52,11 +54,17 @@ export class SidebarComponent implements OnInit {
       console.log("llegando desde el backend" + JSON.stringify(data))
       if (data) {
         this.notification = true
+        this.chat = data.chat
+        console.log("chat " + this.chat);
       }
     })
   }
-  
-  getTheSecurityService (){
+
+  notificacion() {
+    this.router.navigate([`chats/chat/${this.chat}`])
+  }
+
+  getTheSecurityService() {
     return this.theSecutityService
   }
 }

@@ -40,6 +40,11 @@ export class UserService {
   create(theUser: User): Observable<User> {
     return this.http.post<User>(`${environment.url_ms_security}/users`, theUser);
   }
+
+  matchRole(id:string): Observable<User> {
+    return this.http.put<User>(`${environment.url_ms_security}/users/${id}/role/6614af78dc70ec7408facfd1`,id);
+  }
+
   update(theUser: User): Observable<User> {
     return this.http.put<User>(`${environment.url_ms_security}/users/${theUser._id}`, theUser);
   }

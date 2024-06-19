@@ -33,8 +33,9 @@ export default class MessagesController {
             const theMessage: Message = await Message.create(body);
             let perfil = await axios.get(`${Env.get('MS_SECURITY_URL')}/profiles/${body.user_id}`)
             console.log(perfil);
-            Ws.io.emit('news', { message: 'Mensaje nuevo' })
-            Ws.io.emit(`chat${theMessage.chat_id}`, {content_message:`${theMessage.content_message}`,perfil:`${perfil.data.name}`})
+            Ws.io.emit('news', { message: 'Mensaje nuevo' ,chat:`${theMessage.chat_id}`})
+            Ws.io.emit(`chat${theMessage.chat_id}`, {content_message:`${theMessage.content_message}`,perfil:`${perfil.data.name}`,
+            chat:`${theMessage.chat_id}`})
             return theMessage;
         } else {
             return response.status(400).json({

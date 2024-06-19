@@ -2,38 +2,36 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
-import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
   {
-    path: "list",
+    path:'list',
     component: ListComponent
   },
   {
-    path: "list/execution/:id",
+    path:'list/holder/:id',
     component: ListComponent
   },
   {
-    path: "create",
+    path:'create',
     component: ManageComponent
   },
   {
-    path: "update/:id",
+    path:'create/holder/:id',
     component: ManageComponent
   },
   {
-    path: "view/:id",
+    path:'view/:id',
     component: ManageComponent
   },
   {
-    path: "chat/:id",
-    component: ChatComponent
-  }
-
+    path:'update/:id',
+    component: ManageComponent
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChatsRoutingModule { }
+export class BenefactorRoutingModule { }

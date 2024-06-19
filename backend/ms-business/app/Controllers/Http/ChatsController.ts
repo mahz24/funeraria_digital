@@ -19,6 +19,18 @@ export default class ChatsController {
             }
         }
     }
+
+    public async findChatsByClient({ params }: HttpContextContract){
+        const theChats: Chat[] = await Chat.query().preload('executionservice')
+        let realChats: Chat[] = []
+        theChats.forEach(actual =>{
+            if(actual.executionservice.client_id == params.id){
+                realChats.push(actual)
+            }
+        })
+        return realChats
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(ChatValidator);
         const theChat: Chat = await Chat.create(body);

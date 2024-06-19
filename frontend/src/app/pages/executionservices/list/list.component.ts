@@ -92,6 +92,10 @@ export class ListComponent implements OnInit {
     this.router.navigate(["comments/list/execution/" + id])
   }
 
+  chats(id: number){
+    this.router.navigate(["chats/list/execution/" + id])
+  }
+
   delete(id: number): void {
     Swal.fire({
       title: 'Eliminar',

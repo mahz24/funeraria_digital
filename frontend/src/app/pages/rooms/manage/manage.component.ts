@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class ManageComponent implements OnInit {
   mode: number
+  type: number
   room: Room
   trySend: boolean
   theFormGroup: FormGroup
@@ -26,6 +27,7 @@ export class ManageComponent implements OnInit {
     private headquarterService: HeadquarterService
   ) {
     this.mode = 1;
+    this.type = 0
     this.estados = ["ACTIVO", "INACTIVO"]
     this.room = {
       num: 0,
@@ -61,12 +63,18 @@ export class ManageComponent implements OnInit {
       this.mode = 1;
     } else if (currentUrl.includes('create')) {
       this.mode = 2;
+      if(currentUrl.includes('create/headquarter')){
+        this.type = 1
+      }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if (this.activateRoute.snapshot.params.id) {
+    if (this.activateRoute.snapshot.params.id && this.mode != 2) {
       this.room.num = this.activateRoute.snapshot.params.id
       this.getRoom(this.room.num)
+    }
+    if(this.activateRoute.snapshot.params.id && this.mode == 2 && this.type == 1){
+      this.room.headquarter_id = this.activateRoute.snapshot.params.id
     }
     this.headquartersList()
   }
@@ -93,7 +101,11 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["rooms/list"])
+        if(this.type == 0){
+          this.router.navigate(["rooms/list"])
+        }else if(this.type == 1){
+          this.router.navigate(["rooms/list/headquarter/"+ this.room.headquarter_id])
+        }
       })
     }
   }

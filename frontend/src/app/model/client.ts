@@ -1,3 +1,5 @@
+import { Benefactor } from "./benefactor.model"
+import { Holder } from "./holder.model"
 import { User } from "./user.model"
 
 export class Client {
@@ -7,7 +9,7 @@ export class Client {
     gender?: string
     is_alive?: boolean
     user?: User
-    holder?: any
-    benefactor?:any
+    holder?: Holder
+    benefactor?: Benefactor
 
 }

@@ -99,5 +99,9 @@ export const AdminLayoutRoutes: Routes = [
         path: 'causa',
         loadChildren: () => import('src/app/pages/causa/causa.module').then(m=> m.CausaModule)
     },
+    {
+        path: 'benefactors',
+        loadChildren: () => import('src/app/pages/benefactor/benefactor.module').then(m=> m.BenefactorModule)
+    },
 
 ];

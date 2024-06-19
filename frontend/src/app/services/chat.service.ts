@@ -15,6 +15,10 @@ export class ChatService {
     return this.http.get<Chat[]>(`${environment.url_ms_business}/chats`);
   }
 
+  listChats(id: number): Observable<Chat[]> {
+    return this.http.get<Chat[]>(`${environment.url_ms_business}/chats/execution/${id}`);
+  }
+
   view(id: number): Observable<Chat> {
     return this.http.get<Chat>(`${environment.url_ms_business}/chats/${id},
     `);

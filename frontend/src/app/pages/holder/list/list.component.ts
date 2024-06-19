@@ -26,9 +26,9 @@ export class ListComponent implements OnInit {
       this.holders.forEach(actual =>{
         this.userService.view(actual.client.user_id).subscribe(data =>{
           actual.client.user = data
+          actual.client.user.password = ""
         })
       })
-      console.log(JSON.stringify(this.holders));
     })
   }
 

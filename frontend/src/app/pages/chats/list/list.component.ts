@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Chat } from 'src/app/model/chat';
 import { ChatService } from 'src/app/services/chat.service';
 import Swal from 'sweetalert2';
@@ -11,24 +11,41 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   chats: Chat[];
-  constructor(private service: ChatService, private router: Router) {
+  id: number
+  mode: number
+  constructor(private service: ChatService, private router: Router, private activateRoute: ActivatedRoute) {
     this.chats = []
+    this.id = 0
+    this.mode = 1
   }
 
   ngOnInit(): void {
-    this.list()
-    console.log("holii")
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/execution')) {
+      this.mode = 2;
+    }
+    if(this.mode == 1){
+      this.list()
+    }else if(this.mode == 2){
+      this.id = this.activateRoute.snapshot.params.id
+      this.listChats()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
       this.chats = data
-      console.log(JSON.stringify(this.chats));
+    })
+  }
+
+  listChats() {
+    this.service.listChats(this.id).subscribe(data => {
+      this.chats = data
     })
   }
 
   view(id: number) {
-    this.router.navigate(["chats/view/" + id])
+    this.router.navigate(["chats/chat/" + id])
   }
 
   create() {

@@ -5,14 +5,12 @@ export default class BenefactorValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    client_id: schema.number(
-      [rules.exists({ 
-        table: 'clients', column: 'id' 
-      })]),
-    holder_id: schema.number(
-      [rules.exists({ 
-        table: 'holders', column: 'id' 
-      })]),
+    client: schema.object().members({
+      id:schema.number([rules.exists({ table: 'clients', column: 'id' })])
+    }),
+    holder: schema.object().members({
+      id:schema.number([rules.exists({ table: 'holders', column: 'id' })])
+    }),
       isprincipal_benefactor: schema.boolean(),
       isemergency_contact: schema.boolean()
   })

@@ -89,7 +89,6 @@ export default class ClientsController {
         let body = await request.validate(ClientValidator);
         let api_response = await axios.get(`${Env.get('MS_SECURITY_URL')}/users/${body.user_id}`)
         let user = await api_response.data;
-        console.log(user);
         let maybeClient: Client | null;
         try{
             maybeClient = await Client.query()

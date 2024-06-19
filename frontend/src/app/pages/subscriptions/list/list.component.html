@@ -11,6 +11,7 @@
                         <div class="col-3">
                             <h3 *ngIf="mode==1" class="mb-0">Suscripciones</h3>
                             <h3 *ngIf="mode==2" class="mb-0">Suscripciones del cliente {{id}}</h3>
+                            <h3 *ngIf="mode==3" class="mb-0">Suscripciones del plan {{id}}</h3>
                         </div>
                         <div class="col-6"></div>
                         <div class="col-3">
@@ -22,16 +23,16 @@
                     <thead>
                         <tr>
                             <th class="col-1">ID</th>
-                            <th *ngIf="mode==1" class="col-3">Cliente</th>
-                            <th class="col-3">Plan</th>
+                            <th *ngIf="mode!=2" class="col-3">Cliente</th>
+                            <th *ngIf="mode!=3" class="col-3">Plan</th>
                             <th class="col-5">Fecha Activación</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let actual of subs">
                             <td>{{actual.id}}</td>
-                            <td *ngIf="mode==1">{{actual.client.user.email}}</td>
-                            <td>{{actual.plan.name}}</td>
+                            <td *ngIf="mode!=2">{{actual.client.user.email}}</td>
+                            <td *ngIf="mode!=3">{{actual.plan.name}}</td>
                             <td>{{actual.activation_date}}</td>
                             <td><button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                 <button type="button" class="btn btn-danger" (click)="update(actual.id)">Editar</button>

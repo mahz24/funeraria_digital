@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'src/app/model/subscription.model';
-import { SubscriptionService } from 'src/app/services/subscription.service';
+import { Benefactor } from 'src/app/model/benefactor.model';
+import { BenefactorService } from 'src/app/services/benefactor.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -11,42 +11,32 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
-  subs: Subscription[];
+  benefactor: Benefactor[]
   mode: number
-  id: number
-  constructor(private service: SubscriptionService, 
-    private router: Router, 
-    private userService: UserService,
-    private activateRoute: ActivatedRoute
-  ) {
-    this.subs = []
+  id:number
+  constructor(private service: BenefactorService, private router: Router, private userService: UserService, private activateRoute: ActivatedRoute) {
+    this.benefactor = []
     this.mode = 1
     this.id = 0
   }
 
   ngOnInit(): void {
     const currentUrl = this.activateRoute.snapshot.url.join('/');
-    if (currentUrl.includes('list/client')) {
+    if (currentUrl.includes('list/holder')) {
       this.mode = 2;
-    }else if(currentUrl.includes('list/plan')){
-      this.mode = 3;
     }
     if(this.mode == 1){
       this.list()
     }else if(this.mode == 2){
       this.id = this.activateRoute.snapshot.params.id
-      this.listPlans()
-    }else if(this.mode == 3){
-      this.id = this.activateRoute.snapshot.params.id
-      this.listClients()
+      this.lisBenefactors()
     }
   }
 
   list() {
     this.service.list().subscribe(data => {
-      this.subs = data
-      this.subs.forEach(actual =>{
+      this.benefactor = data
+      this.benefactor.forEach(actual =>{
         this.userService.view(actual.client.user_id).subscribe(data =>{
           actual.client.user = data
           actual.client.user.password = ""
@@ -55,10 +45,10 @@ export class ListComponent implements OnInit {
     })
   }
 
-  listPlans() {
-    this.service.listPlans(this.activateRoute.snapshot.params.id).subscribe(data => {
-      this.subs = data
-      this.subs.forEach(actual =>{
+  lisBenefactors() {
+    this.service.listBenefactors(this.id).subscribe(data => {
+      this.benefactor = data
+      this.benefactor.forEach(actual =>{
         this.userService.view(actual.client.user_id).subscribe(data =>{
           actual.client.user = data
           actual.client.user.password = ""
@@ -67,34 +57,21 @@ export class ListComponent implements OnInit {
     })
   }
 
-  listClients() {
-    this.service.listClients(this.activateRoute.snapshot.params.id).subscribe(data => {
-      this.subs = data
-      this.subs.forEach(actual =>{
-        this.userService.view(actual.client.user_id).subscribe(data =>{
-          actual.client.user = data
-          actual.client.user.password = ""
-        })
-      })
-    })
-  }
 
   view(id: number) {
-    this.router.navigate(["subscriptions/view/" + id])
+    this.router.navigate(["benefactors/view/" + id])
   }
 
   create() {
     if(this.mode == 1){
-      this.router.navigate(["subscriptions/create"])
+      this.router.navigate(["benefactors/create"])
     }else if(this.mode == 2){
-      this.router.navigate(["subscriptions/create/client/"+ this.id])
-    }else if(this.mode == 3){
-      this.router.navigate(["subscriptions/create/plan/"+ this.id])
+    this.router.navigate(["benefactors/create/holder/"+ this.id])
     }
   }
 
   update(id: string) {
-      this.router.navigate(["subscriptions/update/" + id])
+    this.router.navigate(["benefactors/update/" + id])
   }
 
   delete(id: number): void {
@@ -112,16 +89,12 @@ export class ListComponent implements OnInit {
         this.service.delete(id).subscribe(data => {
           Swal.fire(
             'Eliminado!',
-            'La ciudad ha sido eliminada correctamente',
+            'La sede ha sido eliminada correctamente',
             'success'
           )
           this.ngOnInit();
         });
       }
     })
-  }
-
-  bills(id: number){
-    this.router.navigate(["bills/list/subscription/" + id])
   }
 }

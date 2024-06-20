@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 })
 export class ManageComponent implements OnInit {
   mode: number; //1-> view, 2-> Create, 3-> Update
+  type: number
   burial: Burial;
   theFormGroup: FormGroup;
   trySend: boolean
@@ -29,6 +30,7 @@ export class ManageComponent implements OnInit {
               private theRoomService: RoomService
   ){
     this.mode=1
+    this.type = 0
     this.trySend=false
     this.services=[]
     this.burial={
@@ -83,7 +85,7 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({ 
       location: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       burial_type: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
-      burial_date:[null, [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      burial_date:[null, [Validators.required]],
       idService:[null, [Validators.required]],
       idRoom:[null, [Validators.required]]
     })
@@ -99,12 +101,17 @@ export class ManageComponent implements OnInit {
       this.mode = 1;
     } else if (currentUrl.includes('create')) {
       this.mode = 2;
+      if(this.activateRoute.snapshot.params.id){
+        this.type= 1
+      }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if(this.activateRoute.snapshot.params.id){
+    if(this.activateRoute.snapshot.params.id && this.mode !=2){
       this.burial.id=this.activateRoute.snapshot.params.id
       this.getBurial(this.burial.id)
+    }else if(this.activateRoute.snapshot.params.id && this.mode ==2){
+      this.burial.service.id = this.activateRoute.snapshot.params.id
     }
     this.servicesList()
     this.roomsList()
@@ -121,7 +128,12 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["burials/list"])
+        if(this.type==0){
+          this.router.navigate(["burials/list"])
+        }else if(this.type == 1){
+          this.router.navigate(["dashboard"])
+        }
+        
       })
     }
   }

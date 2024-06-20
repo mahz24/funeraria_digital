@@ -24,10 +24,12 @@ export class ListComponent implements OnInit {
     const currentUrl = this.activateRoute.snapshot.url.join('/');
     if (currentUrl.includes('list/plan')) {
       this.mode = 2;
+    }else if(currentUrl.includes('list/sub')){
+      this.mode = 3;
     }
     if(this.mode == 1){
       this.list()
-    }else if(this.mode == 2){
+    }else if(this.mode == 2 || this.mode == 3){
       this.id = this.activateRoute.snapshot.params.id
       this.listServices()
     }

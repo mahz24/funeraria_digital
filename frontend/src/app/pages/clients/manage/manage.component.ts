@@ -15,6 +15,7 @@ import  Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   mode: number; //1-> view, 2-> Create, 3-> Update
+  type: number
   client: Client;
   profile: Profile
   theFormGroup: FormGroup;
@@ -26,6 +27,7 @@ export class ManageComponent implements OnInit {
               private router: Router
   ){
     this.mode=1
+    this.type = 0
     this.client = {id: 0, direction:"", gender:"", is_alive: true}
     this.profile = {name: "", last_name: "", birthday: "", number_phone:""}
     this.configFormGroup()
@@ -33,9 +35,16 @@ export class ManageComponent implements OnInit {
   getClient(id:number){
       this.serviceClient.view(id).subscribe(data =>{
         this.client = data
+        this.client.user.password = ""
         this.userService.getProfile(this.client.user_id).subscribe(data => {
           this.profile = data
         })
+        if(this.client.holder){
+          this.type= 1
+        }else if(this.client.benefactor){
+          this.type= 2
+        }
+        
       })
     }
 
@@ -102,6 +111,14 @@ export class ManageComponent implements OnInit {
         })
       })
     }
+  }
+
+  holder(id:number){
+    this.router.navigate(["holders/view/"+ id])
+  }
+
+  benefactor(id:number){
+    this.router.navigate(["benefactors/list/holder/"+ id])
   }
 
 }

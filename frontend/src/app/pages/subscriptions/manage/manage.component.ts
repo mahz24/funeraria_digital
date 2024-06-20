@@ -84,6 +84,9 @@ export class ManageComponent implements OnInit {
   clientList(){
     this.clientService.list().subscribe(data=>{
       this.clients = data
+      this.clients.forEach(actual =>{
+        actual.user.password = ""
+      })
     })
   }
 
@@ -101,6 +104,8 @@ export class ManageComponent implements OnInit {
       this.mode = 2;
       if(currentUrl.includes('client')){
         this.type = 1
+      }else if(currentUrl.includes('plan')){
+        this.type = 2
       }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
@@ -108,9 +113,11 @@ export class ManageComponent implements OnInit {
     if(this.activateRoute.snapshot.params.id && this.mode != 2){
       this.sub.id=this.activateRoute.snapshot.params.id
       this.getSub(this.sub.id) 
-    }else if(this.activateRoute.snapshot.params.id && this.mode == 2){
+    }else if(this.activateRoute.snapshot.params.id && this.mode == 2 && this.type == 1){
       this.sub.client.id = this.activateRoute.snapshot.params.id
       this.getEmail()
+    }else if(this.activateRoute.snapshot.params.id && this.mode == 2 && this.type == 2){
+      this.sub.plan.id = this.activateRoute.snapshot.params.id
     }
     this.clientList()
     this.planList()
@@ -134,6 +141,8 @@ export class ManageComponent implements OnInit {
         )
         if(this.type == 1){
           this.router.navigate(["subscriptions/list/client/"+ this.sub.client.id])
+        }else if(this.type == 2){
+          this.router.navigate(["subscriptions/list/plan/"+ this.sub.plan.id])
         }else if(this.type == 0){
           this.router.navigate(["subscriptions/list"])
         }

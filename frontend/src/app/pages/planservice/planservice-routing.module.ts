@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path:"list/plan/:id",
     component: ListComponent
+  },
+  {
+    path:"list/sub/:id",
+    component: ListComponent
   }
 
 ];

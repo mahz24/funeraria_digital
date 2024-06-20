@@ -19,7 +19,11 @@ const routes: Routes = [
   {
     path:"view/:id",
     component:ManageComponent
-  }
+  },
+  {
+    path: "create/:id",
+    component: ManageComponent
+  },
 
 ];
 

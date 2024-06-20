@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class ManageComponent implements OnInit {
   mode: number
+  type: number
   relocation: Relocation
   trySend: boolean
   theFormGroup: FormGroup
@@ -22,6 +23,7 @@ export class ManageComponent implements OnInit {
     private theFormBuilder: FormBuilder
   ) {
     this.mode = 1;
+    this.type = 0
     this.trySend = false
     this.estados = ["REALIZADO","PENDIENTE","CANCELADO"]
     this.relocation = {
@@ -61,12 +63,17 @@ export class ManageComponent implements OnInit {
       this.mode = 1;
     } else if (currentUrl.includes('create')) {
       this.mode = 2;
+      if(this.activateRoute.snapshot.params.id){
+        this.type= 1
+      }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if (this.activateRoute.snapshot.params.id) {
+    if (this.activateRoute.snapshot.params.id && this.mode !=2) {
       this.relocation.id = this.activateRoute.snapshot.params.id
       this.getPS(this.relocation.id)
+    }else if(this.activateRoute.snapshot.params.id && this.mode ==2){
+      this.relocation.service.id = this.activateRoute.snapshot.params.id
     }
   }
   getPS(id: number) {
@@ -94,7 +101,13 @@ export class ManageComponent implements OnInit {
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["relocations/list"])
+        
+        if(this.type==0){
+          this.router.navigate(["relocations/list"])
+        }else if(this.type == 1){
+          this.router.navigate(["dashboard"])
+        }
+        
       })
     }
   }

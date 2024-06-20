@@ -10,6 +10,10 @@ const routes: Routes = [
     component: ListComponent
   },
   {
+    path: "list/execution/:id",
+    component: ListComponent
+  },
+  {
     path: "create",
     component: ManageComponent
   },

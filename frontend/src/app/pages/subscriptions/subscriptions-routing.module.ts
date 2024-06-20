@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
+import { PlanComponent } from './plan/plan.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
     component: ListComponent
   },{
     path: 'create/client/:id',
+    component: PlanComponent
+  },{
+    path: "list/plan/:id",
+    component: ListComponent
+  },{
+    path: 'create/plan/:id',
     component: ManageComponent
   }
 ];

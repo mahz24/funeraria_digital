@@ -121,6 +121,10 @@ export const AdminLayoutRoutes: Routes = [
         loadChildren: () => import('src/app/pages/causa/causa.module').then(m=> m.CausaModule)
     },
     {
+        path: 'benefactors',
+        loadChildren: () => import('src/app/pages/benefactor/benefactor.module').then(m=> m.BenefactorModule)
+    }
+    {
         path: 'checkout',
         loadChildren: () => import('src/app/pages/checkout/checkout.module').then(m => m.CheckoutModule)
       },

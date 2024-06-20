@@ -1,0 +1,49 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <div class="row">
+                        <div class="col-3">
+                            <h3 class="mb-0">Planes para suscribirse</h3>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th class="col-1">ID</th>
+                                <th class="col-3">Nombre</th>
+                                <th class="col-5">Descripción</th>
+                                <th class="col-3">Precio</th>
+                                <th class="col-4">Numero Beneficiarios</th>
+                                <th class="col-5">Descuento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let actual of plans">
+                                <td>{{actual.id}}</td>
+                                <td>{{actual.name}}</td>
+                                <td>{{actual.description}}</td>
+                                <td>{{actual.price}}</td>
+                                <td>{{actual.beneficiaries_number}}</td>
+                                <td>{{actual.discount}}</td>
+
+                                <td><button type="button" class="btn btn-info" (click)="view(actual.id)">Ver Servicios</button>
+                                    <button type="button" class="btn btn-danger" (click)="create(actual.id)">Suscribirse</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

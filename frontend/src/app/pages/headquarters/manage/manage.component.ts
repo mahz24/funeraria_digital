@@ -21,6 +21,7 @@ export class ManageComponent implements OnInit {
   trySend: boolean
   cities: City[]
   deptos: Department[]
+  depto: Department
   constructor(private activateRoute: ActivatedRoute,
               private headquarterService: HeadquarterService,
               private router: Router,
@@ -43,6 +44,11 @@ export class ManageComponent implements OnInit {
         status:"",
       }
     }
+    this.depto={
+      id:0, name: "", location:"", status:""
+    }
+    this.deptos = []
+    this.cities = []
     this.configFormGroup()
   }
   getHeadquarter(id:number){
@@ -57,7 +63,8 @@ export class ManageComponent implements OnInit {
       direction:['',[Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       description:['',[Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       status:['',[Validators.required, Validators.min(1),Validators.max(4)]],
-      idCity:[null, Validators.required]
+      idCity:[null, Validators.required],
+      idDepto: [null]
     })
   }
 
@@ -65,15 +72,8 @@ export class ManageComponent implements OnInit {
     return this.theFormGroup.controls
   }
 
-  citiesList(){
-    let select = document.querySelector('#deptoId')
-    select.addEventListener('change', () =>{
-      let deptoId = select //mira acá
-      console.log(deptoId);
-      
-    })
-    
-    this.cityService.list().subscribe(data=>{
+  citiesList(id:number){
+    this.cityService.listCities(this.depto.id).subscribe(data=>{
       this.cities = data
    })
   }
@@ -98,7 +98,6 @@ export class ManageComponent implements OnInit {
       this.getHeadquarter(this.headquarter.id)
     }
     this.deptosList()
-    this.citiesList()
   }
 
   create(){

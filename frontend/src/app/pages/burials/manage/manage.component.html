@@ -74,10 +74,16 @@
                                 </div>
                                 <div class="col-8">
                                     <select class="form-control" formControlName="idService"
-                                        [(ngModel)]="burial.service.id">
+                                        [(ngModel)]="burial.service.id" *ngIf="type != 1">
                                         <option *ngFor="let option of services" [value]="option.id">Descripción:
                                             {{option.description}} - Precio: {{option.price}}</option>
                                     </select>
+                                    <input class="form-control" formControlName="idService" [(ngModel)]="burial.service.id" *ngIf="type == 1" disabled>
+                                    <div
+                                        *ngIf="getTheFormGroup.idService.errors && (getTheFormGroup.idService.dirty || getTheFormGroup.idService.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.idService.errors.required"
+                                            class="msnError">Requerido</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -89,6 +95,11 @@
                                         <option *ngFor="let option of rooms" [value]="option.num">Id: {{option.num}} -
                                             Nombre: {{option.name}} - Capacidad: {{option.capacity}}</option>
                                     </select>
+                                    <div
+                                        *ngIf="getTheFormGroup.idRoom.errors && (getTheFormGroup.idRoom.dirty || getTheFormGroup.idRoom.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.idRoom.errors.required"
+                                            class="msnError">Requerido</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

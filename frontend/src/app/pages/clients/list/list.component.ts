@@ -27,8 +27,6 @@ export class ListComponent implements OnInit {
   }
 
   view(id: number) {
-    console.log("El id es ", id);
-    
     this.router.navigate(["clients/view/"+id])
   }
 

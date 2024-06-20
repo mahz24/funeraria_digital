@@ -103,7 +103,6 @@ export class ManageComponent implements OnInit {
   create(){
     const currentUrl = this.activateRoute.snapshot.url.join('/');
     this.trySend=true
-    console.log(this.bill);
     
     if(this.theFormGroup.invalid){
       Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')

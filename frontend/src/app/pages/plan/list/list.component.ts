@@ -65,4 +65,8 @@ export class ListComponent implements OnInit {
   services(id: number){
     this.router.navigate(["planservices/list/plan/"+id])
   }
+  
+  clients(id: number){
+    this.router.navigate(["subscriptions/list/plan/"+id])
+  }
 }

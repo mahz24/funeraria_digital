@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Room } from 'src/app/model/room';
 import { RoomService } from 'src/app/services/room.service';
 import Swal from 'sweetalert2';
@@ -10,19 +10,34 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
-
+  mode: number
+  id:number
   rooms: Room[];
-  constructor(private service: RoomService, private router: Router) {
+  constructor(private service: RoomService, private router: Router, private activateRoute: ActivatedRoute) {
     this.rooms = []
+    this.id =0
+    this.mode= 1
   }
 
   ngOnInit(): void {
-    this.list()
+    const currentUrl = this.activateRoute.snapshot.url.join('/');
+    if (currentUrl.includes('list/headquarter')) {
+      this.mode = 2
+      this.id = this.activateRoute.snapshot.params.id
+      this.listRooms()
+    }else{
+      this.list()
+    }
   }
 
   list() {
     this.service.list().subscribe(data => {
+      this.rooms = data
+    })
+  }
+
+  listRooms() {
+    this.service.listRoom(this.id).subscribe(data => {
       this.rooms = data
     })
   }
@@ -32,7 +47,11 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(["rooms/create"])
+    if(this.mode == 1){
+      this.router.navigate(["rooms/create"])
+    }else if(this.mode == 2){
+      this.router.navigate(["rooms/create/headquarter/"+ this.id])
+    }
   }
 
   update(id: string) {

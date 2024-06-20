@@ -20,6 +20,14 @@ const routes: Routes = [
     path: "view/:id",
     component: ManageComponent
   },
+  {
+    path: "list/headquarter/:id",
+    component: ListComponent
+  },
+  {
+    path: "create/headquarter/:id",
+    component: ManageComponent
+  },
 ];
 
 @NgModule({

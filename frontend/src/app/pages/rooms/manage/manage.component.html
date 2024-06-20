@@ -86,13 +86,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    Estado:
+                                    Sede:
                                 </div>
                                 <div class="col-8">
-                                    <select class="form-control" [(ngModel)]="room.headquarter_id" formControlName="headquarter_id">
+                                    <select class="form-control" [(ngModel)]="room.headquarter_id" formControlName="headquarter_id" *ngIf="type == 0">
                                         <option *ngFor="let option of headquarters" [value]="option.id">
                                             {{option.name}} </option>
                                     </select>
+                                    <input class="form-control" [(ngModel)]="room.headquarter_id" formControlName="headquarter_id" *ngIf="type == 1" disabled>
+                                    <div
+                                        *ngIf="getTheFormGroup.headquarter_id.errors && (getTheFormGroup.headquarter_id.dirty || getTheFormGroup.headquarter_id.touched || trySend)">
+                                        <strong *ngIf="getTheFormGroup.headquarter_id.errors.required"
+                                            class="msnError">Requerido</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

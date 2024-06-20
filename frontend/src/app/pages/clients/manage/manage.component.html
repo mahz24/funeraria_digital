@@ -43,11 +43,8 @@
                                 Apellido:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
-                                class="form-control" 
-                                [(ngModel)]="profile.last_name" 
-                                [disabled]="mode == 1" 
-                                formControlName="last_name">
+                                <input type="text" [(ngModel)]="profile.last_name" formControlName="last_name"
+                                class="form-control">
                                 <div *ngIf="getTheFormGroup.last_name.errors && (getTheFormGroup.last_name.dirty || getTheFormGroup.last_name.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.last_name.errors.required" class="msnError">Requerido</strong>
                                     <strong *ngIf="getTheFormGroup.last_name.errors.minlength || getTheFormGroup.last_name.errors.maxlength" class="msnError">Inválido</strong>
@@ -59,11 +56,8 @@
                                 Fecha de nacimiento:
                             </div>
                             <div class="col-8">
-                                <input type="date" 
-                                class="form-control" 
-                                [(ngModel)]="profile.birthday" 
-                                [disabled]="mode == 1" 
-                                formControlName="birthday">
+                                <input type="date" [(ngModel)]="profile.birthday" formControlName="birthday"
+                                class="form-control">
                                 <div *ngIf="getTheFormGroup.birthday.errors && (getTheFormGroup.birthday.dirty || getTheFormGroup.birthday.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.birthday.errors.required" class="msnError">Requerido</strong>
                                 </div>
@@ -74,11 +68,8 @@
                                 Número telefónico:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
-                                class="form-control" 
-                                [(ngModel)]="profile.number_phone" 
-                                [disabled]="mode == 1" 
-                                formControlName="number_phone">
+                                <input type="text" [(ngModel)]="profile.number_phone" formControlName="number_phone"
+                                class="form-control">
                                 <div *ngIf="getTheFormGroup.number_phone.errors && (getTheFormGroup.number_phone.dirty || getTheFormGroup.number_phone.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.number_phone.errors.required" class="msnError">Requerido</strong>
                                     <strong *ngIf="getTheFormGroup.number_phone.errors.minlength || getTheFormGroup.number_phone.errors.maxlength" class="msnError">Inválido</strong>
@@ -90,11 +81,8 @@
                                 Dirección:
                             </div>
                             <div class="col-8">
-                                <input type="text" 
-                                class="form-control" 
-                                [(ngModel)]="client.direction" 
-                                [disabled]="mode == 1" 
-                                formControlName="direction">
+                                <input type="text" [(ngModel)]="client.direction" formControlName="direction"
+                                class="form-control">
                                 <div *ngIf="getTheFormGroup.direction.errors && (getTheFormGroup.direction.dirty || getTheFormGroup.direction.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.direction.errors.required" class="msnError">Requerido</strong>
                                     <strong *ngIf="getTheFormGroup.direction.errors.minlength || getTheFormGroup.direction.errors.maxlength" class="msnError">Inválido</strong>
@@ -106,9 +94,7 @@
                                 Género:
                             </div>
                             <div class="col-8">
-                                <select class="form-control" 
-                                [(ngModel)]="client.gender" 
-                                formControlName="gender">
+                                <select class="form-control" [(ngModel)]="client.gender" formControlName="gender">
                                     <option value="HOMBRE">HOMBRE</option>
                                     <option value="MUJER">MUJER</option>
                                     <option value="NO BINARIO">NO BINARIO</option>
@@ -121,11 +107,7 @@
                                 ¿Está vivo?:
                             </div>
                             <div class="col-8">
-                                <input type="checkbox" 
-                                class="form-control" 
-                                [(ngModel)]="client.is_alive" 
-                                [disabled]="mode == 1" 
-                                formControlName="is_alive">
+                                <input type="checkbox" class="form-control"[(ngModel)]="client.is_alive" formControlName="is_alive">
                                 <div *ngIf="getTheFormGroup.is_alive.errors && (getTheFormGroup.is_alive.dirty || getTheFormGroup.is_alive.touched || trySend)">
                                     <strong *ngIf="getTheFormGroup.is_alive.errors.required" class="msnError">Requerido</strong>
                                 </div>
@@ -136,9 +118,13 @@
                             </div>
                             <div class="col-8">
                                 <button *ngIf="mode==2" (click)="create()" type="button" 
-                                class="btn btn-primary btn-block">Crear</button>
+                                    class="btn btn-primary btn-block">Crear</button>
                                 <button *ngIf="mode==3" (click)="update()" type="button" 
-                                class="btn btn-primary btn-block">Actualizar</button>
+                                    class="btn btn-primary btn-block">Actualizar</button>
+                                <button *ngIf="mode==1 && type == 1" (click)="benefactor(client.holder.id)" type="button" 
+                                    class="btn btn-secondary ">Ver Beneficiarios</button>
+                                <button *ngIf="mode==1 && type == 2" (click)="holder(client.benefactor.holder.id)" type="button" 
+                                    class="btn btn-secondary">Ver Titular</button>
                             </div>
                         </div>
                     </div>

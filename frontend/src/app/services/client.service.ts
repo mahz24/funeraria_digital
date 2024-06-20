@@ -19,6 +19,11 @@ export class ClientService {
   view(id: number): Observable<Client> {
     return this.http.get<Client>(`${environment.url_ms_business}/clients/${id}`);
   }
+
+  search(id: string): Observable<Client> {
+    return this.http.get<Client>(`${environment.url_ms_business}/clients/user/${id}`);
+  }
+
   create(theClient: Client): Observable<Client> {
     return this.http.post<Client>(`${environment.url_ms_business}/clients`, theClient
     );

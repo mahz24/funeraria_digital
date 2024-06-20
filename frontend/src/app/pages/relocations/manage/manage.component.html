@@ -28,7 +28,9 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" class="form-control" [(ngModel)]="relocation.service.id"
-                                        [disabled]="mode==1" formControlName="idService">
+                                        formControlName="idService" *ngIf="type != 1">
+                                        <input class="form-control" [(ngModel)]="relocation.service.id"
+                                        formControlName="idService" *ngIf="type == 1" disabled>
                                     <div
                                         *ngIf="getTheFormGroup.idService.errors && (getTheFormGroup.idService.dirty || getTheFormGroup.idService.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.idService.errors.required"

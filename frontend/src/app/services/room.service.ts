@@ -15,6 +15,10 @@ export class RoomService {
     return this.http.get<Room[]>(`${environment.url_ms_business}/rooms`);
   }
 
+  listRoom(id:number): Observable<Room[]> {
+    return this.http.get<Room[]>(`${environment.url_ms_business}/rooms/headquarter/${id}`);
+  }
+
   view(id: number): Observable<Room> {
     return this.http.get<Room>(`${environment.url_ms_business}/rooms/${id},
     `);

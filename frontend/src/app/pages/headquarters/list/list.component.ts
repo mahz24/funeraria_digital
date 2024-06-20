@@ -23,7 +23,6 @@ export class ListComponent implements OnInit {
   list() {
     this.service.list().subscribe(data => {
       this.headquarters = data
-      console.log(JSON.stringify(this.headquarters));
     })
   }
 
@@ -37,6 +36,10 @@ export class ListComponent implements OnInit {
 
   update(id: string) {
     this.router.navigate(["headquarters/update/" + id])
+  }
+
+  rooms(id:number){
+    this.router.navigate(["rooms/list/headquarter/" + id])
   }
 
   delete(id: number): void {

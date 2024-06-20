@@ -45,9 +45,10 @@
                                 <select class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id" *ngIf="type != 1">
                                     <option *ngFor="let option of clients" [value]="option.id">{{ option.user.email }}</option>
                                 </select>
-                                <label class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id" *ngIf="type == 1">
-                                    {{sub.client.user.email}}
-                                </label>
+                                <input class="form-control" formControlName="idClient" [(ngModel)]="sub.client.id" *ngIf="type == 1" disabled>
+                                <div *ngIf="getTheFormGroup.idClient.errors && (getTheFormGroup.idClient.dirty || getTheFormGroup.idClient.touched || trySend)">
+                                    <strong *ngIf="getTheFormGroup.idClient.errors.required" class="msnError">Requerido</strong>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -55,9 +56,13 @@
                                 Plan:
                             </div>
                             <div class="col-8">
-                                <select class="form-control" formControlName="idPlan" [(ngModel)]="sub.plan.id">
+                                <select class="form-control" formControlName="idPlan" [(ngModel)]="sub.plan.id" *ngIf="type != 2">
                                     <option *ngFor="let option of plans" [value]="option.id">{{ option.name }}</option>
                                 </select>
+                                <input class="form-control" formControlName="idPlan" [(ngModel)]="sub.plan.id" *ngIf="type == 2" disabled>
+                                <div *ngIf="getTheFormGroup.idPlan.errors && (getTheFormGroup.idPlan.dirty || getTheFormGroup.idPlan.touched || trySend)">
+                                    <strong *ngIf="getTheFormGroup.idPlan.errors.required" class="msnError">Requerido</strong>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

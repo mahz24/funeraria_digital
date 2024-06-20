@@ -21,6 +21,18 @@ export default class RoomsController {
         }
 
     }
+
+    public async findRooms({ params }: HttpContextContract){
+        const theRoom: Room[] = await Room.query().preload('headquarter')
+        let realRooms: Room[] = []
+        theRoom.forEach(actual =>{
+            if(actual.headquarter_id == params.id){
+                realRooms.push(actual)
+            }
+        })
+        return realRooms
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(RoomValidator);
         const theRoom: Room = await Room.create(body);

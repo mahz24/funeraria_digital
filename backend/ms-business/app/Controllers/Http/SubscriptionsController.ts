@@ -34,6 +34,17 @@ export default class SubscriptionsController {
         return realSubscriptions
     }
 
+    public async findClients({ params }: HttpContextContract){
+        const theSubscription: Subscription[] = await Subscription.query().preload('client').preload('plan')
+        let realSubscriptions: Subscription[] = []
+        theSubscription.forEach(actual =>{
+            if(actual.plan.id == params.id){
+                realSubscriptions.push(actual)
+            }
+        })
+        return realSubscriptions
+    }
+
 
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(SubscriptionValidator);

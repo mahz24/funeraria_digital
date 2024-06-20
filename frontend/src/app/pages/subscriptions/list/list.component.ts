@@ -29,12 +29,17 @@ export class ListComponent implements OnInit {
     const currentUrl = this.activateRoute.snapshot.url.join('/');
     if (currentUrl.includes('list/client')) {
       this.mode = 2;
+    }else if(currentUrl.includes('list/plan')){
+      this.mode = 3;
     }
     if(this.mode == 1){
       this.list()
     }else if(this.mode == 2){
       this.id = this.activateRoute.snapshot.params.id
       this.listPlans()
+    }else if(this.mode == 3){
+      this.id = this.activateRoute.snapshot.params.id
+      this.listClients()
     }
   }
 
@@ -44,6 +49,7 @@ export class ListComponent implements OnInit {
       this.subs.forEach(actual =>{
         this.userService.view(actual.client.user_id).subscribe(data =>{
           actual.client.user = data
+          actual.client.user.password = ""
         })
       })
     })
@@ -55,6 +61,19 @@ export class ListComponent implements OnInit {
       this.subs.forEach(actual =>{
         this.userService.view(actual.client.user_id).subscribe(data =>{
           actual.client.user = data
+          actual.client.user.password = ""
+        })
+      })
+    })
+  }
+
+  listClients() {
+    this.service.listClients(this.activateRoute.snapshot.params.id).subscribe(data => {
+      this.subs = data
+      this.subs.forEach(actual =>{
+        this.userService.view(actual.client.user_id).subscribe(data =>{
+          actual.client.user = data
+          actual.client.user.password = ""
         })
       })
     })
@@ -67,8 +86,11 @@ export class ListComponent implements OnInit {
   create() {
     if(this.mode == 1){
       this.router.navigate(["subscriptions/create"])
-    }else if(this.mode == 2)
-    this.router.navigate(["subscriptions/create/client/"+ this.id])
+    }else if(this.mode == 2){
+      this.router.navigate(["subscriptions/create/client/"+ this.id])
+    }else if(this.mode == 3){
+      this.router.navigate(["subscriptions/create/plan/"+ this.id])
+    }
   }
 
   update(id: string) {

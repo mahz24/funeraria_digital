@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
+import { ServiceComponent } from './service/service.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: "create/client/:id",
-    component: ManageComponent
+    component: ServiceComponent
   },
   {
     path: "create/service/:id",

@@ -123,7 +123,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'benefactors',
         loadChildren: () => import('src/app/pages/benefactor/benefactor.module').then(m=> m.BenefactorModule)
-    }
+    },
     {
         path: 'checkout',
         loadChildren: () => import('src/app/pages/checkout/checkout.module').then(m => m.CheckoutModule)

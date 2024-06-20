@@ -36,7 +36,6 @@ import { ResponseComponent } from './pages/response/response.component';
     AppComponent,
     AuthLayoutComponent,
     AdminLayoutComponent,
-    Fa2Component,
   ],
   providers: [AuthGuard, {
     provide: HTTP_INTERCEPTORS,

@@ -1,13 +1,17 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-size: cover; background-position: center top;">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
       <div class="col-lg-7 col-md-10">
-        <h1 class="display-2 text-white">Hola</h1>
-        <p class="text-white mt-0 mb-5">Esta es la página de tu perfil, puedes revisar tus datos.</p>
+        <h1 class="display-2 text-white">Hola {{user.name}}</h1>
+        <p class="text-white mt-0 mb-5">Aqui podras ver tu perfil y editarlo a tu gusto</p>
+        <a href="#!" class="btn btn-info">Edit </a>
       </div>
+    </div>
+  </div>
+</div>
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col-xl-8 order-xl-1">
@@ -15,80 +19,71 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Mi perfil</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-info">Editar perfil</a>
+              <h3 class="mb-0">Mi cuenta</h3>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <form class="form-control">
-            <h6 class="heading-small text-muted mb-4">Información personal</h6>
+          <form>
+            <h6 class="heading-small text-muted mb-4">Datos personales</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="profile.name">
+                    <label class="form-control-label" for="input-username">Nombre</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative"
+                      placeholder="{{user.name}}" value="{{user.name}}">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label">Apellido</label>
-                    <input type="text"class="form-control" [(ngModel)]="profile.last_name">
+                    <label class="form-control-label" for="input-email">Correo</label>
+                    <input type="email" id="input-email" class="form-control form-control-alternative"
+                      placeholder="{{user.email}}" disabled>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label">Correo electrónico</label>
-                    <input type="email" class="form-control" [(ngModel)]="user.email">
+                    <label class="form-control-label" for="input-first-name">Apellido</label>
+                    <input type="text" id="input-first-name" class="form-control form-control-alternative"
+                      placeholder="{{profile.last_name}}" value="{{profile.last_name}}">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label">Cumpleaños</label>
-                    <input type="date" class="form-control" [(ngModel)]="profile.birthday">
+                    <label class="form-control-label" for="input-last-name">Fecha nacimiento</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative"
+                      placeholder="{{profile.birthday}}" value="{{profile.birthday}}">
                   </div>
                 </div>
               </div>
             </div>
             <hr class="my-4" />
             <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Información de Contacto</h6>
+            <h6 class="heading-small text-muted mb-4">Informacion de contacto</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label">Dirección</label>
-                    <input class="form-control" type="text" [(ngModel)]="client.direction">
+                    <label class="form-control-label" for="input-address">Dirección</label>
+                    <input id="input-address" class="form-control form-control-alternative" placeholder="{{client.direction}}"
+                      value="{{client.direction}}" type="text">
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4">
                   <div class="form-group">
-                    <label class="form-control-label">Celular</label>
-                    <input type="text" class="form-control" [(ngModel)]="profile.number_phone">
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label">Género</label>
-                    <input type="text" class="form-control" [(ngModel)]="client.gender">
+                    <label class="form-control-label" for="input-address">Numero telefónico</label>
+                    <input id="input-address" class="form-control form-control-alternative" placeholder="{{profile.number_phone}}"
+                      value="{{profile.number_phone}}" type="text">
                   </div>
                 </div>
               </div>
             </div>
             <hr class="my-4" />
+            <!-- Description -->
           </form>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
 </div>

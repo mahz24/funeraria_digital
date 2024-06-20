@@ -35,7 +35,6 @@ export class UserProfileComponent implements OnInit {
           console.log(this.client);
           console.log(this.profile);
           console.log(this.user);
-          
         })
       })
     }

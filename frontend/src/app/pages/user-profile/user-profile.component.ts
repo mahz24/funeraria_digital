@@ -7,6 +7,7 @@ import { User } from 'src/app/model/user.model';
 import { ClientService } from 'src/app/services/client.service';
 import { SecurityService } from 'src/app/services/security.service';
 import { UserService } from 'src/app/services/user.service';
+import { cli } from 'webpack';
 
 @Component({
   selector: 'app-user-profile',
@@ -41,5 +42,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void{
     this.getClient()
+  }
+
+  editar(){
+console.log("dentro");
+
+    this.router.navigate(["clients/update/"+this.client.id])
   }
 }

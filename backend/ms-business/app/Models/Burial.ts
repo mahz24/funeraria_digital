@@ -14,7 +14,7 @@ export default class Burial extends BaseModel {
   public burial_type: string
 
   @column()
-  public room_id: number
+  public room_id: number | null
 
   @column()
   public service_id: number

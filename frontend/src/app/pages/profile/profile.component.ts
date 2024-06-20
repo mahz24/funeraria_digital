@@ -1,21 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/model/client';
 import { Profile } from 'src/app/model/profile.model';
 import { ClientService } from 'src/app/services/client.service';
 import { UserService } from 'src/app/services/user.service';
-
-import  Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-manage',
-  templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class ManageComponent implements OnInit {
-  mode: number; //1-> view, 2-> Create, 3-> Update
-  type: number
+export class ProfileComponent implements OnInit, OnDestroy {
+
   client: Client;
   profile: Profile
   theFormGroup: FormGroup;
@@ -26,43 +24,18 @@ export class ManageComponent implements OnInit {
               private userService: UserService,
               private router: Router
   ){
-    this.mode=1
-    this.type = 0
     this.client = {id: 0, direction:"", gender:"", is_alive: true}
     this.profile = {name: "", last_name: "", birthday: "", number_phone:""}
     this.configFormGroup()
   }
-  getClient(id:number){
-      this.serviceClient.view(id).subscribe(data =>{
-        this.client = data
-        this.client.user.password = ""
-        this.userService.getProfile(this.client.user_id).subscribe(data => {
-          this.profile = data
-        })
-        if(this.client.holder){
-          this.type= 1
-        }else if(this.client.benefactor){
-          this.type= 2
-        }
-        
-      })
-    }
 
   ngOnInit(): void{
-    const currentUrl = this.activateRoute.snapshot.url.join('/');
-    if (currentUrl.includes('view')) {
-      this.mode = 1;
-    } else if (currentUrl.includes('create')) {
-      this.mode = 2;
-    } else if (currentUrl.includes('update')) {
-      this.mode = 3;
-    }
-    if(this.activateRoute.snapshot.params.id && this.mode != 2){
-      this.client.id=this.activateRoute.snapshot.params.id
-      this.getClient(this.client.id)
-    }else if(this.activateRoute.snapshot.params.id && this.mode == 2){
+    if(this.activateRoute.snapshot.params.id){
       this.client.user_id = this.activateRoute.snapshot.params.id
     }
+  }
+
+  ngOnDestroy() {
   }
 
   configFormGroup() {
@@ -91,34 +64,9 @@ export class ManageComponent implements OnInit {
           Swal.fire(
             "Completado", 'Se ha creado correctamente', 'success'
           )
-          this.router.navigate(["clients/list"])
+          this.router.navigate(["login"])
         })
       })
     }
   }
-
-  update(){
-    this.trySend=true
-    if(this.theFormGroup.invalid){
-      Swal.fire('Error', 'Por favor llene correctamente los campos', 'error')
-    }else{
-      this.serviceClient.update(this.client).subscribe(data=>{
-        this.userService.updateProfile(this.client.user_id, this.profile).subscribe(data =>{
-          Swal.fire(
-            "Completado", 'Se ha actualizado correctamente', 'success'
-          )
-          this.router.navigate(["clients/list"])
-        })
-      })
-    }
-  }
-
-  holder(id:number){
-    this.router.navigate(["holders/view/"+ id])
-  }
-
-  benefactor(id:number){
-    this.router.navigate(["benefactors/list/holder/"+ id])
-  }
-
 }

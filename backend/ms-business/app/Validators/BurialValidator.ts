@@ -12,8 +12,8 @@ export default class BurialValidator {
       id:schema.number([rules.exists({ table: 'services', column: 'id' })])
     }),
     room: schema.object().members({
-      num:schema.number([rules.exists({ table: 'rooms', column: 'num' })])
-    }),
+      num: schema.number([rules.exists({ table: 'rooms', column: 'num' })])
+      }),
   })
 //
   public messages: CustomMessages = {}

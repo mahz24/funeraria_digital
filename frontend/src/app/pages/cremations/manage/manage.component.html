@@ -28,7 +28,9 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" class="form-control" [(ngModel)]="cremation.service_id"
-                                        [disabled]="mode==1" formControlName="service_id">
+                                        formControlName="service_id" *ngIf="type != 1" disabled>
+                                    <input class="form-control" [(ngModel)]="cremation.service_id"
+                                        formControlName="service_id" *ngIf="type == 1" disabled>
                                     <div
                                         *ngIf="getTheFormGroup.service_id.errors && (getTheFormGroup.service_id.dirty || getTheFormGroup.service_id.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.service_id.errors.required"

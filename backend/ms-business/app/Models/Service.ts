@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasMany, HasOne, column, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import PlanXService from './PlanXService'
 import Executionservice from './Executionservice'
 import Cremation from './Cremation'
@@ -29,20 +29,20 @@ export default class Service extends BaseModel {
   })
   public planservices: HasMany<typeof PlanXService>
 
-  @hasOne(() => Cremation, {
+  @hasMany(() => Cremation, {
     foreignKey: 'service_id'
   })
-  public cremations: HasOne<typeof Cremation>
+  public cremations: HasMany<typeof Cremation>
 
-  @hasOne(() => Burial, {
+  @hasMany(() => Burial, {
     foreignKey: 'service_id'
   })
-  public burials: HasOne<typeof Burial>
+  public burials: HasMany<typeof Burial>
 
-  @hasOne(() => Relocation, {
+  @hasMany(() => Relocation, {
     foreignKey: 'service_id'
   })
-  public relocations: HasOne<typeof Relocation>
+  public relocations: HasMany<typeof Relocation>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

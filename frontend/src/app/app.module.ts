@@ -15,6 +15,7 @@ import { ComponentsModule } from './components/components.module';
 import { Fa2Component } from './pages/fa2/fa2.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 // import { AuthInterceptor } from './interceptors/auth.interceptor';
 
@@ -34,8 +35,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     AppComponent,
     AuthLayoutComponent,
     AdminLayoutComponent,
-    Fa2Component
-
   ],
   providers: [AuthGuard, {
     provide: HTTP_INTERCEPTORS,

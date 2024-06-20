@@ -29,6 +29,7 @@ export class UserService {
     return this.http.post<Profile>(`${environment.url_ms_security}/profiles/user/${id}`, theProfile);
   }
 
+
   updateProfile(id:String, theProfile: Profile): Observable<Profile> {
     return this.http.put<Profile>(`${environment.url_ms_security}/profiles/user/${id}`, theProfile);
   }
@@ -38,7 +39,7 @@ export class UserService {
   }
 
   create(theUser: User): Observable<User> {
-    return this.http.post<User>(`${environment.url_ms_security}/users`, theUser);
+    return this.http.post<User>(`${environment.url_ms_security}/users`, theUser)
   }
 
   matchRole(id:string): Observable<User> {

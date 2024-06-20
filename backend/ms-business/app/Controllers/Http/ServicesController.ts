@@ -7,15 +7,19 @@ export default class ServicesController {
 
     public async find({ request, params }: HttpContextContract) {
         if (params.id) {
+            let theService: Service = await Service.findOrFail(params.id);
+            theService.load('burials')
+            theService.load('cremations')
+            theService.load('relocations')
             return await Service.findOrFail(params.id);
         } else {
             const data = request.all()
             if ("page" in data && "per_page" in data) {
                 const page = request.input('page', 1);
                 const perPage = request.input("per_page", 20);
-                return await Service.query().paginate(page, perPage)
+                return await Service.query().preload('burials').preload('cremations').preload('relocations').paginate(page, perPage)
             } else {
-                return await Service.query()
+                return await Service.query().preload('burials').preload('cremations').preload('relocations')
             }
 
         }

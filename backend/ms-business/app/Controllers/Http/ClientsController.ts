@@ -5,14 +5,11 @@ import Env from "@ioc:Adonis/Core/Env";
 import ClientValidator from 'App/Validators/ClientValidator';
 
 export default class ClientsController {
-    public async find({ /*request,*/ response }: HttpContextContract) {
+    public async find({ response }: HttpContextContract) {
         try{
-            //const page = request.input("page", 1);
-            //const perPage = request.input("per_page", 20);
             let clients: Client[] = await Client.query()
             .preload("benefactor")
             .preload("holder")
-            //.paginate(page, perPage);
             if (clients && clients.length > 0){
                 await Promise.all(
                     clients.map(async (client) => {
@@ -53,8 +50,18 @@ export default class ClientsController {
             return response.status(200).json(theClient);
         }else{
             return response.status(400).json({ mensaje: "Registro del cliente no fue encontrado", data: theClient });
-        }
-        
+        } 
+    }
+
+    public async findClient({ params }: HttpContextContract){
+        let clients: Client[] = await Client.query()
+        let theClient: Client = new Client()
+        clients.forEach(actual =>{
+            if(actual.user_id == params.id){
+                theClient = actual
+            }
+        })
+        return theClient;
     }
 
     public async findWithoutHolderAndBenefactor({ response }: HttpContextContract){

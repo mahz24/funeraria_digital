@@ -74,10 +74,11 @@
                                 </div>
                                 <div class="col-8">
                                     <select class="form-control" formControlName="idService"
-                                        [(ngModel)]="burial.service.id">
+                                        [(ngModel)]="burial.service.id" *ngIf="type != 1">
                                         <option *ngFor="let option of services" [value]="option.id">Descripción:
                                             {{option.description}} - Precio: {{option.price}}</option>
                                     </select>
+                                    <input class="form-control" formControlName="idService" [(ngModel)]="burial.service.id" *ngIf="type == 1" disabled>
                                     <div
                                         *ngIf="getTheFormGroup.idService.errors && (getTheFormGroup.idService.dirty || getTheFormGroup.idService.touched || trySend)">
                                         <strong *ngIf="getTheFormGroup.idService.errors.required"

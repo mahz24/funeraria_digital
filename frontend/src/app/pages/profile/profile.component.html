@@ -1,0 +1,115 @@
+<div class="header bg-gradient-danger py-7 py-lg-8">
+    <div class="container">
+      <div class="header-body text-center mb-7">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-6">
+            <h1 class="text-white">Bienvenido a la funeraria digital!</h1>
+            <p class="text-lead text-light">Crea una cuenta para conocer sobre nosotros</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+  <!-- Page content -->
+  <div class="container mt--8 pb-5">
+    <!-- Table -->
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="card bg-secondary shadow border-0">
+          <div class="card-body px-lg-5 py-lg-5">
+            <div class="text-center text-muted mb-4">
+              <small>Introduce estos datos</small>
+            </div>
+              <form class="form" [formGroup]="theFormGroup">
+              <div class="form-group">
+                <div class="text-muted mb-4">
+                    <small>Nombre:</small>
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <input class="form-control" type="text" [(ngModel)]="profile.name" formControlName="name">
+                </div>
+                <div class="text-muted font-italic" 
+                  *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
+                  <small *ngIf="getTheFormGroup.name.errors.required">Requerido</small>
+                  <small *ngIf="getTheFormGroup.name.errors.minlength || getTheFormGroup.name.errors.maxlength">No cumple en tamaño</small>
+                </div>
+                <div class="text-muted mb-4">
+                    <small>Apellido:</small>
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <input class="form-control" type="text" [(ngModel)]="profile.last_name" formControlName="last_name">
+                </div>
+                <div class="text-muted font-italic" 
+                *ngIf="getTheFormGroup.last_name.errors && (getTheFormGroup.last_name.dirty || getTheFormGroup.last_name.touched || trySend)">
+                  <small *ngIf="getTheFormGroup.last_name.errors.required">Requerido</small>
+                  <small *ngIf="getTheFormGroup.last_name.errors.minlength || getTheFormGroup.last_name.errors.maxlength">No cumple en tamaño</small>
+                </div>
+                <div class="text-muted mb-4">
+                    <small>Fecha de nacimiento:</small>
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <input class="form-control" type="date" [(ngModel)]="profile.birthday" formControlName="birthday">
+                </div>
+                <div class="text-muted font-italic" 
+                *ngIf="getTheFormGroup.birthday.errors && (getTheFormGroup.birthday.dirty || getTheFormGroup.birthday.touched || trySend)">
+                  <small *ngIf="getTheFormGroup.birthday.errors.required">Requerido</small>
+                </div>
+                <div class="text-muted mb-4">
+                    <small>Número telefónico:</small>
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <input class="form-control" type="text" [(ngModel)]="profile.number_phone" formControlName="number_phone">
+                </div>
+                <div class="text-muted font-italic" 
+                *ngIf="getTheFormGroup.number_phone.errors && (getTheFormGroup.number_phone.dirty || getTheFormGroup.number_phone.touched || trySend)">
+                  <small *ngIf="getTheFormGroup.number_phone.errors.required">Requerido</small>
+                  <small *ngIf="getTheFormGroup.number_phone.errors.minlength || getTheFormGroup.number_phone.errors.maxlength">No cumple en tamaño</small>
+                </div>
+                <div class="text-muted mb-4">
+                    <small>Dirección:</small>
+                </div>
+                <div class="input-group input-group-alternative mb-3">
+                  <input class="form-control" type="text" [(ngModel)]="client.direction" formControlName="direction">
+                </div>
+                <div class="text-muted font-italic" 
+                *ngIf="getTheFormGroup.direction.errors && (getTheFormGroup.direction.dirty || getTheFormGroup.direction.touched || trySend)">
+                  <small *ngIf="getTheFormGroup.direction.errors.required">Requerido</small>
+                  <small *ngIf="getTheFormGroup.direction.errors.minlength || getTheFormGroup.direction.errors.maxlength">No cumple en tamaño</small>
+                </div>
+                <div class="text-muted mb-4">
+                    <small>Género:</small>
+                </div>
+                <div class="select-group select-group-alternative mb-3"> <!-- HAY QUE REVISAR -->
+                    <select class="form-control" [(ngModel)]="client.gender" formControlName="gender">
+                        <option value="HOMBRE">HOMBRE</option>
+                        <option value="MUJER">MUJER</option>
+                        <option value="NO BINARIO">NO BINARIO</option>
+                        <option value="OTRO">OTRO</option>
+                    </select>
+                </div>
+                <div class="row my-4">
+                    <div class="col-12">
+                      <div class="custom-control custom-control-alternative custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" 
+                            class="form-control"[(ngModel)]="client.is_alive" formControlName="is_alive">
+                        <label class="custom-control-label" for="customCheckRegister">
+                          <span class="text-muted">Está vivo?:</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="text-center">
+                <button type="button" class="btn btn-primary mt-4" (click)="create()">Create account</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

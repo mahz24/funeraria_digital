@@ -26,7 +26,7 @@ import microservises.mssegurity.Services.EncryptionService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -142,10 +142,15 @@ public class UserController {
     @PostMapping("")
     public User create(@RequestBody User newUser, final HttpServletResponse response) {
         try {
-            newUser.setPassword(thEncryptionService.convertSHA256(newUser.getPassword()));
-            response.setStatus(200);
-            User user = this.userRepository.save(newUser);
-            return  user;
+            User Nuser = this.userRepository.getUserByEmail(newUser.getEmail());
+            if(Nuser == null){
+                newUser.setPassword(thEncryptionService.convertSHA256(newUser.getPassword()));
+                response.setStatus(200);
+                User user = this.userRepository.save(newUser);
+                return  user;
+            }else{
+                return null;
+            }
         } catch (Exception e) {
             response.setStatus(500);
             return null;

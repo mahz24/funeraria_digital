@@ -36,11 +36,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   reset(){
-    console.log(this.theUser.email);
     this.theSecurityService.resetPassword(this.theUser.email).subscribe({
      next:(data)=>
        Swal.fire("Revise su nueva contraseña", "Mire su correo", "success")
     })
+  }
+
+  register(){
+    this.router.navigate(['register'])
   }
 
 }

@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./manage.component.scss']
 }) export class ManageComponent implements OnInit {
   mode: number
+  type: number
   cremation: Cremation
   trySend: boolean
   theFormGroup: FormGroup
@@ -25,6 +26,7 @@ import Swal from 'sweetalert2';
     private roomService: RoomService
   ) {
     this.mode = 1;
+    this.type = 0
     this.trySend = false
     this.estados = ["REALIZADO","PENDIENTE","CANCELADO"]
     this.cremation = {
@@ -59,12 +61,17 @@ import Swal from 'sweetalert2';
       this.mode = 1;
     } else if (currentUrl.includes('create')) {
       this.mode = 2;
+      if(this.activateRoute.snapshot.params.id){
+        this.type= 1
+      }
     } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-    if (this.activateRoute.snapshot.params.id) {
+    if (this.activateRoute.snapshot.params.id && this.mode !=2) {
       this.cremation.id = this.activateRoute.snapshot.params.id
       this.getPS(this.cremation.id)
+    }else if(this.activateRoute.snapshot.params.id && this.mode ==2){
+      this.cremation.service_id = this.activateRoute.snapshot.params.id
     }
     this.roomsList()
   }
@@ -98,7 +105,11 @@ import Swal from 'sweetalert2';
         Swal.fire(
           "Completado", 'Se ha creado correctamente', 'success'
         )
-        this.router.navigate(["cremations/list"])
+        if(this.type==0){
+          this.router.navigate(["cremations/list"])
+        }else if(this.type == 1){
+          this.router.navigate(["dashboard"])
+        }
       })
     }
   }

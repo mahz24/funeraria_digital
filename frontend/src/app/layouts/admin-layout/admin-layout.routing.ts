@@ -123,6 +123,6 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'benefactors',
         loadChildren: () => import('src/app/pages/benefactor/benefactor.module').then(m=> m.BenefactorModule)
-    },
+    }
 
 ];

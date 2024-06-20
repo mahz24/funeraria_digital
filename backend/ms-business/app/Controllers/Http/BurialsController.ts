@@ -24,10 +24,15 @@ export default class BurialsController {
         const body = await request.validate(BurialValidator);
         let burial:Burial = new Burial()
         burial.service_id = body.service.id;
-        burial.room_id = body.room.num
+        
         burial.location = body.location
         burial.burial_date = body.burial_date
         burial.burial_type = body.burial_type
+        if(body.room.num != null){
+            burial.room_id = body.room.num
+        }else{
+            burial.room_id = null
+        }
         const theBurial: Burial = await Burial.create(burial);
         return theBurial;
     }

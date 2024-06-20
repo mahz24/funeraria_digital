@@ -120,5 +120,9 @@ export const AdminLayoutRoutes: Routes = [
         canActivate:[AuthGuard],
         loadChildren: () => import('src/app/pages/causa/causa.module').then(m=> m.CausaModule)
     },
+    {
+        path: 'checkout',
+        loadChildren: () => import('src/app/pages/checkout/checkout.module').then(m => m.CheckoutModule)
+      },
 
 ];

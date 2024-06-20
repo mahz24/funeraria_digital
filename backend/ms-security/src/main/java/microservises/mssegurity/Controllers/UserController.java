@@ -26,7 +26,7 @@ import microservises.mssegurity.Services.EncryptionService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired

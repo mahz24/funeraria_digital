@@ -142,7 +142,6 @@ public class UserController {
     @PostMapping("/email")
     public User findByEmail(@RequestBody User theUser) { // es ResponseEntity
         try {
-            System.out.println(theUser);
             User newUser = this.userRepository.getUserByEmail(theUser.getEmail());
             if (newUser != null) {
                 User user = this.userRepository.save(newUser);
@@ -151,7 +150,6 @@ public class UserController {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println(theUser);
             this.jsonResponsesService.setData(null);
             this.jsonResponsesService.setMessage("Error al buscar usuario");
             this.jsonResponsesService.setError(e.toString());

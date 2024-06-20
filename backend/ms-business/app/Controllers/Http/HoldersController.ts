@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Benefactor from 'App/Models/Benefactor';
 import Holder from 'App/Models/Holder';
 import HolderValidator from 'App/Validators/HolderValidator';
 
@@ -19,6 +20,19 @@ export default class HoldersController {
             }
         }
     }
+
+    public async findPrincipal({ params }:HttpContextContract){
+        const theHolder: Holder = await Holder.findOrFail(params.id)
+        await theHolder.load('benefactors')
+        let theBenefactor: Benefactor = new Benefactor()
+        theHolder.benefactors.forEach(actual =>{
+            if(actual.isprincipal_benefactor == true){
+                theBenefactor = actual
+            }
+        })
+        return theBenefactor
+    }
+
     public async create({ request }: HttpContextContract) {
         const body = await request.validate(HolderValidator);
         let holder: Holder = new Holder()

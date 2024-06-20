@@ -5,6 +5,7 @@ Route.group(() => {
     Route.get("/clients/:id", "ClientsController.findOne");
     Route.get("/clients/user/:id", "ClientsController.findClient");
     Route.post("/clients", "ClientsController.create");
+    // Route.post("/clients/email", "ClientsController.findByEmail");
     Route.put("/clients/:id", "ClientsController.update");
     Route.delete("/clients/:id", "ClientsController.delete");
 })

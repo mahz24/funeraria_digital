@@ -17,6 +17,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CheckoutComponent } from './pages/checkout/checkout/checkout.component';
 import { ResponseComponent } from './pages/response/response.component';
+import { PetitionComponent } from './pages/petition/petition.component';
 
 // import { AuthInterceptor } from './interceptors/auth.interceptor';
 

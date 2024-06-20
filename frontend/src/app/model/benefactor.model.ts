@@ -5,6 +5,8 @@ export class Benefactor {
     id?: number
     isprincipal_benefactor: boolean
     isemergency_contact: boolean
-    client: Client
-    holder: Holder
+    client_id?: number
+    holder_id?: number
+    client?: Client
+    holder?: Holder
 }

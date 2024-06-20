@@ -55,6 +55,9 @@ export default class ClientsController {
 
     public async findClient({ params }: HttpContextContract){
         let clients: Client[] = await Client.query()
+                                .preload('holder')
+                                .preload('benefactor', actualBenefactor => {
+                                actualBenefactor.preload('holder')})
         let theClient: Client = new Client()
         clients.forEach(actual =>{
             if(actual.user_id == params.id){
@@ -63,6 +66,23 @@ export default class ClientsController {
         })
         return theClient;
     }
+
+    // public async findByEmail({ request }: HttpContextContract){
+    //     let email = request.body()
+    //     let api_response = await axios.get(`${Env.get('MS_SECURITY_URL')}/users/email`, email)
+    //     let user = api_response.data
+    //     let clients: Client[] = await Client.query()
+    //                             .preload('holder')
+    //                             .preload('benefactor', actualBenefactor => {
+    //                             actualBenefactor.preload('holder')})
+    //     let theClient: Client = new Client()
+    //     clients.forEach(actual =>{
+    //         if(actual.user_id == user._id){
+    //             theClient = actual
+    //         }
+    //     })
+    //     return theClient;
+    // }
 
     public async findWithoutHolderAndBenefactor({ response }: HttpContextContract){
         try {

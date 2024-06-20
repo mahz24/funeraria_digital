@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Holder } from '../model/holder.model';
 import { environment } from 'src/environments/environment';
+import { Benefactor } from '../model/benefactor.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class HolderService {
   constructor(private http:HttpClient) { }
   list(): Observable<Holder[]> {
     return this.http.get<Holder[]>(`${environment.url_ms_business}/holders`);
+  }
+
+  principal(id: number): Observable<Benefactor> {
+    return this.http.get<Benefactor>(`${environment.url_ms_business}/holders/benefactor/${id}`);
   }
 
   view(id: number): Observable<Holder> {

@@ -17,6 +17,10 @@ export class UserService {
     return this.http.get<User[]>(`${environment.url_ms_security}/users`);
   }
 
+  findByEmail(user: User): Observable<User> {
+    return this.http.post<User>(`${environment.url_ms_security}/users/email`, user);
+  }
+
   view(id: String): Observable<User> {
     return this.http.get<User>(`${environment.url_ms_security}/users/${id}`);
   }
